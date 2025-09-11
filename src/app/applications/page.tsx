@@ -14,6 +14,7 @@ import {
   CalendarIcon,
   LinkIcon
 } from '@heroicons/react/24/outline'
+import { Input, Button, Textarea, Select } from '@/components/ui'
 import Link from 'next/link'
 import api from '@/lib/api'
 import { JobApplication, JobApplicationResponse, Resume, ResumeResponse } from '@/types'
@@ -180,116 +181,84 @@ export default function ApplicationsPage() {
                 <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                   Create New Application
                 </h3>
-                <form onSubmit={handleCreateApplication} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Company Name
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.company_name}
-                        onChange={(e) => setFormData({...formData, company_name: e.target.value})}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Position Title
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.position_title}
-                        onChange={(e) => setFormData({...formData, position_title: e.target.value})}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Job Description
-                    </label>
-                    <textarea
-                      rows={4}
-                      value={formData.job_description}
-                      onChange={(e) => setFormData({...formData, job_description: e.target.value})}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Application URL
-                      </label>
-                      <input
-                        type="url"
-                        value={formData.application_url}
-                        onChange={(e) => setFormData({...formData, application_url: e.target.value})}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Application Deadline
-                      </label>
-                      <input
-                        type="date"
-                        value={formData.application_deadline}
-                        onChange={(e) => setFormData({...formData, application_deadline: e.target.value})}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Resume
-                    </label>
-                    <select
+                <form onSubmit={handleCreateApplication} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Input
+                      type="text"
+                      label="Company Name"
+                      placeholder="Enter company name"
+                      value={formData.company_name}
+                      onChange={(e) => setFormData({...formData, company_name: e.target.value})}
                       required
-                      value={formData.resume_id}
-                      onChange={(e) => setFormData({...formData, resume_id: e.target.value})}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    >
-                      <option value="">Select a resume</option>
-                      {resumes.map((resume) => (
-                        <option key={resume.id} value={resume.id}>
-                          {resume.original_filename}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Notes
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={formData.notes}
-                      onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                    <Input
+                      type="text"
+                      label="Position Title"
+                      placeholder="Enter position title"
+                      value={formData.position_title}
+                      onChange={(e) => setFormData({...formData, position_title: e.target.value})}
+                      required
                     />
                   </div>
+
+                  <Textarea
+                    label="Job Description"
+                    placeholder="Paste the job description here..."
+                    rows={4}
+                    value={formData.job_description}
+                    onChange={(e) => setFormData({...formData, job_description: e.target.value})}
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Input
+                      type="url"
+                      label="Application URL"
+                      placeholder="https://company.com/job-posting"
+                      value={formData.application_url}
+                      onChange={(e) => setFormData({...formData, application_url: e.target.value})}
+                    />
+                    <Input
+                      type="date"
+                      label="Application Deadline"
+                      value={formData.application_deadline}
+                      onChange={(e) => setFormData({...formData, application_deadline: e.target.value})}
+                    />
+                  </div>
+
+                  <Select
+                    label="Resume"
+                    placeholder="Select a resume"
+                    value={formData.resume_id}
+                    onChange={(e) => setFormData({...formData, resume_id: e.target.value})}
+                    options={resumes.map(resume => ({
+                      value: resume.id,
+                      label: resume.original_filename
+                    }))}
+                    required
+                  />
+
+                  <Textarea
+                    label="Notes"
+                    placeholder="Add any additional notes..."
+                    rows={3}
+                    value={formData.notes}
+                    onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                  />
 
                   <div className="flex justify-end space-x-3">
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
                       onClick={() => setShowCreateForm(false)}
-                      className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                     >
                       Cancel
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="submit"
-                      className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                      variant="primary"
                     >
                       Create Application
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </div>
