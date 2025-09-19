@@ -33,7 +33,7 @@ export default function Header() {
         <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-indigo-600">
-              Haku
+              CvEnhance
             </Link>
           </div>
           <div className="ml-10 flex items-center space-x-4">

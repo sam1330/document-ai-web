@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Haku - AI-Powered Resume & Job Application Assistant",
+  title: "CvEnhance - AI-Powered Resume & Job Application Assistant",
   description: "Transform your job search with AI-powered resume analysis, optimization, and personalized cover letter generation.",
 };
 

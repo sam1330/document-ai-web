@@ -206,7 +206,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Why choose Haku?
+              Why choose CvEnhance?
             </h2>
             <p className="mt-4 text-xl text-gray-500">
               The most advanced AI-powered job search platform
@@ -289,7 +289,7 @@ export default function Home() {
               Success stories
             </h2>
             <p className="mt-4 text-xl text-gray-500">
-              See how Haku has helped job seekers land their dream jobs
+              See how CvEnhance has helped job seekers land their dream jobs
             </p>
           </div>
 
@@ -305,7 +305,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600 mb-4">
-                "Haku's AI analysis helped me identify exactly what was wrong with my resume. I went from 0 callbacks to 5 interviews in just 2 weeks!"
+                "CvEnhance's AI analysis helped me identify exactly what was wrong with my resume. I went from 0 callbacks to 5 interviews in just 2 weeks!"
               </p>
               <div className="flex items-center">
                 <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
