@@ -3,6 +3,7 @@ export { Textarea } from './Textarea'
 export { Select } from './Select'
 export { Button } from './Button'
 export { Checkbox } from './Checkbox'
+export { Modal } from './Modal'
 
 export type { InputProps } from './Input'
 export type { TextareaProps } from './Textarea'

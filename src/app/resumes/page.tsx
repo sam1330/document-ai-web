@@ -4,25 +4,31 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import Navigation from '@/components/Navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import { 
-  DocumentTextIcon, 
+import {
+  DocumentTextIcon,
   PlusIcon,
   TrashIcon,
   EyeIcon,
   SparklesIcon,
-  CloudArrowUpIcon
+  CloudArrowUpIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import api from '@/lib/api'
 import { Resume } from '@/types'
 import { formatDate, formatFileSize } from '@/lib/utils'
 import toast from 'react-hot-toast'
+import { Modal, Textarea, Button } from '@/components/ui'
 
 export default function ResumesPage() {
   const { user } = useAuth()
   const [resumes, setResumes] = useState<Resume[]>([])
   const [resumesLoading, setResumesLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
+  const [selectedResumeId, setSelectedResumeId] = useState<string | null>(null)
+  const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState(false)
+  const [jobDescription, setJobDescription] = useState('')
+  const [analyzing, setAnalyzing] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -93,13 +99,31 @@ export default function ResumesPage() {
     }
   }
 
-  const handleAnalyzeResume = async (resumeId: string) => {
+  const handleAnalyzeClick = (resumeId: string) => {
+    setSelectedResumeId(resumeId)
+    setJobDescription('')
+    setIsAnalyzeModalOpen(true)
+  }
+
+  const handleConfirmAnalyze = async () => {
+    if (!selectedResumeId) return
+    if (!jobDescription.trim()) {
+      toast.error('Job description is required')
+      return
+    }
+
+    setAnalyzing(true)
     try {
-      await api.post(`/api/resume/analyze`, { resume_id: resumeId })
+      await api.post(`/api/resume/${selectedResumeId}/analyze`, {
+        job_description: jobDescription
+      })
       toast.success('Resume analysis started! Check back in a few minutes.')
+      setIsAnalyzeModalOpen(false)
       fetchResumes()
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to analyze resume')
+    } finally {
+      setAnalyzing(false)
     }
   }
 
@@ -134,39 +158,17 @@ export default function ResumesPage() {
       <div className="min-h-screen bg-gray-50">
         <Navigation />
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="sm:flex sm:items-center">
-            <div className="sm:flex-auto">
-              <h1 className="text-2xl font-bold text-gray-900">Resumes</h1>
-              <p className="mt-2 text-sm text-gray-700">
-                Upload and manage your resumes. Get AI-powered analysis and optimization suggestions.
-              </p>
-            </div>
-            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <label className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer">
-                <CloudArrowUpIcon className="-ml-1 mr-2 h-5 w-5" />
-                Upload Resume
-                <input
-                  type="file"
-                  accept=".pdf,.docx"
-                  onChange={handleFileUpload}
-                  disabled={uploading}
-                  className="hidden"
-                />
-              </label>
-            </div>
-          </div>
-
-          {resumes.length === 0 ? (
-            <div className="text-center py-12">
-              <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No resumes</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Get started by uploading your first resume.
-              </p>
-              <div className="mt-6">
+          <div className="px-4 py-6 sm:px-0">
+            <div className="sm:flex sm:items-center">
+              <div className="sm:flex-auto">
+                <h1 className="text-2xl font-bold text-gray-900">Resumes</h1>
+                <p className="mt-2 text-sm text-gray-700">
+                  Upload and manage your resumes. Get AI-powered analysis and optimization suggestions.
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <label className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer">
-                  <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
+                  <CloudArrowUpIcon className="-ml-1 mr-2 h-5 w-5" />
                   Upload Resume
                   <input
                     type="file"
@@ -178,73 +180,134 @@ export default function ResumesPage() {
                 </label>
               </div>
             </div>
-          ) : (
-            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {resumes?.map((resume) => (
-                <div key={resume.id} className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-6">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <DocumentTextIcon className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <div className="ml-4 flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-gray-900 truncate">
-                          {resume.original_filename}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          {formatFileSize(resume.file_size)} • {formatDate(resume.created_at)}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4">
-                      <div className="flex items-center justify-between">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          resume.is_processed 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {resume.is_processed ? 'Processed' : 'Processing'}
-                        </span>
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => handleDeleteResume(resume.id)}
-                            className="text-red-400 hover:text-red-600"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
+
+            {resumes.length === 0 ? (
+              <div className="text-center py-12">
+                <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No resumes</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Get started by uploading your first resume.
+                </p>
+                <div className="mt-6">
+                  <label className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer">
+                    <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
+                    Upload Resume
+                    <input
+                      type="file"
+                      accept=".pdf,.docx"
+                      onChange={handleFileUpload}
+                      disabled={uploading}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {resumes?.map((resume) => (
+                  <div key={resume.id} className="bg-white overflow-hidden shadow rounded-lg">
+                    <div className="p-6">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0">
+                          <DocumentTextIcon className="h-8 w-8 text-gray-400" />
+                        </div>
+                        <div className="ml-4 flex-1 min-w-0">
+                          <h3 className="text-sm font-medium text-gray-900 truncate">
+                            {resume.original_filename}
+                          </h3>
+                          <p className="text-sm text-gray-500">
+                            {formatFileSize(resume.file_size)} • {formatDate(resume.created_at)}
+                          </p>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="mt-4 space-y-2">
-                      <button
-                        onClick={() => handleAnalyzeResume(resume.id)}
-                        disabled={!resume.is_processed}
-                        className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <SparklesIcon className="-ml-1 mr-2 h-4 w-4" />
-                        Analyze Resume
-                      </button>
-                      
-                      {resume.analysis_results && (
-                        <Link
-                          href={`/resumes/${resume.id}`}
-                          className="w-full inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${resume.is_processed
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                            }`}>
+                            {resume.is_processed ? 'Processed' : 'Processing'}
+                          </span>
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleDeleteResume(resume.id)}
+                              className="text-red-400 hover:text-red-600"
+                            >
+                              <TrashIcon className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 space-y-2">
+                        <button
+                          onClick={() => handleAnalyzeClick(resume.id)}
+                          disabled={!resume.is_processed}
+                          className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          <EyeIcon className="-ml-1 mr-2 h-4 w-4" />
-                          View Analysis
-                        </Link>
-                      )}
+                          <SparklesIcon className="-ml-1 mr-2 h-4 w-4" />
+                          Analyze Resume
+                        </button>
+
+                        {resume.analysis_results && (
+                          <Link
+                            href={`/resumes/${resume.id}`}
+                            className="w-full inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                          >
+                            <EyeIcon className="-ml-1 mr-2 h-4 w-4" />
+                            View Analysis
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
-      </div>
+
+      <Modal
+        isOpen={isAnalyzeModalOpen}
+        onClose={() => !analyzing && setIsAnalyzeModalOpen(false)}
+        title="Analyze Resume"
+        footer={
+          <>
+            <Button
+              variant="outline"
+              onClick={() => setIsAnalyzeModalOpen(false)}
+              disabled={analyzing}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmAnalyze}
+              loading={analyzing}
+              disabled={!jobDescription.trim()}
+            >
+              Start Analysis
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-500">
+            Paste the job description below to tailor the analysis to the specific role.
+          </p>
+          <Textarea
+            label="Job Description"
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            placeholder="Paste job description here..."
+            rows={6}
+            className="w-full text-gray-700"
+            required
+          />
+        </div>
+      </Modal>
     </ProtectedRoute>
   )
 }

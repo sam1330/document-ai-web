@@ -207,6 +207,7 @@ export default function ApplicationsPage() {
                     rows={4}
                     value={formData.job_description}
                     onChange={(e) => setFormData({...formData, job_description: e.target.value})}
+                    className='text-gray-700'
                   />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

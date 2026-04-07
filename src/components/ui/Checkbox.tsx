@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { CheckIcon } from '@heroicons/react/24/outline'
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  label?: string
+  label?: React.ReactNode
   error?: string
   helperText?: string
 }
