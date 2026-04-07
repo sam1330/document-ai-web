@@ -20,29 +20,43 @@ export interface ResumeResponse {
   }
 }
 
-export interface AnalysisResults {
+export interface Analysis {
+  id: string
+  resume_id: string
+  target_role: string
+  target_company: string
   job_description: string
-  analysis: {
+  analysis_results: {
     overview: string
     atsScore: number
     strongPoints: string[]
     weaknesses: string[]
   }
-  timestamp: string
+  created_at: string
 }
 
 export interface Resume {
   id: string
   user_id: string
   original_filename: string
-  file_path: string
+  file_path?: string
   file_type: string
   file_size: number
   extracted_text: string
-  analysis_results?: AnalysisResults
   is_processed: boolean
   created_at: string
   updated_at: string
+}
+
+export interface ResumeDetailResponse {
+  resume: Resume,
+  latest_analysis?: Analysis
+  has_text: boolean,
+  text_length: number,
+}
+
+export interface AnalysesListResponse {
+  analyses: Analysis[]
 }
 
 export interface JobApplicationResponse {

@@ -113,7 +113,7 @@ export default function DashboardPage() {
     },
     {
       name: 'Avg Match Score',
-      value: `${overview?.overview.avg_score || 0}%`,
+      value: `${overview?.overview.avg_score || 0}`,
       icon: ArrowTrendingUpIcon,
       change: '+5%',
       changeType: 'positive' as const,

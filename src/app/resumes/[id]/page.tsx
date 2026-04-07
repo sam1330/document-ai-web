@@ -9,20 +9,23 @@ import {
   PlusIcon,
   TrashIcon,
   EyeIcon,
-  SparklesIcon,
-  CloudArrowUpIcon,
-  PencilIcon,
+  ExclamationTriangleIcon,
+  LightBulbIcon,
+  ClockIcon,
+  ListBulletIcon,
   ArrowLeftIcon,
   CalendarIcon,
   BriefcaseIcon,
   CheckCircleIcon,
   HandThumbUpIcon,
-  ExclamationTriangleIcon,
-  LightBulbIcon,
 } from "@heroicons/react/24/outline";
+import { 
+  SparklesIcon as SparklesIconSolid,
+  CheckCircleIcon as CheckCircleIconSolid 
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import api from "@/lib/api";
-import { Resume, AnalysisResults } from "@/types";
+import { Resume, Analysis, ResumeDetailResponse } from "@/types";
 import { formatDate, formatFileSize } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { Modal, Textarea, Button } from "@/components/ui";
@@ -30,54 +33,64 @@ import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const initialResumeValue: Resume = {
-  id: "",
-  user_id: "",
-  original_filename: "",
-  file_path: "",
-  file_type: "",
-  file_size: 0,
-  extracted_text: "",
-  analysis_results: {
-    job_description: "",
-    analysis: {
-      overview: "",
-      atsScore: 0,
-      strongPoints: [],
-      weaknesses: []
-    },
-    timestamp: ""
+const initialResumeValue: ResumeDetailResponse = {
+  resume: {
+    id: "",
+    user_id: "",
+    original_filename: "",
+    file_path: "",
+    file_type: "",
+    file_size: 0,
+    extracted_text: "",
+    is_processed: false,
+    created_at: "",
+    updated_at: "",
   },
-  is_processed: false,
-  created_at: "",
-  updated_at: "",
+  latest_analysis: undefined,
+  has_text: false,
+  text_length: 0,
 };
 
 export default function ResumeDetailPage() {
   const { user } = useAuth();
   const { id } = useParams();
   const router = useRouter();
-  const [resume, setResume] = useState<Resume>(initialResumeValue);
+  const [resume, setResume] = useState<ResumeDetailResponse>(initialResumeValue);
+  const [analyses, setAnalyses] = useState<Analysis[]>([]);
+  const [selectedAnalysis, setSelectedAnalysis] = useState<Analysis | null>(null);
   const [resumeLoading, setResumeLoading] = useState(true);
   const [isJDModalOpen, setIsJDModalOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
-      fetchResume();
+      fetchData();
     }
   }, [user]);
 
-  const fetchResume = async () => {
+  const fetchData = async () => {
+    setResumeLoading(true);
     try {
-      const response = await api.get(`/api/resume/${id}`);
-      setResume(response.data.resume || initialResumeValue);
+      const [resumeRes, analysesRes] = await Promise.all([
+        api.get(`/api/resume/${id}`),
+        api.get(`/api/resume/${id}/analyses`)
+      ]);
+      
+      const resumeData = resumeRes.data;
+      setResume(resumeData || initialResumeValue);
+      setAnalyses(analysesRes.data.analyses || []);
+      
+      // Set the default selected analysis to the latest one
+      setSelectedAnalysis(resumeData.latest_analysis || null);
     } catch (error) {
-      console.error("Failed to fetch resumes:", error);
-      toast.error("Failed to load resumes");
-      setResume(initialResumeValue);
+      console.error("Failed to fetch page data:", error);
+      toast.error("Failed to load resume details");
     } finally {
       setResumeLoading(false);
     }
+  };
+
+  const handleAnalysisSelect = (analysis: Analysis) => {
+    setSelectedAnalysis(analysis);
   };
 
   if (resumeLoading) {
@@ -106,8 +119,9 @@ export default function ResumeDetailPage() {
     );
   }
 
-  const analysisData = resume.analysis_results?.analysis || null;
+  const analysisData = selectedAnalysis?.analysis_results || null;
   const score = analysisData?.atsScore || 0;
+  const isLatest = selectedAnalysis?.id === resume.latest_analysis?.id;
 
   return (
     <ProtectedRoute>
@@ -127,22 +141,35 @@ export default function ResumeDetailPage() {
                 </button>
                 <div>
                   <h1 className="text-xl font-bold text-slate-900 truncate max-w-md">
-                    {resume.original_filename}
+                    {resume.resume.original_filename}
                   </h1>
                   <div className="flex items-center space-x-3 text-xs text-slate-500 mt-0.5">
+                    {selectedAnalysis ? (
+                      <span className={`flex items-center font-bold px-2 py-0.5 rounded-lg mr-2 ${
+                        isLatest ? 'text-emerald-600 bg-emerald-50' : 'text-indigo-600 bg-indigo-50'
+                      }`}>
+                        {isLatest ? (
+                          <CheckCircleIconSolid className="h-3 w-3 mr-1" />
+                        ) : (
+                          <ClockIcon className="h-3 w-3 mr-1" />
+                        )}
+                        {selectedAnalysis.target_role}
+                        {!isLatest && <span className="ml-2 opacity-60 font-medium">(Historical)</span>}
+                      </span>
+                    ) : null}
                     <span className="flex items-center">
                       <CalendarIcon className="h-3 w-3 mr-1" />
-                      {formatDate(resume.updated_at)}
+                      {formatDate(resume.resume.updated_at)}
                     </span>
                     <span className="flex items-center">
                       <DocumentTextIcon className="h-3 w-3 mr-1" />
-                      {formatFileSize(resume.file_size)}
+                      {formatFileSize(resume.resume.file_size)}
                     </span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" onClick={fetchResume}>
+                <Button variant="outline" size="sm" onClick={fetchData}>
                   Refresh
                 </Button>
                 <Link href={`/api/resume/${id}/download`} target="_blank">
@@ -156,20 +183,83 @@ export default function ResumeDetailPage() {
         </div>
 
         <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          {!resume.is_processed ? (
+          {!resume.resume.is_processed ? (
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-12 text-center">
-              <SparklesIcon className="h-12 w-12 text-indigo-500 mx-auto mb-4 animate-pulse" />
+              <SparklesIconSolid className="h-12 w-12 text-indigo-500 mx-auto mb-4 animate-pulse" />
               <h2 className="text-xl font-semibold text-slate-900">Analysis in Progress</h2>
               <p className="text-slate-500 mt-2 max-w-sm mx-auto">
                 We're still processing your resume. This usually takes a few moments.
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              
+              {/* History Sidebar */}
+              <div className="lg:col-span-1 space-y-4">
+                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                  <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+                    <h3 className="font-bold text-slate-800 flex items-center">
+                      <ClockIcon className="h-5 w-5 mr-2 text-indigo-500" />
+                      History
+                    </h3>
+                    <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-black uppercase tracking-widest">
+                      {analyses.length} Session{analyses.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden p-3 space-y-2">
+                    {analyses.map((analysis) => (
+                      <button
+                        key={analysis.id}
+                        onClick={() => handleAnalysisSelect(analysis)}
+                        className={`w-full text-left p-4 rounded-2xl transition-all duration-200 border-2 ${
+                          selectedAnalysis?.id === analysis.id
+                            ? "bg-indigo-50 border-indigo-200"
+                            : "bg-white border-transparent hover:bg-slate-50 hover:border-slate-100"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                           <div className="min-w-0 flex-1">
+                             <p className="text-sm font-bold text-slate-900 truncate leading-tight">
+                               {analysis.target_role}
+                             </p>
+                             <p className="text-[10px] font-medium text-slate-500 mt-1 uppercase tracking-tight truncate">
+                               {analysis.target_company}
+                             </p>
+                           </div>
+                           <span className={`flex-shrink-0 text-[10px] font-black px-1.5 py-0.5 rounded ${
+                             analysis.analysis_results.atsScore >= 70 ? 'text-emerald-600 bg-emerald-50' :
+                             analysis.analysis_results.atsScore >= 40 ? 'text-amber-600 bg-amber-50' :
+                             'text-rose-600 bg-rose-50'
+                           }`}>
+                             {analysis.analysis_results.atsScore}
+                           </span>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                          <span>{formatDate(analysis.created_at)}</span>
+                          {analysis.id === resume.latest_analysis?.id && (
+                            <span className="text-emerald-500 flex items-center">
+                              <CheckCircleIconSolid className="h-3 w-3 mr-1" />
+                              Latest
+                            </span>
+                          )}
+                        </div>
+                      </button>
+                    ))}
+                    {analyses.length === 0 && (
+                      <div className="py-10 text-center">
+                        <ListBulletIcon className="h-10 w-10 text-slate-200 mx-auto mb-2" />
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+                          No history yet
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Main Analysis Content */}
               <div className="lg:col-span-2 space-y-8">
-                
+
                 {/* Overview Card */}
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                   <div className="bg-indigo-50/30 px-6 py-5 border-b border-indigo-100 flex items-center">
@@ -229,13 +319,10 @@ export default function ResumeDetailPage() {
                     </ul>
                   </div>
                 </div>
-
-                {/* Detailed Analysis (Fallback for any extra markdown content) */}
-                {/* We can hide this now that we have structured fields, or use it for any raw content */}
               </div>
 
               {/* Sidebar: Score and Job Description */}
-              <div className="space-y-6">
+              <div className="lg:col-span-1 space-y-6">
                 {/* Score Card */}
                 <div className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
@@ -282,13 +369,17 @@ export default function ResumeDetailPage() {
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                   <div className="border-b border-slate-100 px-6 py-4 bg-slate-50/50 flex items-center">
                     <BriefcaseIcon className="h-5 w-5 mr-2 text-slate-500" />
-                    <h2 className="font-semibold text-slate-800">Job Description</h2>
+                    <h2 className="font-semibold text-slate-800 text-sm">Target Context</h2>
                   </div>
                   <div className="p-6">
-                    <div className="text-sm text-slate-600 line-clamp-[12] whitespace-pre-wrap leading-relaxed">
-                      {resume.analysis_results?.job_description || "No job description provided."}
+                    <div className="mb-4">
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Company</p>
+                       <p className="font-bold text-slate-900">{selectedAnalysis?.target_company || 'N/A'}</p>
                     </div>
-                    <button 
+                    <div className="text-sm text-slate-600 line-clamp-[8] whitespace-pre-wrap leading-relaxed border-t border-slate-50 pt-4">
+                      {selectedAnalysis?.job_description || "No job description provided."}
+                    </div>
+                    <button
                       onClick={() => setIsJDModalOpen(true)}
                       className="mt-4 text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
                     >
@@ -301,21 +392,28 @@ export default function ResumeDetailPage() {
                     >
                       <div className="py-4">
                         <div className="bg-slate-50 rounded-xl p-6 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap max-h-[60vh] overflow-y-auto border border-slate-200">
-                          {resume.analysis_results?.job_description}
+                          {selectedAnalysis?.job_description}
                         </div>
                       </div>
                     </Modal>
                   </div>
                 </div>
 
-                {/* Status Card */}
-                <div className="bg-emerald-50 rounded-2xl border border-emerald-100 p-6">
+                <div className={`rounded-2xl border p-6 transition-colors ${
+                  isLatest ? 'bg-emerald-50 border-emerald-100' : 'bg-amber-50 border-amber-100'
+                }`}>
                   <div className="flex items-center">
-                    <CheckCircleIcon className="h-5 w-5 text-emerald-600 mr-2" />
-                    <span className="font-semibold text-emerald-900">Analysis Verified</span>
+                    {isLatest ? (
+                      <CheckCircleIconSolid className="h-5 w-5 text-emerald-600 mr-2" />
+                    ) : (
+                      <ClockIcon className="h-5 w-5 text-amber-600 mr-2" />
+                    )}
+                    <span className={`font-semibold ${isLatest ? 'text-emerald-900' : 'text-amber-900'}`}>
+                      {isLatest ? 'Latest Version' : 'Historical Analysis'}
+                    </span>
                   </div>
-                  <p className="text-xs text-emerald-700 mt-2">
-                    This analysis was generated on {resume.analysis_results?.timestamp ? formatDate(resume.analysis_results.timestamp) : 'N/A'}.
+                  <p className={`text-xs mt-2 ${isLatest ? 'text-emerald-700' : 'text-amber-700'}`}>
+                    Match {isLatest ? 'verified' : 'archived'} on {selectedAnalysis?.created_at ? formatDate(selectedAnalysis.created_at) : 'N/A'}.
                   </p>
                 </div>
 
