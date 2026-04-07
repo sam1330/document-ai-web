@@ -89,11 +89,37 @@ export interface AuthResponse {
   user: User
 }
 
+export interface ActivityItem {
+  id: string
+  type: 'resume' | 'application' | 'analysis'
+  title: string
+  subtitle: string
+  status?: string
+  date: string
+  link: string
+}
+
 export interface DashboardOverview {
-  total_resumes: number
-  total_applications: number
-  applications_this_month: number
-  ai_requests_this_month: number
+  overview: {
+    total_resumes: number
+    total_applications: number
+    analyzed_count: number
+    avg_score: number
+    monthly_cost: number
+    applications_this_month: number
+    ai_requests_this_month: number
+  }
+  resume_analytics: {
+    score_distribution: {
+      poor: number
+      average: number
+      good: number
+    }
+    top_strengths: string[]
+    top_weaknesses: string[]
+    recent_analyses: any[]
+  }
+  recent_activity: ActivityItem[]
   subscription_status: string
   subscription_expires_at?: string
 }

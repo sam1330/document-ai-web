@@ -4,14 +4,19 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import Navigation from '@/components/Navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import { 
-  DocumentTextIcon, 
-  BriefcaseIcon, 
+import {
+  DocumentTextIcon,
+  BriefcaseIcon,
   ChartBarIcon,
   SparklesIcon,
   PlusIcon,
   ArrowUpIcon,
-  ArrowDownIcon
+  ArrowDownIcon,
+  CheckBadgeIcon,
+  ExclamationCircleIcon,
+  ClockIcon,
+  ArrowRightIcon,
+  ArrowTrendingUpIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import api from '@/lib/api'
@@ -21,9 +26,30 @@ import { AxiosResponse } from 'axios'
 
 export default function DashboardPage() {
   const { user } = useAuth()
-  const [overview, setOverview] = useState<DashboardOverview | null>(null)
-  const [recentResumes, setRecentResumes] = useState<Resume[]>([])
-  const [recentApplications, setRecentApplications] = useState<JobApplication[]>([])
+  const [overview, setOverview] = useState<DashboardOverview | null>({
+    overview: {
+      total_resumes: 0,
+      total_applications: 0,
+      analyzed_count: 0,
+      avg_score: 0,
+      monthly_cost: 0,
+      applications_this_month: 0,
+      ai_requests_this_month: 0,
+    },
+    resume_analytics: {
+      score_distribution: {
+        poor: 0,
+        average: 0,
+        good: 0,
+      },
+      top_strengths: [],
+      top_weaknesses: [],
+      recent_analyses: [],
+    },
+    recent_activity: [],
+    subscription_status: '',
+    subscription_expires_at: '',
+  })
   const [dashboardLoading, setDashboardLoading] = useState(true)
 
   useEffect(() => {
@@ -34,15 +60,8 @@ export default function DashboardPage() {
 
   const fetchDashboardData = async () => {
     try {
-      const [overviewRes, resumesRes, applicationsRes]: [AxiosResponse<DashboardOverview>, AxiosResponse<ResumeResponse>, AxiosResponse<JobApplicationResponse>] = await Promise.all([
-        api.get('/api/dashboard/overview'),
-        api.get('/api/resume'),
-        api.get('/api/job-application')
-      ])
-      
-      setOverview(overviewRes.data)
-      setRecentResumes(resumesRes.data.resumes.slice(0, 3))
-      setRecentApplications(applicationsRes.data.job_applications.slice(0, 3))
+      const response = await api.get('/api/dashboard/overview')
+      setOverview(response.data)
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error)
     } finally {
@@ -78,225 +97,227 @@ export default function DashboardPage() {
   const stats = [
     {
       name: 'Total Resumes',
-      value: overview?.total_resumes || 0,
+      value: overview?.overview.total_resumes || 0,
       icon: DocumentTextIcon,
       change: '+12%',
       changeType: 'positive' as const,
+      gradient: 'from-blue-500 to-indigo-600',
     },
     {
-      name: 'Job Applications',
-      value: overview?.total_applications || 0,
+      name: 'Applications',
+      value: overview?.overview.total_applications || 0,
       icon: BriefcaseIcon,
       change: '+8%',
       changeType: 'positive' as const,
+      gradient: 'from-purple-500 to-pink-600',
     },
     {
-      name: 'This Month',
-      value: overview?.applications_this_month || 0,
-      icon: ChartBarIcon,
-      change: '+23%',
+      name: 'Avg Match Score',
+      value: `${overview?.overview.avg_score || 0}%`,
+      icon: ArrowTrendingUpIcon,
+      change: '+5%',
       changeType: 'positive' as const,
+      gradient: 'from-emerald-500 to-teal-600',
     },
     {
-      name: 'AI Requests',
-      value: overview?.ai_requests_this_month || 0,
+      name: 'AI Impact',
+      value: overview?.overview.ai_requests_this_month || 0,
       icon: SparklesIcon,
       change: '+15%',
       changeType: 'positive' as const,
+      gradient: 'from-amber-500 to-orange-600',
     },
   ]
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-50/50">
         <Navigation />
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="mt-1 text-sm text-gray-500">
-              Welcome back, {user?.first_name}! Here's what's happening with your job search.
-            </p>
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+          {/* Welcome Header */}
+          <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                Welcome back, {user?.first_name}! 👋
+              </h1>
+              <p className="mt-2 text-slate-500 text-lg">
+                Your AI-powered career assistant has analyzed <span className="text-indigo-600 font-semibold">{overview?.overview.analyzed_count}</span> variations of your profile.
+              </p>
+            </div>
+            <div className="flex space-x-3">
+              <Link href="/resumes">
+                <button className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">
+                  <PlusIcon className="h-5 w-5 mr-1.5" />
+                  Analyze New
+                </button>
+              </Link>
+            </div>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {stats.map((stat) => (
-              <div key={stat.name} className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <stat.icon className="h-6 w-6 text-gray-400" />
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">
-                          {stat.name}
-                        </dt>
-                        <dd className="flex items-baseline">
-                          <div className="text-2xl font-semibold text-gray-900">
-                            {stat.value}
-                          </div>
-                          <div className={`ml-2 flex items-baseline text-sm font-semibold ${
-                            stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-                          }`}>
-                            {stat.changeType === 'positive' ? (
-                              <ArrowUpIcon className="self-center flex-shrink-0 h-4 w-4" />
-                            ) : (
-                              <ArrowDownIcon className="self-center flex-shrink-0 h-4 w-4" />
-                            )}
-                            <span className="sr-only">
-                              {stat.changeType === 'positive' ? 'Increased' : 'Decreased'} by
-                            </span>
-                            {stat.change}
-                          </div>
-                        </dd>
-                      </dl>
-                    </div>
+              <div key={stat.name} className="relative group overflow-hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${stat.gradient} opacity-5 group-hover:opacity-10 transition-opacity rounded-bl-full`} />
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-3 bg-gradient-to-br ${stat.gradient} rounded-2xl shadow-lg shadow-indigo-100`}>
+                    <stat.icon className="h-6 w-6 text-white" />
                   </div>
+                  <div className={`flex items-center px-2 py-1 rounded-lg text-xs font-bold ${stat.changeType === 'positive' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                    }`}>
+                    {stat.changeType === 'positive' ? '↑' : '↓'} {stat.change}
+                  </div>
+                </div>
+                <div>
+                  <dt className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{stat.name}</dt>
+                  <dd className="text-3xl font-bold text-slate-900 mt-1">{stat.value}</dd>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Recent Resumes */}
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Recent Resumes
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            {/* AI Career Insights */}
+            <div className="lg:col-span-2 space-y-8">
+              <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden leading-relaxed">
+                <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <h3 className="text-xl font-bold text-slate-900 flex items-center">
+                    <SparklesIcon className="h-6 w-6 text-indigo-600 mr-2" />
+                    AI Talent Intelligence
                   </h3>
-                  <Link
-                    href="/resumes"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    View all
-                  </Link>
+                  <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                    Aggregate Analysis
+                  </span>
                 </div>
-                <div className="flow-root">
-                  <ul className="-my-5 divide-y divide-gray-200">
-                    {recentResumes.length === 0 ? (
-                      <li className="py-4">
-                        <div className="text-center">
-                          <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
-                          <h3 className="mt-2 text-sm font-medium text-gray-900">No resumes</h3>
-                          <p className="mt-1 text-sm text-gray-500">
-                            Get started by uploading your first resume.
-                          </p>
-                          <div className="mt-6">
-                            <Link
-                              href="/resumes"
-                              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                            >
-                              <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
-                              Upload Resume
-                            </Link>
+                <div className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Strengths */}
+                    <div>
+                      <div className="flex items-center mb-5">
+                        <CheckBadgeIcon className="h-5 w-5 text-emerald-500 mr-2" />
+                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">Key Strengths</h4>
+                      </div>
+                      <div className="space-y-3">
+                        {overview?.resume_analytics.top_strengths.map((strength, i) => (
+                          <div key={i} className="flex items-center p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl transition hover:border-emerald-200">
+                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-3" />
+                            <span className="text-sm font-medium text-slate-700">{strength}</span>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Weaknesses */}
+                    <div>
+                      <div className="flex items-center mb-5">
+                        <ExclamationCircleIcon className="h-5 w-5 text-amber-500 mr-2" />
+                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">Growth Areas</h4>
+                      </div>
+                      <div className="space-y-3">
+                        {overview?.resume_analytics.top_weaknesses.map((weakness, i) => (
+                          <div key={i} className="flex items-center p-3 bg-amber-50/50 border border-amber-100 rounded-xl transition hover:border-amber-200">
+                            <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-3" />
+                            <span className="text-sm font-medium text-slate-700">{weakness}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Score Distribution */}
+              <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+                <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center">
+                  <ChartBarIcon className="h-6 w-6 text-indigo-600 mr-2" />
+                  Resume Quality Distribution
+                </h3>
+                <div className="space-y-6">
+                  {(['good', 'average', 'poor'] as const).map((level) => {
+                    const count = overview?.resume_analytics.score_distribution[level] || 0;
+                    const total = (overview?.resume_analytics.score_distribution.good || 0) +
+                      (overview?.resume_analytics.score_distribution.average || 0) +
+                      (overview?.resume_analytics.score_distribution.poor || 0) || 1;
+                    const percentage = (count / total) * 100;
+                    const color = level === 'good' ? 'bg-emerald-500' : level === 'average' ? 'bg-amber-500' : 'bg-rose-500';
+
+                    return (
+                      <div key={level}>
+                        <div className="flex justify-between text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">
+                          <span>{level} Matches</span>
+                          <span>{count} Profiles</span>
                         </div>
-                      </li>
-                    ) : (
-                      recentResumes.map((resume) => (
-                        <li key={resume.id} className="py-4">
-                          <div className="flex items-center space-x-4">
-                            <div className="flex-shrink-0">
-                              <DocumentTextIcon className="h-8 w-8 text-gray-400" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-gray-900 truncate">
-                                {resume.original_filename}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {formatDate(resume.created_at)}
-                              </p>
-                            </div>
-                            <div className="flex-shrink-0">
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                resume.is_processed 
-                                  ? 'bg-green-100 text-green-800' 
-                                  : 'bg-yellow-100 text-yellow-800'
-                              }`}>
-                                {resume.is_processed ? 'Processed' : 'Processing'}
-                              </span>
-                            </div>
-                          </div>
-                        </li>
-                      ))
-                    )}
-                  </ul>
+                        <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full ${color} transition-all duration-1000 ease-out`}
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
-            {/* Recent Applications */}
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Recent Applications
-                  </h3>
-                  <Link
-                    href="/applications"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    View all
-                  </Link>
-                </div>
-                <div className="flow-root">
-                  <ul className="-my-5 divide-y divide-gray-200">
-                    {recentApplications.length === 0 ? (
-                      <li className="py-4">
-                        <div className="text-center">
-                          <BriefcaseIcon className="mx-auto h-12 w-12 text-gray-400" />
-                          <h3 className="mt-2 text-sm font-medium text-gray-900">No applications</h3>
-                          <p className="mt-1 text-sm text-gray-500">
-                            Start tracking your job applications.
+            {/* Recent Activity Sidebar */}
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-full leading-relaxed">
+              <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <h3 className="text-xl font-bold text-slate-900 flex items-center">
+                  <ClockIcon className="h-6 w-6 text-indigo-600 mr-2" />
+                  Recent Activity
+                </h3>
+              </div>
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="space-y-1">
+                  {overview?.recent_activity.length === 0 ? (
+                    <div className="p-8 text-center">
+                      <p className="text-slate-400 font-medium">No recent activity detected.</p>
+                    </div>
+                  ) : (
+                    overview?.recent_activity?.map((activity, i) => (
+                      // <Link key={i} href={activity.link}>
+                      <div key={i} className="group p-4 rounded-2xl hover:bg-slate-50 transition-colors flex items-start space-x-4 border border-transparent hover:border-slate-100">
+                        <div className={`p-2 rounded-xl mt-1 ${activity.type === 'resume' ? 'bg-blue-100 text-blue-600' :
+                          activity.type === 'application' ? 'bg-purple-100 text-purple-600' :
+                            'bg-indigo-100 text-indigo-600'
+                          }`}>
+                          {activity.type === 'resume' ? <DocumentTextIcon className="h-5 w-5" /> :
+                            activity.type === 'application' ? <BriefcaseIcon className="h-5 w-5" /> :
+                              <SparklesIcon className="h-5 w-5" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-bold text-slate-900 truncate group-hover:text-indigo-600 transition-colors">
+                            {activity.title}
                           </p>
-                          <div className="mt-6">
-                            <Link
-                              href="/applications"
-                              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                            >
-                              <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
-                              New Application
-                            </Link>
+                          <p className="text-xs text-slate-500 mt-0.5">{activity.subtitle}</p>
+                          <div className="flex items-center mt-2 text-[10px] font-bold uppercase tracking-tight text-slate-400">
+                            <span>{formatDate(activity.date)}</span>
+                            {activity.status && (
+                              <>
+                                <span className="mx-1.5">•</span>
+                                <span className={activity.status === 'Processed' || activity.status === 'Accepted' ? 'text-emerald-500' : 'text-indigo-500'}>
+                                  {activity.status}
+                                </span>
+                              </>
+                            )}
                           </div>
                         </div>
-                      </li>
-                    ) : (
-                      recentApplications.map((application) => (
-                        <li key={application.id} className="py-4">
-                          <div className="flex items-center space-x-4">
-                            <div className="flex-shrink-0">
-                              <BriefcaseIcon className="h-8 w-8 text-gray-400" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-gray-900 truncate">
-                                {application.position_title}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {application.company_name} • {formatDate(application.created_at)}
-                              </p>
-                            </div>
-                            <div className="flex-shrink-0">
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                application.status === 'applied' ? 'bg-blue-100 text-blue-800' :
-                                application.status === 'interview' ? 'bg-yellow-100 text-yellow-800' :
-                                application.status === 'accepted' ? 'bg-green-100 text-green-800' :
-                                application.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                                'bg-gray-100 text-gray-800'
-                              }`}>
-                                {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
-                              </span>
-                            </div>
-                          </div>
-                        </li>
-                      ))
-                    )}
-                  </ul>
+                        <ArrowRightIcon className="h-4 w-4 text-slate-300 group-hover:text-indigo-400 mt-1 transition-colors" />
+                      </div>
+                      // </Link>
+                    ))
+                  )}
                 </div>
               </div>
-            </div>
+              <div className="p-6 border-t border-slate-100">
+                <Link href="/resumes">
+                  <button className="w-full py-3 bg-slate-50 text-slate-600 font-bold rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all flex items-center justify-center">
+                    View Comprehensive History
+                    <ArrowRightIcon className="h-4 w-4 ml-2" />
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
