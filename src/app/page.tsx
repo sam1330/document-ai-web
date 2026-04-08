@@ -9,557 +9,489 @@ import {
   SparklesIcon,
   ChartBarIcon,
   CheckCircleIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  CloudArrowUpIcon,
+  CpuChipIcon,
+  ShieldCheckIcon,
+  AcademicCapIcon,
+  UserGroupIcon,
+  CommandLineIcon,
+  ChevronDownIcon,
+  QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline'
+import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Home() {
   const { user } = useAuth()
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
 
-  if (user) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
-              Welcome back, {user.first_name}!
-            </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              Ready to take your job search to the next level?
-            </p>
-            <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-              <div className="rounded-md shadow">
-                <Link
-                  href="/dashboard"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                >
-                  Go to Dashboard
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    )
-  }
+  // Simplified navigation for the landing page
+  const navLinks = [
+    { name: 'Features', href: '#features' },
+    { name: 'How it works', href: '#how-it-works' },
+    { name: 'Pricing', href: '#pricing' },
+    { name: 'FAQ', href: '#faq' },
+  ]
+
+  const faqs = [
+    {
+      question: "How does the token-based pricing work?",
+      answer: "Instead of a monthly subscription, you purchase credits (tokens). Each AI analysis consumes a specific amount of tokens based on the complexity and model used. You only pay for what you actually use, with 1,000 free tokens to get you started."
+    },
+    {
+      question: "Is my resume data secure?",
+      answer: "Absolutely. We use enterprise-grade encryption and never share your data with third parties. You can delete your resumes and analysis history at any time from your dashboard."
+    },
+    {
+      question: "What makes Haku different from other ATS tools?",
+      answer: "Most tools just search for keywords. Haku uses advanced LLMs to understand the semantic intent of your experience and how it aligns with specific job requirements, providing much deeper insights than a standard keyword matcher."
+    },
+    {
+      question: "Can I use Haku for different languages?",
+      answer: "Currently, we are optimized for English, but our AI models support multiple languages. You can upload resumes in various languages, though the structured matching feedback is currently focused on English markets."
+    }
+  ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans selection:bg-indigo-100 selection:text-indigo-900">
       <Header />
-      {/* Hero section */}
-      <div className="relative overflow-hidden bg-white pt-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block xl:inline">AI-Powered Resume &</span>{' '}
-                  <span className="block text-indigo-600 xl:inline">Job Application Assistant</span>
-                </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Transform your job search with AI-powered resume analysis, optimization, and personalized cover letter generation. Get hired faster with intelligent insights.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <Link
-                      href="/register"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                    >
-                      Get started for free
-                    </Link>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <Link
-                      href="/login"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-                    >
-                      Sign in
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <div className="h-56 w-full bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 sm:h-72 md:h-96 lg:w-full lg:h-full flex items-center justify-center">
-            <div className="text-white text-center">
-              <SparklesIcon className="mx-auto h-24 w-24 mb-4" />
-              <h3 className="text-2xl font-bold">Powered by AI</h3>
-              <p className="text-lg opacity-90">GPT-4 Technology</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Features section */}
-      <div id="features" className="py-16 bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-50 rounded-full blur-[120px] opacity-60"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-purple-50 rounded-full blur-[100px] opacity-50"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to land your dream job
-            </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-              Our AI-powered platform provides comprehensive tools to optimize your job search process.
-            </p>
-          </div>
-
-          <div className="mt-16">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
-                  <DocumentTextIcon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Resume Analysis</h3>
-                <p className="text-gray-500">
-                  Upload your resume and get instant AI-powered analysis with ATS optimization suggestions.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
-                  <BriefcaseIcon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Job Applications</h3>
-                <p className="text-gray-500">
-                  Track and manage your job applications with personalized cover letter generation.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
-                  <SparklesIcon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">AI Optimization</h3>
-                <p className="text-gray-500">
-                  Get AI-powered suggestions to improve your resume and increase your chances of getting hired.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
-                  <ChartBarIcon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Analytics Dashboard</h3>
-                <p className="text-gray-500">
-                  Track your progress with detailed analytics and insights into your job search performance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* How it works section */}
-      <div id="how-it-works" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              How it works
-            </h2>
-            <p className="mt-4 text-xl text-gray-500">
-              Get started in minutes and transform your job search
-            </p>
-          </div>
-
-          <div className="mt-16">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-              <div className="text-center">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                  <span className="text-2xl font-bold">1</span>
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Upload Your Resume</h3>
-                <p className="text-gray-500">
-                  Upload your resume in PDF or DOCX format. Our AI will analyze it for ATS compatibility and optimization opportunities.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                  <span className="text-2xl font-bold">2</span>
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Get AI Analysis</h3>
-                <p className="text-gray-500">
-                  Receive detailed feedback on your resume with specific suggestions for improvement, keyword optimization, and ATS compatibility.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                  <span className="text-2xl font-bold">3</span>
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Land More Interviews</h3>
-                <p className="text-gray-500">
-                  Apply with confidence using optimized resumes and personalized cover letters that get you noticed by recruiters.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Why choose us section */}
-      <div className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Why choose CvEnhance?
-            </h2>
-            <p className="mt-4 text-xl text-gray-500">
-              The most advanced AI-powered job search platform
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white">
-                    <SparklesIcon className="h-6 w-6" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Powered by Advanced AI</h3>
-                  <p className="mt-2 text-gray-500">
-                    Our platform uses GPT-4 technology to provide intelligent resume analysis, optimization suggestions, and personalized cover letter generation that adapts to your industry and role.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white">
-                    <ChartBarIcon className="h-6 w-6" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">ATS-Optimized</h3>
-                  <p className="mt-2 text-gray-500">
-                    Every resume is analyzed for ATS compatibility, ensuring your application passes through automated screening systems and reaches human recruiters.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white">
-                    <BriefcaseIcon className="h-6 w-6" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Complete Job Search Solution</h3>
-                  <p className="mt-2 text-gray-500">
-                    Track applications, generate cover letters, analyze job descriptions, and get insights - all in one platform designed to streamline your job search process.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white">
-                    <CheckCircleIcon className="h-6 w-6" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900">Proven Results</h3>
-                  <p className="mt-2 text-gray-500">
-                    Our users report 3x more interview callbacks and significantly improved job search success rates with our AI-powered optimization tools.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Success stories section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Success stories
-            </h2>
-            <p className="mt-4 text-xl text-gray-500">
-              See how CvEnhance has helped job seekers land their dream jobs
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <p className="text-gray-600 mb-4">
-                "CvEnhance's AI analysis helped me identify exactly what was wrong with my resume. I went from 0 callbacks to 5 interviews in just 2 weeks!"
-              </p>
-              <div className="flex items-center">
-                <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <span className="text-indigo-600 font-medium">SJ</span>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Sarah Johnson</p>
-                  <p className="text-sm text-gray-500">Software Engineer at Google</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <p className="text-gray-600 mb-4">
-                "The cover letter generator is incredible. It saved me hours and the personalized letters actually got responses from recruiters."
-              </p>
-              <div className="flex items-center">
-                <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <span className="text-indigo-600 font-medium">MR</span>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Mike Rodriguez</p>
-                  <p className="text-sm text-gray-500">Marketing Manager at Microsoft</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <p className="text-gray-600 mb-4">
-                "The application tracking feature kept me organized throughout my job search. I landed my dream job in 3 months!"
-              </p>
-              <div className="flex items-center">
-                <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <span className="text-indigo-600 font-medium">AL</span>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">Alex Lee</p>
-                  <p className="text-sm text-gray-500">Product Manager at Amazon</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pricing section */}
-      <div id="pricing" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Simple, transparent pricing
-            </h2>
-            <p className="mt-4 text-xl text-gray-500">
-              Choose the plan that's right for your job search
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {/* Free Plan */}
-            <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900">Free</h3>
-                <p className="mt-4 text-gray-500">
-                  Perfect for getting started with your job search
-                </p>
-                <p className="mt-8">
-                  <span className="text-4xl font-bold text-gray-900">$0</span>
-                  <span className="text-gray-500">/month</span>
-                </p>
-                <ul className="mt-8 space-y-4">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Upload up to 3 resumes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Basic resume analysis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">5 AI requests per month</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Email support</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/register"
-                  className="mt-8 w-full bg-gray-100 text-gray-900 py-3 px-4 rounded-md text-center font-medium hover:bg-gray-200 transition-colors block"
-                >
-                  Get started for free
-                </Link>
-              </div>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="bg-indigo-50 border border-indigo-200 rounded-lg shadow-sm relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                  Most Popular
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center lg:text-left"
+            >
+              <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                 </span>
+                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">v2.0 Now Live</span>
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900">Pro</h3>
-                <p className="mt-4 text-gray-500">
-                  For serious job seekers who want the best results
-                </p>
-                <p className="mt-8">
-                  <span className="text-4xl font-bold text-gray-900">$29</span>
-                  <span className="text-gray-500">/month</span>
-                </p>
-                <ul className="mt-8 space-y-4">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Unlimited resume uploads</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Advanced AI analysis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Unlimited AI requests</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Resume optimization</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Priority support</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-                    <span className="text-gray-500">Cover letter generation</span>
-                  </li>
-                </ul>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
+                Land your dream job with <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">AI Intelligence.</span>
+              </h1>
+              <p className="text-lg sm:text-xl text-slate-600 leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+                The most advanced AI-powered job search suite. Optimize resumes, generate cover letters, and track applications with real-time token-based intelligence.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link
-                  href="/register"
-                  className="mt-8 w-full bg-indigo-600 text-white py-3 px-4 rounded-md text-center font-medium hover:bg-indigo-700 transition-colors block"
+                  href={user ? "/dashboard" : "/register"}
+                  className="w-full sm:w-auto px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:shadow-indigo-300 transition-all duration-300 flex items-center justify-center group"
                 >
-                  Start Pro trial
+                  {user ? "Go to Dashboard" : "Get Started for Free"}
+                  <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="#how-it-works"
+                  className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center"
+                >
+                  Watch Demo
                 </Link>
               </div>
-            </div>
-          </div>
+              <div className="mt-10 flex items-center justify-center lg:justify-start space-x-6 text-slate-400">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="h-8 w-8 rounded-full border-2 border-white bg-slate-200"></div>
+                  ))}
+                </div>
+                <p className="text-sm font-medium">Joined by <span className="text-slate-900 font-bold">10,000+</span> professionals</p>
+              </div>
+            </motion.div>
 
-          <div className="mt-12 text-center">
-            <p className="text-gray-500">
-              All plans include a 14-day free trial. No credit card required.
-            </p>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200 border border-slate-200 bg-white">
+                 <Image 
+                    src="/images/hero-mockup.png" 
+                    alt="Dashboard Mockup" 
+                    width={800} 
+                    height={600} 
+                    className="w-full h-auto"
+                 />
+              </div>
+              {/* Floating Decorative Elements */}
+              <div className="absolute -top-6 -right-6 h-24 w-24 bg-indigo-100 rounded-3xl -z-10 animate-blob"></div>
+              <div className="absolute -bottom-8 -left-8 h-32 w-32 bg-purple-100 rounded-full -z-10 animate-blob animation-delay-2000"></div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* FAQ section */}
-      <div id="faq" className="py-16 bg-gray-50">
+      {/* Trust Section */}
+      <section className="py-12 border-y border-slate-100 bg-slate-50/30">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-8 lg:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+          <span className="text-xl font-black tracking-tighter text-slate-900">MICROSOFT</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">GOOGLE</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">AMAZON</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">META</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">NETFLIX</span>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-indigo-600 font-black uppercase tracking-widest text-sm mb-4">Core Engine</h2>
+            <h3 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+              Intelligence in every step of your journey.
+            </h3>
+            <p className="text-lg text-slate-500">
+              Our AI engine processes thousands of data points to ensure your application stands out from the competition.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FeatureCard 
+              icon={<CpuChipIcon className="h-7 w-7" />}
+              title="Advanced Analysis"
+              description="Deep-learning scanning that identifies semantic gaps in your experience for targeted roles."
+              color="indigo"
+            />
+            <FeatureCard 
+              icon={<ShieldCheckIcon className="h-7 w-7" />}
+              title="ATS Shield"
+              description="Built-in scoring that mimics modern Applicant Tracking Systems used by top Fortune 500 companies."
+              color="emerald"
+            />
+            <FeatureCard 
+              icon={<CommandLineIcon className="h-7 w-7" />}
+              title="Token-Based Precision"
+              description="Pay only for the intelligence you use. Flexible consumption model that scales with your needs."
+              color="amber"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section id="how-it-works" className="py-24 bg-slate-50 rounded-[4rem] mx-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">Three steps to success</h2>
+            <p className="text-slate-500">Streamlining your path from application to offer.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
+            {/* Connector Line (Desktop) */}
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -translate-y-1/2 -z-10"></div>
+            
+            <StepItem 
+              number="01"
+              title="Upload & Sync"
+              description="Simply drop your PDF or Word document. We extract metadata and text automatically."
+            />
+            <StepItem 
+              number="02"
+              title="AI Deep Scan"
+              description="Target a specific job and let our algorithm identify the perfect alignment strategy."
+            />
+            <StepItem 
+              number="03"
+              title="Review & Optimize"
+              description="View detailed historical reports and tweak your resume until you hit the 90+ score mark."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section (Pay-as-you-go) */}
+      <section id="pricing" className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="p-12 lg:p-16 bg-slate-50/50">
+                <h3 className="text-3xl font-black text-slate-900 mb-6">Pay-as-you-go Pricing</h3>
+                <p className="text-slate-600 mb-8 leading-relaxed">
+                  No monthly subscriptions. No hidden fees. We believe in fair, usage-based access to the world's most powerful AI models.
+                </p>
+                <div className="space-y-4 mb-10">
+                  <PricingDetail icon={<CheckCircleIcon className="h-5 w-5 text-emerald-500" />} text="Unlimited Resume Storage" />
+                  <PricingDetail icon={<CheckCircleIcon className="h-5 w-5 text-emerald-500" />} text="Real-time Application Tracking" />
+                  <PricingDetail icon={<CheckCircleIcon className="h-5 w-5 text-emerald-500" />} text="Detailed Historical Analysis" />
+                  <PricingDetail icon={<CheckCircleIcon className="h-5 w-5 text-emerald-500" />} text="ATS Compatibility Scoring" />
+                </div>
+                <Link
+                  href="/register"
+                  className="inline-flex items-center text-indigo-600 font-bold hover:text-indigo-700 transition-colors"
+                >
+                  Create free account to view detailed rates
+                  <ArrowRightIcon className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+              <div className="p-12 lg:p-16 flex flex-col justify-center items-center lg:items-start text-center lg:text-left bg-white border-l border-slate-100">
+                <div className="mb-8">
+                  <span className="text-indigo-600 font-bold uppercase tracking-widest text-sm">Transparency First</span>
+                  <p className="text-4xl font-black text-slate-900 mt-2">Intelligence on Demand</p>
+                </div>
+                <div className="space-y-6 w-full">
+                  <div className="p-6 rounded-2xl bg-indigo-50 border border-indigo-100 text-left">
+                    <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">Token System</p>
+                    <p className="text-slate-700 text-sm leading-relaxed">
+                      We charge based on actual token consumption. You pay the direct model cost with a small processing margin. Total transparency, absolute control.
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="h-14 w-14 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                       <SparklesIcon className="h-8 w-8 text-emerald-500" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-bold text-slate-900">Start for free</p>
+                      <p className="text-sm text-slate-500">Every new user gets 1,000 complimentary tokens.</p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/register"
+                    className="w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all text-center block"
+                  >
+                    Start Free Trial
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Roadmap Section */}
+      <section id="roadmap" className="py-24 bg-slate-900 text-white rounded-[4rem] mx-4 mb-24 overflow-hidden relative">
+        <div className="absolute top-0 right-0 p-20 opacity-10 pointer-events-none">
+           <CommandLineIcon className="h-96 w-96 transform rotate-12" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-indigo-400 font-black tracking-widest uppercase text-sm mb-4">The Future</h2>
+              <h3 className="text-4xl font-extrabold tracking-tight mb-8">What's coming next?</h3>
+              <p className="text-slate-400 text-lg leading-relaxed mb-10">
+                We are building the end-to-end recruitment bridge. Our upcoming features will close the gap between job seekers and elite recruiters.
+              </p>
+              <div className="space-y-6">
+                 <RoadmapItem 
+                   title="AI Resume Engine" 
+                   description="Instant CV generation based on your target job and personal background." 
+                   status="Q3 2026"
+                 />
+                 <RoadmapItem 
+                   title="Recruiter ATS Matching" 
+                   description="A portal for headhunters to find candidates based on AI-verified skill alignment." 
+                   status="Q4 2026"
+                 />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4 pt-12">
+                 <div className="bg-slate-800 p-6 rounded-3xl h-48 flex items-end">
+                    <UserGroupIcon className="h-10 w-10 text-indigo-400" />
+                 </div>
+                 <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-3xl h-64"></div>
+              </div>
+              <div className="space-y-4">
+                 <div className="bg-slate-800 p-6 rounded-3xl h-64 flex items-start">
+                    <AcademicCapIcon className="h-10 w-10 text-purple-400" />
+                 </div>
+                 <div className="bg-slate-700 p-6 rounded-3xl h-48"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-24 lg:py-32">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Frequently asked questions
-            </h2>
-            <p className="mt-4 text-xl text-gray-500">
-              Everything you need to know about Haku
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-indigo-600 font-black uppercase tracking-widest text-sm mb-4">Support</h2>
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">Common Questions</h3>
+            <p className="text-slate-500">Everything you need to know about the Haku platform.</p>
           </div>
 
-          <div className="mt-16 space-y-8">
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                How does the AI resume analysis work?
-              </h3>
-              <p className="text-gray-500">
-                Our AI analyzes your resume for ATS compatibility, keyword optimization, action verbs, formatting, and overall impact. It provides specific, actionable feedback to help you improve your resume's effectiveness.
-              </p>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="border border-slate-200 rounded-2xl overflow-hidden bg-white hover:border-indigo-100 transition-colors">
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-5 text-left flex items-center justify-between group"
+                >
+                  <span className={`font-bold transition-colors ${openFaq === index ? 'text-indigo-600' : 'text-slate-900 group-hover:text-indigo-600'}`}>
+                    {faq.question}
+                  </span>
+                  <ChevronDownIcon className={`h-5 w-5 text-slate-400 transition-transform duration-300 ${openFaq === index ? 'rotate-180 text-indigo-500' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {openFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    >
+                      <div className="px-6 pb-6 text-slate-500 text-sm leading-relaxed border-t border-slate-50 pt-4">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-16 p-8 bg-indigo-50 rounded-[2rem] border border-indigo-100 flex flex-col sm:flex-row items-center justify-between">
+            <div className="flex items-center mb-4 sm:mb-0">
+               <div className="p-3 bg-white rounded-2xl mr-4 shadow-sm">
+                  <QuestionMarkCircleIcon className="h-6 w-6 text-indigo-600" />
+               </div>
+               <div className="text-center sm:text-left">
+                  <p className="font-bold text-slate-900">Still have questions?</p>
+                  <p className="text-sm text-slate-500">We're here to help you land that role.</p>
+               </div>
             </div>
+            <Link 
+              href="/contact" 
+              className="px-6 py-3 bg-white text-indigo-600 font-bold rounded-xl border border-indigo-100 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+            >
+              Contact Support
+            </Link>
+          </div>
+        </div>
+      </section>
 
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Is my resume data secure and private?
-              </h3>
-              <p className="text-gray-500">
-                Yes, absolutely. We use enterprise-grade security to protect your data. Your resume is processed securely and can be deleted at any time. We never share your personal information with third parties.
+      {/* Footer */}
+      <footer className="bg-white border-t border-slate-100 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
+            <div className="col-span-2">
+              <Link href="/" className="text-2xl font-black tracking-tighter text-slate-900 mb-6 block">
+                HAKU<span className="text-indigo-600">.</span>
+              </Link>
+              <p className="text-slate-500 mb-8 max-w-sm">
+                Empowering job seekers with the world's most sophisticated AI resume analysis and application tools.
               </p>
+              <div className="flex space-x-4">
+                 <SocialIcon name="Twitter" />
+                 <SocialIcon name="LinkedIn" />
+                 <SocialIcon name="GitHub" />
+              </div>
             </div>
-
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                What file formats do you support?
-              </h3>
-              <p className="text-gray-500">
-                We support PDF and DOCX formats. For best results, we recommend using a clean, ATS-friendly template without complex formatting or graphics.
-              </p>
+              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Product</p>
+              <ul className="space-y-4 text-slate-500 text-sm">
+                <li><Link href="#features" className="hover:text-indigo-600">Features</Link></li>
+                <li><Link href="#pricing" className="hover:text-indigo-600">Pricing</Link></li>
+                <li><Link href="#roadmap" className="hover:text-indigo-600">Roadmap</Link></li>
+              </ul>
             </div>
-
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                How long does the analysis take?
-              </h3>
-              <p className="text-gray-500">
-                Our AI analysis is instant! You'll receive your detailed feedback and optimization suggestions within seconds of uploading your resume.
-              </p>
+              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Company</p>
+              <ul className="space-y-4 text-slate-500 text-sm">
+                <li><Link href="/about" className="hover:text-indigo-600">About Us</Link></li>
+                <li><Link href="/careers" className="hover:text-indigo-600">Careers</Link></li>
+                <li><Link href="/blog" className="hover:text-indigo-600">Blog</Link></li>
+              </ul>
             </div>
-
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Do you offer a free trial?
-              </h3>
-              <p className="text-gray-500">
-                Yes! We offer a free tier that includes basic resume analysis and limited AI requests. You can upgrade to our Pro plan for unlimited access to all features.
-              </p>
+              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Support</p>
+              <ul className="space-y-4 text-slate-500 text-sm">
+                <li><Link href="/faq" className="hover:text-indigo-600">FAQ</Link></li>
+                <li><Link href="/contact" className="hover:text-indigo-600">Contact</Link></li>
+                <li><Link href="/privacy" className="hover:text-indigo-600">Privacy Policy</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-medium uppercase tracking-widest">
+            <p>&copy; 2026 Haku AI. All rights reserved.</p>
+            <div className="mt-4 md:mt-0 flex space-x-8">
+               <Link href="/terms" className="hover:text-slate-600">Terms of Service</Link>
+               <Link href="/cookies" className="hover:text-slate-600">Cookie Settings</Link>
             </div>
           </div>
         </div>
-      </div>
+      </footer>
+    </div>
+  )
+}
 
-      {/* CTA section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-700">
-        <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            <span className="block">Ready to get started?</span>
-            <span className="block">Start your free trial today.</span>
-          </h2>
-          <p className="mt-4 text-lg leading-6 text-indigo-100">
-            Join thousands of job seekers who have already transformed their careers with our AI-powered platform.
-          </p>
-          <Link
-            href="/register"
-            className="mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            Get started for free
-            <ArrowRightIcon className="ml-2 h-5 w-5" />
-          </Link>
-        </div>
+function FeatureCard({ icon, title, description, color }: { icon: any, title: string, description: string, color: string }) {
+  const colorMap: any = {
+    indigo: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+    emerald: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+    amber: 'bg-amber-50 text-amber-600 border-amber-100',
+  }
+  
+  return (
+    <motion.div 
+      whileHover={{ y: -5 }}
+      className="p-8 rounded-3xl border border-slate-200 bg-white hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-50 transition-all duration-300"
+    >
+      <div className={`h-14 w-14 rounded-2xl flex items-center justify-center border mb-6 ${colorMap[color] || colorMap.indigo}`}>
+        {icon}
       </div>
+      <h4 className="text-xl font-bold text-slate-900 mb-3">{title}</h4>
+      <p className="text-slate-500 leading-relaxed text-sm">
+        {description}
+      </p>
+    </motion.div>
+  )
+}
+
+function StepItem({ number, title, description }: { number: string, title: string, description: string }) {
+  return (
+    <div className="bg-white p-8 rounded-3xl border border-slate-200 relative group">
+      <div className="text-5xl font-black text-slate-100 mb-4 group-hover:text-indigo-50 transition-colors">
+        {number}
+      </div>
+      <h4 className="text-xl font-bold text-slate-900 mb-3">{title}</h4>
+      <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
+    </div>
+  )
+}
+
+function PricingDetail({ icon, text }: { icon: any, text: string }) {
+  return (
+    <div className="flex items-center space-x-3">
+      {icon}
+      <span className="text-slate-600 font-medium">{text}</span>
+    </div>
+  )
+}
+
+function RoadmapItem({ title, description, status }: { title: string, description: string, status: string }) {
+  return (
+    <div className="border border-slate-800 p-6 rounded-3xl bg-slate-800/50 hover:bg-slate-800 transition-colors">
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="font-bold text-white tracking-tight">{title}</h4>
+        <span className="text-[10px] font-black uppercase tracking-widest text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full border border-indigo-400/20">
+          {status}
+        </span>
+      </div>
+      <p className="text-sm text-slate-400 tracking-tight leading-relaxed">{description}</p>
+    </div>
+  )
+}
+
+function SocialIcon({ name }: { name: string }) {
+  return (
+    <div className="h-10 w-10 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all cursor-pointer">
+       <span className="sr-only">{name}</span>
+       <div className="h-5 w-5 bg-current opacity-50 rounded-sm"></div>
     </div>
   )
 }
