@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const fetchProfile = async () => {
     try {
       const response = await api.get('/api/auth/profile')
-      setUser(response.data)
+      setUser(response.data.user)
     } catch (error) {
       localStorage.removeItem('token')
     } finally {
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email,
       password,
     })
-    
+
     const { token, user } = response.data
     localStorage.setItem('token', token)
     setUser(user)
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (data: RegisterData) => {
     const response = await api.post<AuthResponse>('/api/auth/register', data)
-    
+
     const { token, user } = response.data
     localStorage.setItem('token', token)
     setUser(user)

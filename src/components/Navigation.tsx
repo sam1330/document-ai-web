@@ -4,8 +4,8 @@ import { useState, Fragment } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { 
-  Bars3Icon, 
+import {
+  Bars3Icon,
   XMarkIcon,
   UserIcon,
   DocumentTextIcon,
@@ -46,7 +46,7 @@ export default function Navigation() {
                   <SparklesIcon className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 tracking-tight">
-                  CvEnhance
+                  Haku
                 </span>
               </Link>
             </div>
@@ -57,22 +57,20 @@ export default function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`group flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-indigo-50 text-indigo-700' 
+                    className={`group flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
+                        ? 'bg-indigo-50 text-indigo-700'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
+                      }`}
                   >
-                    <item.icon className={`mr-2 h-4 w-4 transition-colors ${
-                      isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'
-                    }`} />
+                    <item.icon className={`mr-2 h-4 w-4 transition-colors ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'
+                      }`} />
                     {item.name}
                   </Link>
                 )
               })}
             </div>
           </div>
-          
+
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
             {/* Notification Bell */}
             <button className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all relative group">
@@ -95,7 +93,7 @@ export default function Navigation() {
                   </p>
                 </div>
               </Menu.Button>
-              
+
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-200"
@@ -113,9 +111,8 @@ export default function Navigation() {
                     {({ active }) => (
                       <Link
                         href="/profile"
-                        className={`${
-                          active ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'
-                        } flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors`}
+                        className={`${active ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'
+                          } flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors`}
                       >
                         <Cog6ToothIcon className="mr-3 h-5 w-5 opacity-70" />
                         Settings
@@ -126,9 +123,8 @@ export default function Navigation() {
                     {({ active }) => (
                       <button
                         onClick={handleLogout}
-                        className={`${
-                          active ? 'bg-rose-50 text-rose-700' : 'text-slate-600'
-                        } flex w-full items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
+                        className={`${active ? 'bg-rose-50 text-rose-700' : 'text-slate-600'
+                          } flex w-full items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
                       >
                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 opacity-70" />
                         Sign out
@@ -176,11 +172,10 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center px-4 py-3 text-base font-bold rounded-2xl transition-all ${
-                    isActive 
-                      ? 'bg-indigo-50 text-indigo-700' 
+                  className={`flex items-center px-4 py-3 text-base font-bold rounded-2xl transition-all ${isActive
+                      ? 'bg-indigo-50 text-indigo-700'
                       : 'text-slate-600 hover:bg-slate-50'
-                  }`}
+                    }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <item.icon className={`mr-4 h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />

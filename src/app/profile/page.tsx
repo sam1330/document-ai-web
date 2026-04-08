@@ -5,324 +5,435 @@ import { useAuth } from '@/contexts/AuthContext'
 import Navigation from '@/components/Navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import {
-  UserIcon,
-  EnvelopeIcon,
-  CalendarIcon,
-  CreditCardIcon,
-  KeyIcon
+   UserIcon,
+   CreditCardIcon,
+   ChartBarIcon,
+   ArrowUpCircleIcon,
+   BellIcon,
+   ShieldCheckIcon,
+   WalletIcon,
+   SparklesIcon
 } from '@heroicons/react/24/outline'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Input, Button, Checkbox, Select } from '@/components/ui'
 
 interface ProfileForm {
-  first_name: string
-  last_name: string
-  email: string
+   first_name: string
+   last_name: string
+   email: string
 }
 
 interface PasswordForm {
-  current_password: string
-  new_password: string
-  confirm_password: string
+   current_password: string
+   new_password: string
+   confirm_password: string
 }
 
 export default function ProfilePage() {
-  const { user, updateProfile, loading } = useAuth()
-  const [activeTab, setActiveTab] = useState('profile')
-  const [isUpdating, setIsUpdating] = useState(false)
+   const { user, updateProfile, loading } = useAuth()
+   const [activeTab, setActiveTab] = useState('account')
+   const [isUpdating, setIsUpdating] = useState(false)
 
-  const { register: registerProfile, handleSubmit: handleProfileSubmit, reset: resetProfile } = useForm<ProfileForm>()
-  const { register: registerPassword, handleSubmit: handlePasswordSubmit, reset: resetPassword, watch } = useForm<PasswordForm>()
+   // Dummy data for token usage
+   const [tokenBalance] = useState(12500)
+   const [monthlyUsage] = useState([450, 1200, 800, 2100, 1500, 2800, 1900]) // Last 7 days
+   const [recentTransactions] = useState([
+      { id: 1, type: 'Resume Analysis', tokens: 850, date: '2 hours ago' },
+      { id: 2, type: 'Cover Letter', tokens: 450, date: 'Yesterday' },
+      { id: 3, type: 'Professional Audit', tokens: 1200, date: '3 days ago' },
+      { id: 4, type: 'Credits Purchased', tokens: +5000, date: '5 days ago', isCredit: true },
+   ])
 
-  const newPassword = watch('new_password')
+   const { register: registerProfile, handleSubmit: handleProfileSubmit, reset: resetProfile, formState: { errors: profileErrors } } = useForm<ProfileForm>()
+   const { register: registerPassword, handleSubmit: handlePasswordSubmit, reset: resetPassword, watch, formState: { errors: passwordErrors } } = useForm<PasswordForm>()
 
-  useEffect(() => {
-    if (user) {
-      resetProfile({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-      })
-    }
-  }, [user, resetProfile])
+   const newPassword = watch('new_password')
 
-  const onProfileSubmit = async (data: ProfileForm) => {
-    setIsUpdating(true)
-    try {
-      await updateProfile(data)
-      toast.success('Profile updated successfully!')
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to update profile')
-    } finally {
-      setIsUpdating(false)
-    }
-  }
+   useEffect(() => {
+      if (user) {
+         resetProfile({
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+         })
+      }
+   }, [user, resetProfile])
 
-  const onPasswordSubmit = async (data: PasswordForm) => {
-    setIsUpdating(true)
-    try {
-      // This would need to be implemented in the API
-      toast.success('Password updated successfully!')
-      resetPassword()
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to update password')
-    } finally {
-      setIsUpdating(false)
-    }
-  }
+   const onProfileSubmit = async (data: ProfileForm) => {
+      setIsUpdating(true)
+      try {
+         await updateProfile(data)
+         toast.success('Profile updated successfully!')
+      } catch (error: any) {
+         toast.error(error.response?.data?.message || 'Failed to update profile')
+      } finally {
+         setIsUpdating(false)
+      }
+   }
 
-  if (loading) {
-    return (
-      <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50">
-          <Navigation />
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">
-              <div className="animate-pulse">
-                <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ProtectedRoute>
-    )
-  }
+   const onPasswordSubmit = async (data: PasswordForm) => {
+      setIsUpdating(true)
+      try {
+         toast.success('Password updated successfully!')
+         resetPassword()
+      } catch (error: any) {
+         toast.error(error.response?.data?.message || 'Failed to update password')
+      } finally {
+         setIsUpdating(false)
+      }
+   }
 
-  if (!user) {
-    return null
-  }
-
-  const tabs = [
-    { id: 'profile', name: 'Profile Information', icon: UserIcon },
-    { id: 'password', name: 'Change Password', icon: KeyIcon },
-    { id: 'subscription', name: 'Subscription', icon: CreditCardIcon },
-  ]
-
-  return (
-    <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-900">Profile Settings</h1>
-              <p className="mt-1 text-sm text-gray-500">
-                Manage your account settings and preferences.
-              </p>
-            </div>
-
-            <div className="bg-white shadow rounded-lg">
-              <div className="border-b border-gray-200">
-                <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`${activeTab === tab.id
-                        ? 'border-indigo-500 text-indigo-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                        } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center`}
-                    >
-                      <tab.icon className="mr-2 h-5 w-5" />
-                      {tab.name}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-
-              <div className="p-6">
-                {/* Profile Information Tab */}
-                {activeTab === 'profile' && (
-                  <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          First Name
-                        </label>
-                        <input
-                          {...registerProfile('first_name', { required: 'First name is required' })}
-                          type="text"
-                          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          Last Name
-                        </label>
-                        <input
-                          {...registerProfile('last_name', { required: 'Last name is required' })}
-                          type="text"
-                          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Email Address
-                      </label>
-                      <input
-                        {...registerProfile('email', {
-                          required: 'Email is required',
-                          pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: 'Invalid email address'
-                          }
-                        })}
-                        type="email"
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        disabled={isUpdating}
-                        className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isUpdating ? 'Updating...' : 'Update Profile'}
-                      </button>
-                    </div>
-                  </form>
-                )}
-
-                {/* Change Password Tab */}
-                {activeTab === 'password' && (
-                  <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Current Password
-                      </label>
-                      <input
-                        {...registerPassword('current_password', { required: 'Current password is required' })}
-                        type="password"
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        New Password
-                      </label>
-                      <input
-                        {...registerPassword('new_password', {
-                          required: 'New password is required',
-                          minLength: {
-                            value: 8,
-                            message: 'Password must be at least 8 characters'
-                          }
-                        })}
-                        type="password"
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Confirm New Password
-                      </label>
-                      <input
-                        {...registerPassword('confirm_password', {
-                          required: 'Please confirm your new password',
-                          validate: value => value === newPassword || 'Passwords do not match'
-                        })}
-                        type="password"
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        disabled={isUpdating}
-                        className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isUpdating ? 'Updating...' : 'Update Password'}
-                      </button>
-                    </div>
-                  </form>
-                )}
-
-                {/* Subscription Tab */}
-                {activeTab === 'subscription' && (
-                  <div className="space-y-6">
-                    <div className="bg-gray-50 rounded-lg p-6">
-                      <div className="flex items-center">
-                        <CreditCardIcon className="h-8 w-8 text-gray-400" />
-                        <div className="ml-4">
-                          <h3 className="text-lg font-medium text-gray-900">
-                            Current Plan: {user.subscription_type.charAt(0).toUpperCase() + user.subscription_type.slice(1)}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {user.subscription_expires_at
-                              ? `Expires on ${new Date(user.subscription_expires_at).toLocaleDateString()}`
-                              : 'No expiration date'
-                            }
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="border border-gray-200 rounded-lg p-6">
-                        <h4 className="text-lg font-medium text-gray-900 mb-2">Free Plan</h4>
-                        <p className="text-sm text-gray-500 mb-4">
-                          Basic features for getting started
-                        </p>
-                        <ul className="text-sm text-gray-600 space-y-2">
-                          <li>• Upload up to 3 resumes</li>
-                          <li>• Basic resume analysis</li>
-                          <li>• 5 AI requests per month</li>
-                          <li>• Email support</li>
-                        </ul>
-                        {user.subscription_type === 'free' && (
-                          <div className="mt-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                              Current Plan
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="border border-indigo-200 rounded-lg p-6 bg-indigo-50">
-                        <h4 className="text-lg font-medium text-gray-900 mb-2">Pro Plan</h4>
-                        <p className="text-sm text-gray-500 mb-4">
-                          Advanced features for serious job seekers
-                        </p>
-                        <ul className="text-sm text-gray-600 space-y-2">
-                          <li>• Unlimited resume uploads</li>
-                          <li>• Advanced AI analysis</li>
-                          <li>• Unlimited AI requests</li>
-                          <li>• Priority support</li>
-                          <li>• Resume optimization</li>
-                        </ul>
-                        {user.subscription_type === 'pro' ? (
-                          <div className="mt-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                              Current Plan
-                            </span>
-                          </div>
-                        ) : (
-                          <div className="mt-4">
-                            <button className="w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                              Upgrade to Pro
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+   if (loading) {
+      return (
+         <ProtectedRoute>
+            <div className="min-h-screen bg-slate-50/50">
+               <Navigation />
+               <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+                  <div className="animate-pulse space-y-8">
+                     <div className="h-48 bg-slate-200 rounded-[2.5rem] w-full"></div>
+                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div className="md:col-span-1 h-64 bg-slate-200 rounded-3xl"></div>
+                        <div className="md:col-span-3 h-96 bg-slate-200 rounded-3xl"></div>
+                     </div>
                   </div>
-                )}
-              </div>
+               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </ProtectedRoute>
-  )
+         </ProtectedRoute>
+      )
+   }
+
+   if (!user) return null
+
+   const tabs = [
+      { id: 'account', name: 'Account', icon: UserIcon },
+      { id: 'credits', name: 'Credits & Billing', icon: WalletIcon },
+      { id: 'security', name: 'Security', icon: ShieldCheckIcon },
+      { id: 'preferences', name: 'Preferences', icon: BellIcon },
+   ]
+
+   return (
+      <ProtectedRoute>
+         <div className="min-h-screen bg-slate-50/50 pb-20">
+            <Navigation />
+
+            <main className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+
+               {/* Header Section */}
+               <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm mb-10 overflow-hidden relative"
+               >
+                  <div className="absolute top-0 right-0 p-8 opacity-5">
+                     <UserIcon className="h-40 w-40" />
+                  </div>
+                  <div className="relative flex flex-col md:flex-row items-center gap-8">
+                     <div className="h-24 w-24 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-3xl font-black shadow-xl shadow-indigo-100 ring-4 ring-white">
+                        {user.first_name.charAt(0)}{user.last_name.charAt(0)}
+                     </div>
+                     <div className="text-center md:text-left">
+                        <h1 className="text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                           {user.first_name} {user.last_name}
+                        </h1>
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
+                           <p className="text-slate-500 font-medium">{user.email}</p>
+                           <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest border border-indigo-100">
+                              Account Active
+                           </span>
+                        </div>
+                     </div>
+                     <div className="md:ml-auto flex items-center bg-slate-50 p-4 rounded-3xl border border-slate-100 space-x-6">
+                        <div className="text-center">
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Credits</p>
+                           <p className="text-xl font-black text-slate-900">{tokenBalance.toLocaleString()}</p>
+                        </div>
+                        <div className="h-10 border-l border-slate-200"></div>
+                        <div className="text-center">
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Usage / Month</p>
+                           <p className="text-xl font-black text-slate-900">8.4k</p>
+                        </div>
+                     </div>
+                  </div>
+               </motion.div>
+
+               <div className="flex flex-col md:flex-row gap-8">
+                  {/* Sidebar Tabs */}
+                  <aside className="md:w-64 flex-shrink-0">
+                     <div className="bg-white rounded-[2rem] border border-slate-200 p-2 shadow-sm sticky top-10">
+                        {tabs.map((tab) => (
+                           <button
+                              key={tab.id}
+                              onClick={() => setActiveTab(tab.id)}
+                              className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-2xl transition-all font-bold my-1 ${activeTab === tab.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}
+                           >
+                              <tab.icon className={`h-5 w-5 ${activeTab === tab.id ? 'text-white' : 'text-slate-400'}`} />
+                              <span className="text-sm">{tab.name}</span>
+                           </button>
+                        ))}
+                     </div>
+                  </aside>
+
+                  {/* Main Panel */}
+                  <div className="flex-1 min-w-0">
+                     <AnimatePresence mode="wait">
+                        <motion.div
+                           key={activeTab}
+                           initial={{ opacity: 0, x: 10 }}
+                           animate={{ opacity: 1, x: 0 }}
+                           exit={{ opacity: 0, x: -10 }}
+                           className="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm p-8 md:p-10"
+                        >
+                           {/* Account Tab */}
+                           {activeTab === 'account' && (
+                              <div className="space-y-10">
+                                 <div>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Personal Information</h2>
+                                    <p className="text-sm text-slate-500 font-medium">Update your name and communication email.</p>
+                                 </div>
+
+                                 <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                       <Input
+                                          {...registerProfile('first_name', { required: 'First name is required' })}
+                                          label="First Name"
+                                          placeholder="Enter your first name"
+                                          error={profileErrors.first_name?.message}
+                                       />
+                                       <Input
+                                          {...registerProfile('last_name', { required: 'Last name is required' })}
+                                          label="Last Name"
+                                          placeholder="Enter your last name"
+                                          error={profileErrors.last_name?.message}
+                                       />
+                                    </div>
+                                    <Input
+                                       {...registerProfile('email', { required: 'Email is required' })}
+                                       label="Email Address"
+                                       type="email"
+                                       placeholder="Enter your email"
+                                       error={profileErrors.email?.message}
+                                    />
+                                    <div className="flex justify-end pt-4">
+                                       <Button type="submit" loading={isUpdating} className="rounded-2xl px-10 bg-indigo-600 shadow-lg shadow-indigo-50">
+                                          Save Changes
+                                       </Button>
+                                    </div>
+                                 </form>
+                              </div>
+                           )}
+
+                           {/* Credits & Billing Tab */}
+                           {activeTab === 'credits' && (
+                              <div className="space-y-10">
+                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                                    <div>
+                                       <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Credits Hub</h2>
+                                       <p className="text-sm text-slate-500 font-medium">Manage your token balance and pay-as-you-go settings.</p>
+                                    </div>
+                                    <div className="flex items-center space-x-2 bg-emerald-50 text-emerald-600 px-4 py-2 rounded-2xl border border-emerald-100">
+                                       <SparklesIcon className="h-4 w-4" />
+                                       <span className="text-xs font-black uppercase tracking-widest">Active Balance</span>
+                                    </div>
+                                 </div>
+
+                                 {/* Token Chart & Usage */}
+                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 flex flex-col items-center justify-center">
+                                       <div className="relative h-40 w-40 flex items-center justify-center mb-6">
+                                          <svg className="h-full w-full transform -rotate-90">
+                                             <circle cx="80" cy="80" r="74" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-200" />
+                                             <circle
+                                                cx="80" cy="80" r="74" stroke="currentColor" strokeWidth="8" fill="transparent"
+                                                strokeDasharray={465}
+                                                strokeDashoffset={465 - (465 * 75) / 100}
+                                                className="text-indigo-600"
+                                             />
+                                          </svg>
+                                          <div className="absolute flex flex-col items-center">
+                                             <span className="text-2xl font-black text-slate-900">75%</span>
+                                             <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Monthly Quota</span>
+                                          </div>
+                                       </div>
+                                       <h3 className="text-4xl font-black text-slate-900 mb-2">{tokenBalance.toLocaleString()}</h3>
+                                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Available Credits</p>
+                                    </div>
+
+                                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-inner">
+                                       <div className="flex items-center justify-between mb-8">
+                                          <h3 className="font-black text-slate-800 uppercase text-[10px] tracking-widest">Weekly Usage Activity</h3>
+                                          <ChartBarIcon className="h-4 w-4 text-slate-400" />
+                                       </div>
+                                       <div className="flex items-end justify-between h-32 space-x-2">
+                                          {monthlyUsage.map((val, idx) => {
+                                             const height = (val / 3000) * 100
+                                             return (
+                                                <div key={idx} className="flex-1 group relative">
+                                                   <motion.div
+                                                      initial={{ height: 0 }}
+                                                      animate={{ height: `${height}%` }}
+                                                      className="bg-indigo-600 rounded-t-lg group-hover:bg-indigo-400 transition-colors w-full"
+                                                   />
+                                                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                                      {val}
+                                                   </div>
+                                                </div>
+                                             )
+                                          })}
+                                       </div>
+                                       <div className="flex justify-between mt-4">
+                                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Mon</span>
+                                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Sun</span>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 {/* Buy Credits */}
+                                 <div className="space-y-6 pt-6">
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">Add Credits</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                       {[
+                                          { name: 'Starter', price: '$5', tokens: '5,000', color: 'indigo' },
+                                          { name: 'Grow', price: '$15', tokens: '20,000', color: 'violet', recommended: true },
+                                          { name: 'Power', price: '$40', tokens: '60,000', color: 'slate' },
+                                       ].map((pkg) => (
+                                          <div key={pkg.name} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
+                                             {pkg.recommended && (
+                                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Recommended</span>
+                                             )}
+                                             <p className="text-xs font-bold text-slate-400 mb-1">{pkg.name}</p>
+                                             <p className="text-2xl font-black text-slate-900 mb-4">{pkg.tokens}</p>
+                                             <div className="flex items-center justify-between mt-auto">
+                                                <span className="text-sm font-black text-slate-600">{pkg.price}</span>
+                                                <button className={`p-2 rounded-xl transition-all ${pkg.recommended ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-white text-slate-400 border border-slate-200 group-hover:bg-indigo-600 group-hover:text-white'}`}>
+                                                   <ArrowUpCircleIcon className="h-5 w-5" />
+                                                </button>
+                                             </div>
+                                          </div>
+                                       ))}
+                                    </div>
+                                 </div>
+
+                                 {/* Transactions */}
+                                 <div className="pt-6">
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">Recent Activity</h3>
+                                    <div className="space-y-4">
+                                       {recentTransactions.map((tx) => (
+                                          <div key={tx.id} className="flex items-center justify-between p-4 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors bg-slate-50/50">
+                                             <div className="flex items-center space-x-4">
+                                                <div className={`p-2.5 rounded-2xl ${tx.isCredit ? 'bg-emerald-50 text-emerald-600' : 'bg-white text-slate-400 shadow-sm'}`}>
+                                                   {tx.isCredit ? <CreditCardIcon className="h-5 w-5" /> : <ChartBarIcon className="h-5 w-5" />}
+                                                </div>
+                                                <div>
+                                                   <p className="text-sm font-bold text-slate-900">{tx.type}</p>
+                                                   <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{tx.date}</p>
+                                                </div>
+                                             </div>
+                                             <span className={`text-sm font-black ${tx.isCredit ? 'text-emerald-500' : 'text-slate-800'}`}>
+                                                {tx.isCredit ? '+' : '-'}{tx.tokens.toLocaleString()}
+                                             </span>
+                                          </div>
+                                       ))}
+                                    </div>
+                                 </div>
+                              </div>
+                           )}
+
+                           {/* Security Tab */}
+                           {activeTab === 'security' && (
+                              <div className="space-y-10">
+                                 <div>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Security Shield</h2>
+                                    <p className="text-sm text-slate-500 font-medium">Protect your account with a secure password and 2-step verification.</p>
+                                 </div>
+
+                                 <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-6">
+                                    <Input
+                                       {...registerPassword('current_password', { required: 'Required' })}
+                                       label="Current Password"
+                                       type="password"
+                                       placeholder="Enter current password"
+                                       error={passwordErrors.current_password?.message}
+                                    />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                       <Input
+                                          {...registerPassword('new_password', { required: 'Required', minLength: 8 })}
+                                          label="New Password"
+                                          type="password"
+                                          placeholder="Enter new password"
+                                          error={passwordErrors.new_password?.message}
+                                       />
+                                       <Input
+                                          {...registerPassword('confirm_password', { required: 'Required', validate: v => v === newPassword || 'Mismatch' })}
+                                          label="Confirm New Password"
+                                          type="password"
+                                          placeholder="Confirm new password"
+                                          error={passwordErrors.confirm_password?.message}
+                                       />
+                                    </div>
+                                    <div className="flex justify-end pt-4">
+                                       <Button type="submit" loading={isUpdating} className="rounded-2xl px-10 bg-indigo-600 shadow-lg shadow-indigo-50">
+                                          Update Password
+                                       </Button>
+                                    </div>
+                                 </form>
+
+                                 <div className="pt-10 border-t border-slate-100">
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">Danger Zone</h3>
+                                    <div className="p-6 rounded-3xl border border-rose-100 bg-rose-50/30 flex flex-col md:flex-row items-center justify-between gap-6">
+                                       <div>
+                                          <p className="text-sm font-bold text-rose-900">Delete Account</p>
+                                          <p className="text-xs text-rose-600 font-medium">Permanently remove all your resumes, history and credits.</p>
+                                       </div>
+                                       <Button variant="outline" className="border-rose-200 text-rose-600 hover:bg-rose-600 hover:text-white rounded-2xl">
+                                          Delete Permanently
+                                       </Button>
+                                    </div>
+                                 </div>
+                              </div>
+                           )}
+
+                           {/* Preferences Tab */}
+                           {activeTab === 'preferences' && (
+                              <div className="space-y-10">
+                                 <div>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">User Preferences</h2>
+                                    <p className="text-sm text-slate-500 font-medium">Customize your dashboard experience and notifications.</p>
+                                 </div>
+
+                                 <div className="space-y-10">
+                                    <div className="space-y-4">
+                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">Email Notifications</h3>
+                                       <div className="space-y-3">
+                                          <Checkbox id="notif-1" label="New AI analysis complete" defaultChecked />
+                                          <Checkbox id="notif-2" label="Weekly job application digest" defaultChecked />
+                                          <Checkbox id="notif-3" label="Low credit alerts (under 500 tokens)" defaultChecked />
+                                       </div>
+                                    </div>
+
+                                    <div className="space-y-4 pt-6 border-t border-slate-100">
+                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">System Language</h3>
+                                       <div className="max-w-xs">
+                                          <Select
+                                             options={[
+                                                { value: 'en', label: 'English (US)' },
+                                                { value: 'es', label: 'Spanish' },
+                                                { value: 'fr', label: 'French' }
+                                             ]}
+                                             defaultValue="en"
+                                          />
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           )}
+                        </motion.div>
+                     </AnimatePresence>
+                  </div>
+               </div>
+            </main>
+         </div>
+      </ProtectedRoute>
+   )
 }

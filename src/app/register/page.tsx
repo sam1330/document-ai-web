@@ -49,7 +49,7 @@ export default function RegisterPage() {
             Create your account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Get started with CvEnhance or{' '}
+            Get started with Haku or{' '}
             <Link
               href="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
@@ -58,7 +58,7 @@ export default function RegisterPage() {
             </Link>
           </p>
         </div>
-        
+
         <div className="bg-white py-8 px-6 shadow-lg rounded-xl border border-gray-100">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">
@@ -83,7 +83,7 @@ export default function RegisterPage() {
             </div>
 
             <Input
-              {...register('email', { 
+              {...register('email', {
                 required: 'Email is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -99,7 +99,7 @@ export default function RegisterPage() {
             />
 
             <Input
-              {...register('password', { 
+              {...register('password', {
                 required: 'Password is required',
                 minLength: {
                   value: 8,
@@ -127,7 +127,7 @@ export default function RegisterPage() {
             />
 
             <Input
-              {...register('confirmPassword', { 
+              {...register('confirmPassword', {
                 required: 'Please confirm your password',
                 validate: value => value === password || 'Passwords do not match'
               })}
