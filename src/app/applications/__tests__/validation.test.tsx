@@ -9,8 +9,8 @@ vi.mock('@/lib/api', () => ({
   default: {
     get: vi.fn((url) => {
       if (url === '/api/job-application') return Promise.resolve({ data: { job_applications: [], pagination: {} } });
-      if (url === '/api/resume') return Promise.resolve({ data: [{ id: 'res-1', original_filename: 'Test Resume' }] });
-      return Promise.resolve({ data: {} });
+      if (url === '/api/resume') return Promise.resolve({ data: { resumes: [{ id: 'res-1', original_filename: 'Test Resume' }] } });
+      return Promise.resolve({ data: [] });
     }),
     post: vi.fn(() => Promise.resolve({ data: {} })),
     put: vi.fn(() => Promise.resolve({ data: {} })),
@@ -66,7 +66,8 @@ describe('ApplicationsPage Integration', () => {
     renderWithAuth(<ApplicationsPage />)
 
     // Wait for the skeleton loader to disappear and find the 'New Application' button by role
-    const addBtn = await screen.findByRole('button', { name: /new application/i })
+    // Increase timeout to 5s to be absolutely sure JSDOM has rendered
+    const addBtn = await screen.findByRole('button', { name: /new application/i }, { timeout: 5000 })
     fireEvent.click(addBtn)
 
     // Fill in a 1-character company name

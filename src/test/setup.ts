@@ -29,8 +29,20 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}))
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+} as any
+
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  readonly root: Element | null = null
+  readonly rootMargin: string = ''
+  readonly thresholds: ReadonlyArray<number> = []
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() { return [] }
+} as any

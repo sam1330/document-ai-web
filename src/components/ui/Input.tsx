@@ -11,10 +11,12 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, error, helperText, leftIcon, rightIcon, ...props }, ref) => {
+    const inputId = props.id || label?.toLowerCase().replace(/\s+/g, '-')
+    
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-2">
             {label}
           </label>
         )}
@@ -27,6 +29,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           <input
+            id={inputId}
             type={type}
             className={cn(
               "block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm !text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500",
