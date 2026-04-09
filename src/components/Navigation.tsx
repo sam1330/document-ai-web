@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
@@ -16,7 +16,9 @@ import {
   BellIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
+import CreditsService from '@/services/credits'
+import { useCredits } from '@/contexts/CreditContext'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
@@ -29,6 +31,7 @@ export default function Navigation() {
   const { user, logout } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
+  const { balance } = useCredits();
 
   const handleLogout = () => {
     logout()
@@ -80,7 +83,7 @@ export default function Navigation() {
 
             {/* Profile Dropdown */}
             <Menu as="div" className="relative">
-              <Menu.Button className="flex items-center p-1 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
+              <MenuButton className="flex items-center p-1 cursor-pointer rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
                 <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shadow-md text-white font-bold text-xs">
                   {user?.first_name?.charAt(0)}{user?.last_name?.charAt(0)}
                 </div>
@@ -89,10 +92,10 @@ export default function Navigation() {
                     {user?.first_name} {user?.last_name}
                   </p>
                   <p className="text-[10px] font-medium text-slate-500 mt-1 uppercase tracking-tight">
-                    Premium Member
+                    <span className='font-bold text-slate-900'>{balance}</span> Credits Available
                   </p>
                 </div>
-              </Menu.Button>
+              </MenuButton>
 
               <Transition
                 as={Fragment}
@@ -103,11 +106,11 @@ export default function Navigation() {
                 leaveFrom="transform opacity-100 scale-100 translate-y-0"
                 leaveTo="transform opacity-0 scale-95 -translate-y-2"
               >
-                <Menu.Items className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-slate-200 focus:outline-none backdrop-blur-xl">
+                <MenuItems className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-slate-200 focus:outline-none backdrop-blur-xl">
                   <div className="px-3 py-2 mb-2 border-b border-slate-50">
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Account</p>
                   </div>
-                  <Menu.Item>
+                  <MenuItem>
                     {({ active }) => (
                       <Link
                         href="/profile"
@@ -118,20 +121,20 @@ export default function Navigation() {
                         Settings
                       </Link>
                     )}
-                  </Menu.Item>
-                  <Menu.Item>
+                  </MenuItem>
+                  <MenuItem>
                     {({ active }) => (
                       <button
                         onClick={handleLogout}
                         className={`${active ? 'bg-rose-50 text-rose-700' : 'text-slate-600'
-                          } flex w-full items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
+                          } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
                       >
                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 opacity-70" />
                         Sign out
                       </button>
                     )}
-                  </Menu.Item>
-                </Menu.Items>
+                  </MenuItem>
+                </MenuItems>
               </Transition>
             </Menu>
           </div>

@@ -41,8 +41,11 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
   
   const [isEditingDescription, setIsEditingDescription] = useState(false)
   const [isEditingNotes, setIsEditingNotes] = useState(false)
-  const [editValue, setEditValue] = useState('')
   const [isSaving, setIsSaving] = useState(false)
+  
+  const [editNotes, setEditNotes] = useState('')
+  const [editJobDescription, setEditJobDescription] = useState('')
+  const [editCoverLetter, setEditCoverLetter] = useState('')
 
   useEffect(() => {
     if (user && id) {
@@ -82,7 +85,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
     }
   }
 
-  const handleSaveEdit = async (field: 'job_description' | 'notes') => {
+  const handleSaveEdit = async (field: 'job_description' | 'notes' | 'cover_letter_data', editValue: string) => {
     try {
       setIsSaving(true)
       await api.put(`/api/job-application/${id}`, { [field]: editValue })
@@ -237,7 +240,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                        </div>
                        {!isEditingDescription && (
                          <button 
-                            onClick={() => { setEditValue(application.job_description); setIsEditingDescription(true); }}
+                            onClick={() => { setEditJobDescription(application.job_description); setIsEditingDescription(true); }}
                             className="p-2 text-slate-400 hover:text-indigo-600 transition-colors"
                          >
                             <PencilIcon className="h-4 w-4" />
@@ -248,14 +251,14 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                        {isEditingDescription ? (
                          <div className="space-y-4">
                             <Textarea 
-                              value={editValue} 
-                              onChange={(e) => setEditValue(e.target.value)} 
+                              value={editJobDescription} 
+                              onChange={(e) => setEditJobDescription(e.target.value)} 
                               rows={12}
                               className="text-sm rounded-2xl"
                             />
                             <div className="flex justify-end space-x-3">
                                <Button variant="outline" size="sm" onClick={() => setIsEditingDescription(false)}>Cancel</Button>
-                               <Button size="sm" loading={isSaving} onClick={() => handleSaveEdit('job_description')}>Save changes</Button>
+                               <Button size="sm" loading={isSaving} onClick={() => handleSaveEdit('job_description', editJobDescription)}>Save changes</Button>
                             </div>
                          </div>
                        ) : (
@@ -282,7 +285,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                        </div>
                        {!isEditingNotes && (
                          <button 
-                            onClick={() => { setEditValue(application.notes || ''); setIsEditingNotes(true); }}
+                            onClick={() => { setEditNotes(application.notes || ''); setIsEditingNotes(true); }}
                             className="p-2 text-slate-400 hover:text-indigo-600 transition-colors"
                          >
                             <PencilIcon className="h-4 w-4" />
@@ -293,20 +296,64 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                         {isEditingNotes ? (
                          <div className="space-y-4">
                             <Textarea 
-                              value={editValue} 
-                              onChange={(e) => setEditValue(e.target.value)} 
+                              value={editNotes} 
+                              onChange={(e) => setEditNotes(e.target.value)} 
                               rows={6}
                               placeholder="Key interview points, names of recruiters, etc."
                               className="text-sm rounded-2xl"
                             />
                             <div className="flex justify-end space-x-3">
                                <Button variant="outline" size="sm" onClick={() => setIsEditingNotes(false)}>Cancel</Button>
-                               <Button size="sm" loading={isSaving} onClick={() => handleSaveEdit('notes')}>Save Notes</Button>
+                               <Button size="sm" loading={isSaving} onClick={() => handleSaveEdit('notes', editNotes)}>Save Notes</Button>
                             </div>
                          </div>
                         ) : (
                          <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
                             {application.notes || 'No notes added yet. Use this space for recruiter names, interview dates, or prep work.'}
+                         </div>
+                        )}
+                    </div>
+                 </motion.div>
+
+                 {/* Cover letter Card */}
+                 <motion.div 
+                   initial={{ opacity: 0, scale: 0.98 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ delay: 0.2 }}
+                   className="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm"
+                 >
+                    <div className="px-8 py-6 border-b border-slate-50 flex items-center justify-between">
+                       <div className="flex items-center space-x-3">
+                          <PencilIcon className="h-5 w-5 text-amber-500" />
+                          <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest">Cover letter</h2>
+                       </div>
+                       {!isEditingNotes && (
+                         <button 
+                            onClick={() => { setEditCoverLetter(application.cover_letter_data || ''); setIsEditingNotes(true); }}
+                            className="p-2 text-slate-400 hover:text-indigo-600 transition-colors"
+                         >
+                            <PencilIcon className="h-4 w-4" />
+                         </button>
+                       )}
+                    </div>
+                    <div className="p-8">
+                        {isEditingNotes ? (
+                         <div className="space-y-4">
+                            <Textarea 
+                              value={editCoverLetter} 
+                              onChange={(e) => setEditCoverLetter(e.target.value)} 
+                              rows={6}
+                              placeholder="Key interview points, names of recruiters, etc."
+                              className="text-sm rounded-2xl"
+                            />
+                            <div className="flex justify-end space-x-3">
+                               <Button variant="outline" size="sm" onClick={() => setIsEditingNotes(false)}>Cancel</Button>
+                               <Button size="sm" loading={isSaving} onClick={() => handleSaveEdit('cover_letter_data', editCoverLetter)}>Save Cover letter</Button>
+                            </div>
+                         </div>
+                        ) : (
+                         <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                            {application.notes || 'No cover letter added yet.'}
                          </div>
                         )}
                     </div>

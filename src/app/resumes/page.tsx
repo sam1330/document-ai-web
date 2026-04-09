@@ -24,26 +24,29 @@ import { Resume, Analysis } from '@/types'
 import { formatDate, formatFileSize } from '@/lib/utils'
 import toast from 'react-hot-toast'
 import { Modal, Textarea, Button, Input } from '@/components/ui'
+import { useCredits } from '@/contexts/CreditContext'
 
 export default function ResumesPage() {
-  const { user } = useAuth()
-  const [resumes, setResumes] = useState<Resume[]>([])
-  const [resumesLoading, setResumesLoading] = useState(true)
-  const [uploading, setUploading] = useState(false)
-  const [selectedResumeId, setSelectedResumeId] = useState<string | null>(null)
-  const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState(false)
-  const [jobDescription, setJobDescription] = useState('')
-  const [targetRole, setTargetRole] = useState('')
-  const [targetCompany, setTargetCompany] = useState('')
-  const [analyzing, setAnalyzing] = useState(false)
+  const { user } = useAuth();
+  const { getBalance } = useCredits();
+
+  const [resumes, setResumes] = useState<Resume[]>([]);
+  const [resumesLoading, setResumesLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [selectedResumeId, setSelectedResumeId] = useState<string | null>(null);
+  const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState(false);
+  const [jobDescription, setJobDescription] = useState('');
+  const [targetRole, setTargetRole] = useState('');
+  const [targetCompany, setTargetCompany] = useState('');
+  const [analyzing, setAnalyzing] = useState(false);
   
   // Search & Filter State
-  const [searchQuery, setSearchQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'analyzed' | 'pending'>('all')
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'analyzed' | 'pending'>('all');
 
   useEffect(() => {
     if (user) {
-      fetchResumes()
+      fetchResumes();
     }
   }, [user])
 
@@ -143,6 +146,7 @@ export default function ResumesPage() {
         target_company: targetCompany
       })
       toast.success('Resume analysis completed!')
+      getBalance();
       setIsAnalyzeModalOpen(false)
       fetchResumes()
     } catch (error: any) {
@@ -309,21 +313,21 @@ export default function ResumesPage() {
                   {/* Card Actions */}
                   <div className="p-6 bg-slate-50/30">
                     <div className="flex flex-col space-y-3">
-                      <button
+                      <Button
                         onClick={() => handleAnalyzeClick(resume.id)}
                         disabled={!resume.is_processed || analyzing}
-                        className="w-full py-3 bg-indigo-600 text-white font-black rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center disabled:opacity-50"
+                        className="w-full py-3 text-md bg-indigo-600 text-white font-black rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center disabled:opacity-50"
                       >
                         <SparklesIcon className="h-5 w-5 mr-2" />
                         {resume.latest_analysis ? 'New Analysis' : 'Go Detailed Analysis'}
-                      </button>
+                      </Button>
                       
                       {resume.latest_analysis && (
                         <Link href={`/resumes/${resume.id}`}>
-                          <button className="w-full py-3 bg-white text-indigo-600 border border-indigo-100 font-bold rounded-xl hover:bg-indigo-50 transition flex items-center justify-center">
+                          <Button className="w-full py-3 text-md bg-white text-indigo-600 border border-indigo-100 font-bold rounded-xl hover:bg-indigo-50 transition flex items-center justify-center">
                             <EyeIcon className="h-5 w-5 mr-2" />
                             View Last Report
-                          </button>
+                          </Button>
                         </Link>
                       )}
                     </div>
@@ -340,6 +344,7 @@ export default function ResumesPage() {
         isOpen={isAnalyzeModalOpen}
         onClose={() => !analyzing && setIsAnalyzeModalOpen(false)}
         title="Analyze Resume"
+        subtitle="This action will cost you 10 credits"
         footer={
           <>
             <Button
