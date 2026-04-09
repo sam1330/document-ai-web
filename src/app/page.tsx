@@ -22,6 +22,9 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
+import SocialIcon from '@/components/ui/SocialIcon'
+import RoadmapItem from '@/components/ui/RoadmapItem'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const { user } = useAuth()
@@ -38,7 +41,7 @@ export default function Home() {
   const faqs = [
     {
       question: "How does the token-based pricing work?",
-      answer: "Instead of a monthly subscription, you purchase credits (tokens). Each AI analysis consumes a specific amount of tokens based on the complexity and model used. You only pay for what you actually use, with 1,000 free tokens to get you started."
+      answer: "Instead of a monthly subscription, you purchase credits (tokens). Each AI analysis consumes a specific amount of tokens based on the complexity and model used. You only pay for what you actually use, with 30 free tokens to get you started."
     },
     {
       question: "Is my resume data secure?",
@@ -79,7 +82,7 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                 </span>
-                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">v2.0 Now Live</span>
+                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">v1.0 Now Live</span>
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
                 Land your dream job with <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">AI Intelligence.</span>
@@ -102,14 +105,14 @@ export default function Home() {
                   Watch Demo
                 </Link>
               </div>
-              <div className="mt-10 flex items-center justify-center lg:justify-start space-x-6 text-slate-400">
+              {/* <div className="mt-10 flex items-center justify-center lg:justify-start space-x-6 text-slate-400">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map(i => (
                     <div key={i} className="h-8 w-8 rounded-full border-2 border-white bg-slate-200"></div>
                   ))}
                 </div>
                 <p className="text-sm font-medium">Joined by <span className="text-slate-900 font-bold">10,000+</span> professionals</p>
-              </div>
+              </div> */}
             </motion.div>
 
             <motion.div 
@@ -255,7 +258,7 @@ export default function Home() {
                     </div>
                     <div className="text-left">
                       <p className="font-bold text-slate-900">Start for free</p>
-                      <p className="text-sm text-slate-500">Every new user gets 1,000 complimentary tokens.</p>
+                      <p className="text-sm text-slate-500">Every new user gets 30 complimentary tokens.</p>
                     </div>
                   </div>
                   <Link
@@ -285,12 +288,12 @@ export default function Home() {
                 We are building the end-to-end recruitment bridge. Our upcoming features will close the gap between job seekers and elite recruiters.
               </p>
               <div className="space-y-6">
-                 <RoadmapItem 
+                 <RoadmapItem
                    title="AI Resume Engine" 
                    description="Instant CV generation based on your target job and personal background." 
                    status="Q3 2026"
                  />
-                 <RoadmapItem 
+                 <RoadmapItem
                    title="Recruiter ATS Matching" 
                    description="A portal for headhunters to find candidates based on AI-verified skill alignment." 
                    status="Q4 2026"
@@ -354,7 +357,7 @@ export default function Home() {
             ))}
           </div>
           
-          <div className="mt-16 p-8 bg-indigo-50 rounded-[2rem] border border-indigo-100 flex flex-col sm:flex-row items-center justify-between">
+          {/* <div className="mt-16 p-8 bg-indigo-50 rounded-[2rem] border border-indigo-100 flex flex-col sm:flex-row items-center justify-between">
             <div className="flex items-center mb-4 sm:mb-0">
                <div className="p-3 bg-white rounded-2xl mr-4 shadow-sm">
                   <QuestionMarkCircleIcon className="h-6 w-6 text-indigo-600" />
@@ -370,61 +373,12 @@ export default function Home() {
             >
               Contact Support
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
-            <div className="col-span-2">
-              <Link href="/" className="text-2xl font-black tracking-tighter text-slate-900 mb-6 block">
-                HAKU<span className="text-indigo-600">.</span>
-              </Link>
-              <p className="text-slate-500 mb-8 max-w-sm">
-                Empowering job seekers with the world's most sophisticated AI resume analysis and application tools.
-              </p>
-              <div className="flex space-x-4">
-                 <SocialIcon name="Twitter" />
-                 <SocialIcon name="LinkedIn" />
-                 <SocialIcon name="GitHub" />
-              </div>
-            </div>
-            <div>
-              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Product</p>
-              <ul className="space-y-4 text-slate-500 text-sm">
-                <li><Link href="#features" className="hover:text-indigo-600">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-indigo-600">Pricing</Link></li>
-                <li><Link href="#roadmap" className="hover:text-indigo-600">Roadmap</Link></li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Company</p>
-              <ul className="space-y-4 text-slate-500 text-sm">
-                <li><Link href="/about" className="hover:text-indigo-600">About Us</Link></li>
-                <li><Link href="/careers" className="hover:text-indigo-600">Careers</Link></li>
-                <li><Link href="/blog" className="hover:text-indigo-600">Blog</Link></li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-bold text-slate-900 mb-6 uppercase tracking-widest text-xs">Support</p>
-              <ul className="space-y-4 text-slate-500 text-sm">
-                <li><Link href="/faq" className="hover:text-indigo-600">FAQ</Link></li>
-                <li><Link href="/contact" className="hover:text-indigo-600">Contact</Link></li>
-                <li><Link href="/privacy" className="hover:text-indigo-600">Privacy Policy</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-medium uppercase tracking-widest">
-            <p>&copy; 2026 Haku AI. All rights reserved.</p>
-            <div className="mt-4 md:mt-0 flex space-x-8">
-               <Link href="/terms" className="hover:text-slate-600">Terms of Service</Link>
-               <Link href="/cookies" className="hover:text-slate-600">Cookie Settings</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
@@ -469,29 +423,6 @@ function PricingDetail({ icon, text }: { icon: any, text: string }) {
     <div className="flex items-center space-x-3">
       {icon}
       <span className="text-slate-600 font-medium">{text}</span>
-    </div>
-  )
-}
-
-function RoadmapItem({ title, description, status }: { title: string, description: string, status: string }) {
-  return (
-    <div className="border border-slate-800 p-6 rounded-3xl bg-slate-800/50 hover:bg-slate-800 transition-colors">
-      <div className="flex items-center justify-between mb-2">
-        <h4 className="font-bold text-white tracking-tight">{title}</h4>
-        <span className="text-[10px] font-black uppercase tracking-widest text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full border border-indigo-400/20">
-          {status}
-        </span>
-      </div>
-      <p className="text-sm text-slate-400 tracking-tight leading-relaxed">{description}</p>
-    </div>
-  )
-}
-
-function SocialIcon({ name }: { name: string }) {
-  return (
-    <div className="h-10 w-10 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all cursor-pointer">
-       <span className="sr-only">{name}</span>
-       <div className="h-5 w-5 bg-current opacity-50 rounded-sm"></div>
     </div>
   )
 }
