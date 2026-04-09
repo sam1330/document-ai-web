@@ -46,6 +46,7 @@ export interface Resume {
   is_processed: boolean
   created_at: string
   updated_at: string
+  latest_analysis?: Analysis
 }
 
 export interface ResumeDetailResponse {
@@ -105,12 +106,11 @@ export interface AuthResponse {
 
 export interface ActivityItem {
   id: string
-  type: 'resume' | 'application' | 'analysis'
+  type: 'resume_upload' | 'job_application' | 'analysis' | 'ai_request'
   title: string
-  subtitle: string
+  description: string
   status?: string
-  date: string
-  link: string
+  timestamp: string
 }
 
 export interface DashboardOverview {
