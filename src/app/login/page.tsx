@@ -16,6 +16,7 @@ interface LoginForm {
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [unverifiedEmail, setUnverifiedEmail] = useState('')
   const { login } = useAuth()
   const router = useRouter()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginForm>()
@@ -26,7 +27,13 @@ export default function LoginPage() {
       toast.success('Successfully logged in!')
       router.push('/dashboard')
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed')
+      const code = error.response?.data?.code
+      if (code === 'EMAIL_NOT_VERIFIED') {
+        setUnverifiedEmail(data.email)
+        toast.error(error.response?.data?.error || 'Please verify your email before logging in')
+      } else {
+        toast.error(error.response?.data?.message || error.response?.data?.error || 'Login failed')
+      }
     }
   }
 
@@ -47,11 +54,42 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-        
+
+        {unverifiedEmail && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+            <div className="flex">
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-yellow-800">
+                  Email not verified
+                </h3>
+                <div className="mt-2 text-sm text-yellow-700">
+                  <p>
+                    Please verify your email <span className="font-medium">{unverifiedEmail}</span> before logging in.
+                  </p>
+                </div>
+                <div className="mt-3 space-x-3">
+                  <Link
+                    href={`/email-verification?email=${encodeURIComponent(unverifiedEmail)}`}
+                    className="text-sm font-medium text-yellow-800 hover:text-yellow-700 underline"
+                  >
+                    Resend verification email
+                  </Link>
+                  <button
+                    onClick={() => setUnverifiedEmail('')}
+                    className="text-sm font-medium text-yellow-600 hover:text-yellow-500"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="bg-white py-8 px-6 shadow-lg rounded-xl border border-gray-100">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
-              {...register('email', { 
+              {...register('email', {
                 required: 'Email is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -95,7 +133,7 @@ export default function LoginPage() {
                 label="Remember me"
               />
               <Link
-                href="#"
+                href="/forgot-password"
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
               >
                 Forgot password?
