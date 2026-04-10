@@ -38,6 +38,8 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
   const [resume, setResume] = useState<Resume | null>(null)
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [coverLetterLoading, setCoverLetterLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
   
   const [isEditingDescription, setIsEditingDescription] = useState(false)
   const [isEditingNotes, setIsEditingNotes] = useState(false)
@@ -103,20 +105,27 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this application?')) return
     try {
+      setDeleteLoading(true)
       await api.delete(`/api/job-application/${id}`)
       toast.success('Application deleted')
+      setDeleteLoading(false)
       router.push('/applications')
     } catch (error) {
+      setDeleteLoading(false)
       toast.error('Delete failed')
     }
   }
 
   const handleGenerateCoverLetter = async () => {
+     setCoverLetterLoading(true)
     try {
       toast.loading('Generating cover letter...', { id: 'cl-gen' })
       await api.post(`/api/job-application/${id}/cover-letter`)
       toast.success('Cover letter generation started!', { id: 'cl-gen' })
+      setCoverLetterLoading(false)
+      fetchDetail()
     } catch (error) {
+      setCoverLetterLoading(false)
       toast.error('Failed to start generation', { id: 'cl-gen' })
     }
   }
@@ -207,6 +216,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                       variant="outline" 
                       className="rounded-2xl border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-100"
                       onClick={handleDelete}
+                      loading={deleteLoading}
                     >
                        <TrashIcon className="h-5 w-5 mr-2" />
                        Delete
@@ -214,6 +224,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                     <Button 
                       onClick={handleGenerateCoverLetter}
                       className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-6 py-3 shadow-lg shadow-indigo-100 group"
+                      loading={coverLetterLoading}
                     >
                        <SparklesIcon className="h-5 w-5 mr-2 transition-transform group-hover:scale-110" />
                        Generate AI Cover Letter
@@ -316,7 +327,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
                  </motion.div>
 
                  {/* Cover letter Card */}
-                 <motion.div 
+                 <motion.div
                    initial={{ opacity: 0, scale: 0.98 }}
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ delay: 0.2 }}
@@ -362,7 +373,6 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
 
               {/* Sidebar Column */}
               <div className="space-y-8">
-                 
                  {/* Match Score Card */}
                  <motion.div 
                    initial={{ opacity: 0, x: 20 }}

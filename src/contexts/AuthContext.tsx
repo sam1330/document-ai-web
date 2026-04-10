@@ -11,11 +11,23 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<void>
   logout: () => void
   updateProfile: (data: Partial<User>) => Promise<void>
+  verifyEmail: (token: string) => Promise<AuthResponse>
+  resendVerification: (email: string) => Promise<void>
+  checkVerificationStatus: (email: string) => Promise<VerificationStatusResponse>
+  requestPasswordReset: (email: string) => Promise<void>
+  resetPassword: (token: string, newPassword: string) => Promise<void>
 }
 
 interface RegisterData {
   email: string
   password: string
+  first_name: string
+  last_name: string
+}
+
+interface VerificationStatusResponse {
+  email: string
+  email_verified: boolean
   first_name: string
   last_name: string
 }
@@ -75,6 +87,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(response.data)
   }
 
+  const verifyEmail = async (token: string) => {
+    const response = await api.post<AuthResponse>('/api/auth/verify-email', { token })
+    const { token: authToken, user } = response.data
+    if (authToken) {
+      localStorage.setItem('token', authToken)
+      setUser(user)
+    }
+    return response.data
+  }
+
+  const resendVerification = async (email: string) => {
+    await api.post('/api/auth/resend-verification', { email })
+  }
+
+  const checkVerificationStatus = async (email: string) => {
+    const response = await api.get<VerificationStatusResponse>('/api/auth/verify-email/status', {
+      params: { email }
+    })
+    return response.data
+  }
+
+  const requestPasswordReset = async (email: string) => {
+    await api.post('/api/auth/forgot-password', { email })
+  }
+
+  const resetPassword = async (token: string, newPassword: string) => {
+    await api.post('/api/auth/reset-password', { token, password: newPassword })
+  }
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -83,6 +124,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       register,
       logout,
       updateProfile,
+      verifyEmail,
+      resendVerification,
+      checkVerificationStatus,
+      requestPasswordReset,
+      resetPassword,
     }}>
       {children}
     </AuthContext.Provider>

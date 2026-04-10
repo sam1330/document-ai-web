@@ -34,10 +34,15 @@ export default function RegisterPage() {
         email: data.email,
         password: data.password,
       })
-      toast.success('Account created successfully!')
-      router.push('/dashboard')
+      toast.success('Account created successfully! Please check your email to verify your account.')
+      router.push(`/email-verification?email=${encodeURIComponent(data.email)}`)
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Registration failed')
+      const code = error.response?.data?.code
+      if (code === 'USER_EXISTS') {
+        toast.error(error.response?.data?.error || 'An account with this email already exists')
+      } else {
+        toast.error(error.response?.data?.message || 'Registration failed')
+      }
     }
   }
 
@@ -158,13 +163,13 @@ export default function RegisterPage() {
               label={
                 <span>
                   I agree to the{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500 transition-colors">
+                  <Link href="/terms" className="text-indigo-600 hover:text-indigo-500 transition-colors">
                     Terms of Service
-                  </a>{' '}
+                  </Link>{' '}
                   and{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500 transition-colors">
+                  <Link href="/privacy" className="text-indigo-600 hover:text-indigo-500 transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </span>
               }
             />
