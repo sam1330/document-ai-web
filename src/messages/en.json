@@ -1,0 +1,160 @@
+{
+  "landing": {
+    "header": {
+      "resume": {
+        "title": "Resume",
+        "aiResumeAnalysis": "AI Resume Analysis",
+        "aiResumeAnalysisDescription": "Get deep insights into your experience alignment.",
+        "ats": "ATS Keyword Match",
+        "atsDescription": "Bypass automated filters with precision matching.",
+        "history": "Analysis History",
+        "historyDescription": "Track your growth across multiple applications."
+      },
+      "howItWorks": "How It Works",
+      "pricing": "Pricing",
+      "resources": {
+        "title": "Resources",
+        "faq": "Support FAQ"
+      }
+    },
+    "common": {
+      "getStartedFree": "Get Started for Free",
+      "goToDashboard": "Go to Dashboard",
+      "watchDemo": "Watch Demo",
+      "createFreeAccount": "Create free account",
+      "startFreeTrial": "Start Free Trial",
+      "contactSupport": "Contact Support",
+      "learnMore": "Learn More"
+    },
+    "hero": {
+      "badge": "v1.0 Now Live",
+      "title": "Land your dream job with <aiIntelligence></aiIntelligence>.",
+      "aiIntelligence": "AI Intelligence",
+      "subtitle": "The most advanced AI-powered job search suite. Optimize resumes, generate cover letters, and track applications with real-time token-based intelligence."
+    },
+    "trust": {
+      "joinedBy": "Joined by {count} professionals",
+      "companies": {
+        "microsoft": "MICROSOFT",
+        "google": "GOOGLE",
+        "amazon": "AMAZON",
+        "meta": "META",
+        "netflix": "NETFLIX"
+      }
+    },
+    "features": {
+      "sectionTitle": "Core Engine",
+      "sectionSubtitle": "Intelligence in every step of your journey.",
+      "sectionDescription": "Our AI engine processes thousands of data points to ensure your application stands out from the competition.",
+      "advancedAnalysis": {
+        "title": "Advanced Analysis",
+        "description": "Deep-learning scanning that identifies semantic gaps in your experience for targeted roles."
+      },
+      "atsShield": {
+        "title": "ATS Shield",
+        "description": "Built-in scoring that mimics modern Applicant Tracking Systems used by top Fortune 500 companies."
+      },
+      "tokenPrecision": {
+        "title": "Token-Based Precision",
+        "description": "Pay only for the intelligence you use. Flexible consumption model that scales with your needs."
+      }
+    },
+    "howItWorks": {
+      "sectionTitle": "Three steps to success",
+      "sectionSubtitle": "Streamlining your path from application to offer.",
+      "steps": {
+        "step1": {
+          "number": "01",
+          "title": "Upload & Sync",
+          "description": "Simply drop your PDF or Word document. We extract metadata and text automatically."
+        },
+        "step2": {
+          "number": "02",
+          "title": "AI Deep Scan",
+          "description": "Target a specific job and let our algorithm identify the perfect alignment strategy."
+        },
+        "step3": {
+          "number": "03",
+          "title": "Review & Optimize",
+          "description": "View detailed historical reports and tweak your resume until you hit the 90+ score mark."
+        }
+      }
+    },
+    "pricing": {
+      "sectionTitle": "Pay-as-you-go Pricing",
+      "sectionSubtitle": "No monthly subscriptions. No hidden fees. We believe in fair, usage-based access to the world's most powerful AI models.",
+      "features": {
+        "unlimitedStorage": "Unlimited Resume Storage",
+        "realTimeTracking": "Real-time Application Tracking",
+        "historicalAnalysis": "Detailed Historical Analysis",
+        "atsScoring": "ATS Compatibility Scoring"
+      },
+      "viewRates": "Create free account to view detailed rates",
+      "tokenSystem": {
+        "title": "Token System",
+        "description": "We charge based on actual token consumption. You pay the direct model cost with a small processing margin. Total transparency, absolute control."
+      },
+      "startFree": {
+        "title": "Start for free",
+        "description": "Every new user gets 30 complimentary tokens."
+      },
+      "transparencyFirst": "Transparency First",
+      "intelligenceOnDemand": "Intelligence on Demand"
+    },
+    "roadmap": {
+      "sectionTitle": "The Future",
+      "sectionSubtitle": "What's coming next?",
+      "sectionDescription": "We are building the end-to-end recruitment bridge. Our upcoming features will close the gap between job seekers and elite recruiters.",
+      "items": {
+        "aiResumeEngine": {
+          "title": "AI Resume Engine",
+          "description": "Instant CV generation based on your target job and personal background.",
+          "status": "Q3 2026"
+        },
+        "recruiterAts": {
+          "title": "Recruiter ATS Matching",
+          "description": "A portal for headhunters to find candidates based on AI-verified skill alignment.",
+          "status": "Q4 2026"
+        }
+      }
+    },
+    "faq": {
+      "sectionTitle": "Support",
+      "sectionSubtitle": "Common Questions",
+      "sectionDescription": "Everything you need to know about the Haku platform.",
+      "questions": {
+        "q1": {
+          "question": "How does the token-based pricing work?",
+          "answer": "Instead of a monthly subscription, you purchase credits (tokens). Each AI analysis consumes a specific amount of tokens based on the complexity and model used. You only pay for what you actually use, with 30 free tokens to get you started."
+        },
+        "q2": {
+          "question": "Is my resume data secure?",
+          "answer": "Absolutely. We use enterprise-grade encryption and never share your data with third parties. You can delete your resumes and analysis history at any time from your dashboard."
+        },
+        "q3": {
+          "question": "What makes Haku different from other ATS tools?",
+          "answer": "Most tools just search for keywords. Haku uses advanced LLMs to understand the semantic intent of your experience and how it aligns with specific job requirements, providing much deeper insights than a standard keyword matcher."
+        },
+        "q4": {
+          "question": "Can I use Haku for different languages?",
+          "answer": "Currently, we are optimized for English, but our AI models support multiple languages. You can upload resumes in various languages, though the structured matching feedback is currently focused on English markets."
+        }
+      },
+      "stillHaveQuestions": {
+        "title": "Still have questions?",
+        "description": "We're here to help you land that role."
+      }
+    },
+    "navigation": {
+      "features": "Features",
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "faq": "FAQ"
+    },
+    "language": {
+      "english": "English",
+      "spanish": "Español",
+      "selectLanguage": "Select Language"
+    }
+  }
+}

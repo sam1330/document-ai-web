@@ -1,0 +1,160 @@
+{
+  "landing": {
+    "header": {
+      "resume": {
+        "title": "Curriculum",
+        "aiResumeAnalysis": "Análisis IA de Curriculum",
+        "aiResumeAnalysisDescription": "Obtén información detallada sobre la coherencia de tu experiencia.",
+        "ats": "Coincidencia de palabras clave ATS",
+        "atsDescription": "Pasa los filtros automáticos gracias a la coincidencia precisa.",
+        "history": "Historial de análisis",
+        "historyDescription": "Realiza un seguimiento de tu evolución en varias aplicaciones."
+      },
+      "howItWorks": "Como Funciona",
+      "pricing": "Precios",
+      "resources": {
+        "title": "Recursos",
+        "faq": "Preguntas FAQ"
+      }
+    },
+    "common": {
+      "getStartedFree": "Comienza Gratis",
+      "goToDashboard": "Ir al Panel",
+      "watchDemo": "Ver Demo",
+      "createFreeAccount": "Crear cuenta gratis",
+      "startFreeTrial": "Comenzar Prueba Gratuita",
+      "contactSupport": "Contactar Soporte",
+      "learnMore": "Saber Más"
+    },
+    "hero": {
+      "badge": "v1.0 Ahora Disponible",
+      "title": "Consigue tu trabajo soñado con <aiIntelligence></aiIntelligence>.",
+      "aiIntelligence": "Inteligencia IA",
+      "subtitle": "La suite de búsqueda de empleo más avanzada impulsada por IA. Optimiza currículums, genera cartas de presentación y rastrea solicitudes con inteligencia en tiempo real basada en tokens."
+    },
+    "trust": {
+      "joinedBy": "Únete a {count} profesionales",
+      "companies": {
+        "microsoft": "MICROSOFT",
+        "google": "GOOGLE",
+        "amazon": "AMAZON",
+        "meta": "META",
+        "netflix": "NETFLIX"
+      }
+    },
+    "features": {
+      "sectionTitle": "Motor Principal",
+      "sectionSubtitle": "Inteligencia en cada paso de tu camino.",
+      "sectionDescription": "Nuestro motor de IA procesa miles de puntos de datos para asegurar que tu solicitud destaque entre la competencia.",
+      "advancedAnalysis": {
+        "title": "Análisis Avanzado",
+        "description": "Escaneo con aprendizaje profundo que identifica brechas semánticas en tu experiencia para roles específicos."
+      },
+      "atsShield": {
+        "title": "Escudo ATS",
+        "description": "Puntuación integrada que simula los Sistemas de Seguimiento de Candidatos modernos usados por las principales empresas Fortune 500."
+      },
+      "tokenPrecision": {
+        "title": "Precisión Basada en Tokens",
+        "description": "Paga solo por la inteligencia que uses. Modelo de consumo flexible que se adapta a tus necesidades."
+      }
+    },
+    "howItWorks": {
+      "sectionTitle": "Tres pasos hacia el éxito",
+      "sectionSubtitle": "Simplificando tu camino desde la solicitud hasta la oferta.",
+      "steps": {
+        "step1": {
+          "number": "01",
+          "title": "Sube y Sincroniza",
+          "description": "Simplemente arrastra tu documento PDF o Word. Extraemos metadatos y texto automáticamente."
+        },
+        "step2": {
+          "number": "02",
+          "title": "Escaneo Profundo IA",
+          "description": "Apunta a un trabajo específico y deja que nuestro algoritmo identifique la estrategia de alineación perfecta."
+        },
+        "step3": {
+          "number": "03",
+          "title": "Revisa y Optimiza",
+          "description": "Consulta informes históricos detallados y ajusta tu currículum hasta alcanzar una puntuación de 90+."
+        }
+      }
+    },
+    "pricing": {
+      "sectionTitle": "Precios de Pago por Uso",
+      "sectionSubtitle": "Sin suscripciones mensuales. Sin cargos ocultos. Creemos en un acceso justo y basado en el uso a los modelos de IA más potentes del mundo.",
+      "features": {
+        "unlimitedStorage": "Almacenamiento Ilimitado de Currículums",
+        "realTimeTracking": "Rastreo de Solicitudes en Tiempo Real",
+        "historicalAnalysis": "Análisis Histórico Detallado",
+        "atsScoring": "Puntuación de Compatibilidad ATS"
+      },
+      "viewRates": "Crea una cuenta gratis para ver las tarifas detalladas",
+      "tokenSystem": {
+        "title": "Sistema de Tokens",
+        "description": "Cobramos según el consumo real de tokens. Pagas el costo directo del modelo con un pequeño margen de procesamiento. Transparencia total, control absoluto."
+      },
+      "startFree": {
+        "title": "Comienza gratis",
+        "description": "Cada usuario nuevo recibe 30 tokens de cortesía."
+      },
+      "transparencyFirst": "Transparencia Primero",
+      "intelligenceOnDemand": "Inteligencia Bajo Demanda"
+    },
+    "roadmap": {
+      "sectionTitle": "El Futuro",
+      "sectionSubtitle": "¿Qué viene después?",
+      "sectionDescription": "Estamos construyendo el puente de reclutamiento integral. Nuestras próximas funciones cerrarán la brecha entre buscadores de empleo y reclutadores de élite.",
+      "items": {
+        "aiResumeEngine": {
+          "title": "Motor de Currículums IA",
+          "description": "Generación instantánea de CV basada en tu trabajo objetivo y antecedentes personales.",
+          "status": "Q3 2026"
+        },
+        "recruiterAts": {
+          "title": "Coincidencia ATS para Reclutadores",
+          "description": "Un portal para headhunters para encontrar candidatos basados en alineación de habilidades verificada por IA.",
+          "status": "Q4 2026"
+        }
+      }
+    },
+    "faq": {
+      "sectionTitle": "Soporte",
+      "sectionSubtitle": "Preguntas Frecuentes",
+      "sectionDescription": "Todo lo que necesitas saber sobre la plataforma Haku.",
+      "questions": {
+        "q1": {
+          "question": "¿Cómo funciona el precio basado en tokens?",
+          "answer": "En lugar de una suscripción mensual, compras créditos (tokens). Cada análisis de IA consume una cantidad específica de tokens según la complejidad y el modelo utilizado. Solo pagas por lo que realmente usas, con 30 tokens gratuitos para comenzar."
+        },
+        "q2": {
+          "question": "¿Mis datos de currículum están seguros?",
+          "answer": "Absolutamente. Usamos encriptación de nivel empresarial y nunca compartimos tus datos con terceros. Puedes eliminar tus currículums e historial de análisis en cualquier momento desde tu panel."
+        },
+        "q3": {
+          "question": "¿Qué hace diferente a Haku de otras herramientas ATS?",
+          "answer": "La mayoría de las herramientas solo buscan palabras clave. Haku utiliza LLMs avanzados para entender la intención semántica de tu experiencia y cómo se alinea con los requisitos específicos del trabajo, proporcionando insights mucho más profundos que un buscador estándar de palabras clave."
+        },
+        "q4": {
+          "question": "¿Puedo usar Haku para diferentes idiomas?",
+          "answer": "Actualmente, estamos optimizados para inglés, pero nuestros modelos de IA admiten múltiples idiomas. Puedes subir currículums en varios idiomas, aunque los comentarios de coincidencia estructurada están actualmente enfocados en mercados de habla inglesa."
+        }
+      },
+      "stillHaveQuestions": {
+        "title": "¿Aún tienes preguntas?",
+        "description": "Estamos aquí para ayudarte a conseguir ese puesto."
+      }
+    },
+    "navigation": {
+      "features": "Características",
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "faq": "Preguntas Frecuentes"
+    },
+    "language": {
+      "english": "English",
+      "spanish": "Español",
+      "selectLanguage": "Seleccionar Idioma"
+    }
+  }
+}

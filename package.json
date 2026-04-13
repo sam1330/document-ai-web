@@ -11,14 +11,18 @@
     "test:spec": "playwright test"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.8.2",
     "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.2.1",
+    "@types/negotiator": "^0.6.4",
     "axios": "^1.11.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.544.0",
+    "negotiator": "^1.0.0",
     "next": "^15.5.9",
+    "next-intl": "^4.9.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",

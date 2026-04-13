@@ -18,29 +18,37 @@ import {
   BriefcaseIcon,
   DocumentTextIcon
 } from '@heroicons/react/24/outline'
-import { Menu, Transition, Popover } from '@headlessui/react'
+import { Menu, Transition, Popover, PopoverButton, PopoverPanel, MenuButton, MenuItems, MenuItem, PopoverGroup } from '@headlessui/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslations } from 'next-intl'
 
-const resumeFeatures = [
+export default function Header() {
+  const t = useTranslations()
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+
+  const resumeFeatures = [
   {
-    name: 'AI Resume Analysis',
-    description: 'Get deep insights into your experience alignment.',
+    name: t('landing.header.resume.aiResumeAnalysis'),
+    description: t('landing.header.resume.aiResumeAnalysisDescription'),
     href: '/resumes',
     icon: SparklesIcon,
     color: 'text-indigo-600',
     bgColor: 'bg-indigo-50'
   },
   {
-    name: 'ATS Keyword Match',
-    description: 'Bypass automated filters with precision matching.',
+    name: t('landing.header.resume.ats'),
+    description: t('landing.header.resume.atsDescription'),
     href: '/resumes',
     icon: CpuChipIcon,
     color: 'text-emerald-600',
     bgColor: 'bg-emerald-50'
   },
   {
-    name: 'Analysis History',
-    description: 'Track your growth across multiple applications.',
+    name: t('landing.header.resume.history'),
+    description: t('landing.header.resume.historyDescription'),
     href: '/resumes',
     icon: ClockIcon,
     color: 'text-amber-600',
@@ -53,10 +61,6 @@ const resourceLinks = [
   { name: 'Support FAQ', href: '#faq', icon: QuestionMarkCircleIcon },
   { name: 'Community', href: '#', icon: UserGroupIcon },
 ]
-
-export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { user, logout } = useAuth()
 
   const handleLogout = () => {
     logout()
@@ -81,16 +85,16 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            <Popover.Group className="flex items-center space-x-8">
+            <PopoverGroup className="flex items-center space-x-8">
               
               {/* Resume Mega Menu */}
               <Popover className="relative">
                 {({ open }) => (
                   <>
-                    <Popover.Button className={`group flex items-center space-x-1 outline-none text-[17px] font-medium transition-colors ${open ? 'text-indigo-600' : 'text-slate-500 hover:text-slate-900'}`}>
-                      <span>Resume</span>
+                    <PopoverButton className={`group flex items-center space-x-1 outline-none text-[17px] font-medium transition-colors ${open ? 'text-indigo-600' : 'text-slate-500 hover:text-slate-900'}`}>
+                      <span>{t('landing.header.resume.title')}</span>
                       <ChevronDownIcon className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180 text-indigo-500' : 'text-slate-400'}`} />
-                    </Popover.Button>
+                    </PopoverButton>
 
                     <Transition
                       as={Fragment}
@@ -101,7 +105,7 @@ export default function Header() {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                      <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
                         <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-2xl ring-1 ring-slate-900/5">
                           <div className="p-4">
                             {resumeFeatures.map((item) => (
@@ -127,23 +131,23 @@ export default function Header() {
                              <Link href="/resumes" className="text-xs font-black text-indigo-600 uppercase tracking-widest hover:text-indigo-700">Explore Tool &rarr;</Link>
                           </div>
                         </div>
-                      </Popover.Panel>
+                      </PopoverPanel>
                     </Transition>
                   </>
                 )}
               </Popover>
 
-              <a href="#how-it-works" className="text-[17px] font-medium text-slate-500 hover:text-slate-900 transition-colors">How it works</a>
-              <a href="#pricing" className="text-[17px] font-medium text-slate-500 hover:text-slate-900 transition-colors">Pricing</a>
+              <a href="#how-it-works" className="text-[17px] font-medium text-slate-500 hover:text-slate-900 transition-colors">{t('landing.header.howItWorks')}</a>
+              <a href="#pricing" className="text-[17px] font-medium text-slate-500 hover:text-slate-900 transition-colors">{t('landing.header.pricing')}</a>
 
               {/* Resources Dropdown */}
               <Popover className="relative">
                 {({ open }) => (
                   <>
-                    <Popover.Button className={`group flex items-center space-x-1 outline-none text-[17px] font-medium transition-colors ${open ? 'text-indigo-600' : 'text-slate-500 hover:text-slate-900'}`}>
-                      <span>Resources</span>
+                    <PopoverButton className={`group flex items-center space-x-1 outline-none text-[17px] font-medium transition-colors ${open ? 'text-indigo-600' : 'text-slate-500 hover:text-slate-900'}`}>
+                      <span>{t('landing.header.resources.title')}</span>
                       <ChevronDownIcon className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180 text-indigo-500' : 'text-slate-400'}`} />
-                    </Popover.Button>
+                    </PopoverButton>
 
                     <Transition
                       as={Fragment}
@@ -154,7 +158,7 @@ export default function Header() {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-56 -translate-x-1/2 px-4">
+                      <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-56 -translate-x-1/2 px-4">
                         <div className="w-56 overflow-hidden rounded-2xl bg-white p-2 text-sm shadow-2xl ring-1 ring-slate-900/5">
                           {resourceLinks.map((item) => (
                             <Link
@@ -167,25 +171,26 @@ export default function Header() {
                             </Link>
                           ))}
                         </div>
-                      </Popover.Panel>
+                      </PopoverPanel>
                     </Transition>
                   </>
                 )}
               </Popover>
 
-            </Popover.Group>
+            </PopoverGroup>
           </div>
 
           {/* Action Section */}
           <div className="flex items-center">
+            <LanguageSwitcher />
             {user ? (
               <Menu as="div" className="relative">
-                <Menu.Button className="flex items-center space-x-3 p-1.5 pr-4 rounded-full bg-slate-50 border border-slate-100 hover:bg-slate-100 transition-all">
+                <MenuButton className="flex items-center space-x-3 p-1.5 pr-4 rounded-full bg-slate-50 border border-slate-100 hover:bg-slate-100 transition-all">
                    <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-sm">
                       <UserIcon className="h-4 w-4" />
                    </div>
                    <span className="text-sm font-bold text-slate-700">{user.first_name}</span>
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-100"
@@ -195,31 +200,31 @@ export default function Header() {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-slate-900/5 focus:outline-none">
-                    <Menu.Item>
-                      {({ active }) => (
+                  <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-slate-900/5 focus:outline-none">
+                    <MenuItem>
+                      {({ focus }) => (
                         <Link
                           href="/dashboard"
-                          className={`flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${active ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'}`}
+                          className={`flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${focus ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'}`}
                         >
                           <BriefcaseIcon className="h-5 w-5 opacity-70" />
                           <span>Dashboard</span>
                         </Link>
                       )}
-                    </Menu.Item>
+                    </MenuItem>
                     <div className="my-1 border-t border-slate-50"></div>
-                    <Menu.Item>
-                      {({ active }) => (
+                    <MenuItem>
+                      {({ focus }) => (
                         <button
                           onClick={handleLogout}
-                          className={`flex w-full items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${active ? 'bg-rose-50 text-rose-700' : 'text-slate-600'}`}
+                          className={`flex w-full items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${focus ? 'bg-rose-50 text-rose-700' : 'text-slate-600'}`}
                         >
                           <ArrowRightOnRectangleIcon className="h-5 w-5 opacity-70" />
                           <span>Sign out</span>
                         </button>
                       )}
-                    </Menu.Item>
-                  </Menu.Items>
+                    </MenuItem>
+                  </MenuItems>
                 </Transition>
               </Menu>
             ) : (

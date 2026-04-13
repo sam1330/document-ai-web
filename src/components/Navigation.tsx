@@ -111,10 +111,10 @@ export default function Navigation() {
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Account</p>
                   </div>
                   <MenuItem>
-                    {({ active }) => (
+                    {({ focus }) => (
                       <Link
                         href="/profile"
-                        className={`${active ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'
+                        className={`${focus ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'
                           } flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors`}
                       >
                         <Cog6ToothIcon className="mr-3 h-5 w-5 opacity-70" />
@@ -123,10 +123,10 @@ export default function Navigation() {
                     )}
                   </MenuItem>
                   <MenuItem>
-                    {({ active }) => (
+                    {({ focus }) => (
                       <button
                         onClick={handleLogout}
-                        className={`${active ? 'bg-rose-50 text-rose-700' : 'text-slate-600'
+                        className={`${focus ? 'bg-rose-50 text-rose-700' : 'text-slate-600'
                           } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
                       >
                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 opacity-70" />
