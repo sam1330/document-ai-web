@@ -247,6 +247,116 @@
       "requestNewVerification": "Request new verification email",
       "goToDashboard": "Go to dashboard"
     },
+    "resumes": {
+      "title": "Resume Repository",
+      "subtitle": "Manage your professional documents and track AI analyses across various roles.",
+      "uploadNew": "Upload New",
+      "searchPlaceholder": "Search resumes by filename...",
+      "filters": {
+        "all": "all",
+        "analyzed": "analyzed",
+        "pending": "pending"
+      },
+      "emptyState": {
+        "title": "Build your Talent Library",
+        "description": "Upload your CV in PDF or DOCX format. Our AI handles the extraction and deep analysis against any role.",
+        "buttonText": "Select your Resume",
+        "supportedFormats": "Supports PDF and DOCX (Max 10MB)"
+      },
+      "fileType": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
+      "analysis": {
+        "latestAnalysis": "Latest Analysis",
+        "score": "Score",
+        "readyForAnalysis": "Ready for deep analysis",
+        "newAnalysis": "New Analysis",
+        "goDetailedAnalysis": "Go Detailed Analysis",
+        "viewLastReport": "View Last Report",
+        "atCompany": "at"
+      },
+      "modal": {
+        "title": "Analyze Resume",
+        "subtitle": "This action will cost you 10 credits",
+        "cancel": "Cancel",
+        "startAnalysis": "Start Analysis",
+        "targetRole": "Target Role",
+        "targetRolePlaceholder": "e.g. Senior Frontend Engineer",
+        "targetCompany": "Target Company",
+        "targetCompanyPlaceholder": "e.g. Google",
+        "jobDescription": "Job Description",
+        "jobDescriptionPlaceholder": "Paste the full job description here...",
+        "jobDescriptionHint": "Paste the job description below to tailor the AI analysis to this specific role."
+      },
+      "upload": {
+        "success": "Resume uploaded successfully!",
+        "failed": "Failed to upload resume",
+        "invalidType": "Please upload a PDF or DOCX file",
+        "invalidSize": "File size must be less than 10MB"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete this resume?",
+        "success": "Resume deleted successfully!",
+        "failed": "Failed to delete resume"
+      },
+      "errors": {
+        "failedToLoad": "Failed to load resumes",
+        "failedToAnalyze": "Failed to analyze resume",
+        "allFieldsRequired": "All fields are required"
+      }
+    },
+    "resumeDetail": {
+      "back": "Back",
+      "refresh": "Refresh",
+      "viewOriginal": "View Original",
+      "analysisInProgress": {
+        "title": "Analysis in Progress",
+        "description": "We're still processing your resume. This usually takes a few moments."
+      },
+      "history": {
+        "title": "History",
+        "sessionCount": "{{count}} Session{{count, plural, one{} other{s}}}",
+        "noHistory": "No history yet",
+        "latest": "Latest",
+        "historical": "(Historical)"
+      },
+      "analysisOverview": {
+        "title": "Analysis Overview",
+        "noOverview": "No overview provided."
+      },
+      "strongPoints": {
+        "title": "Strong Points",
+        "noneIdentified": "None identified."
+      },
+      "weaknesses": {
+        "title": "Potential Gaps",
+        "noneIdentified": "None identified."
+      },
+      "score": {
+        "title": "Compatibility Score",
+        "excellentMatch": "Excellent Match!",
+        "goodPotential": "Good Potential",
+        "significantGaps": "Significant Gaps Found"
+      },
+      "jobDescription": {
+        "title": "Target Context",
+        "company": "Company",
+        "notAvailable": "N/A",
+        "noDescription": "No job description provided.",
+        "viewFullDescription": "View Full Description",
+        "fullTitle": "Full Job Description"
+      },
+      "version": {
+        "latest": "Latest Version",
+        "historical": "Historical Analysis",
+        "verified": "verified",
+        "archived": "archived"
+      },
+      "errors": {
+        "failedToLoad": "Failed to load resume details"
+      }
+    },
     "toast": {
       "signInSuccess": "Successfully logged in!",
       "signUpSuccess": "Signed up successfully",

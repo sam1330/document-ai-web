@@ -32,6 +32,7 @@ import { Modal, Textarea, Button } from "@/components/ui";
 import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useTranslations } from "next-intl";
 
 const initialResumeValue: ResumeDetailResponse = {
   resume: {
@@ -52,6 +53,7 @@ const initialResumeValue: ResumeDetailResponse = {
 };
 
 export default function ResumeDetailPage() {
+  const t = useTranslations()
   const { user } = useAuth();
   const { id } = useParams();
   const router = useRouter();
@@ -83,7 +85,7 @@ export default function ResumeDetailPage() {
       setSelectedAnalysis(resumeData.latest_analysis || null);
     } catch (error) {
       console.error("Failed to fetch page data:", error);
-      toast.error("Failed to load resume details");
+      toast.error(t("resumeDetail.errors.failedToLoad"));
     } finally {
       setResumeLoading(false);
     }
@@ -154,7 +156,7 @@ export default function ResumeDetailPage() {
                           <ClockIcon className="h-3 w-3 mr-1" />
                         )}
                         {selectedAnalysis.target_role}
-                        {!isLatest && <span className="ml-2 opacity-60 font-medium">(Historical)</span>}
+                        {!isLatest && <span className="ml-2 opacity-60 font-medium">{t('resumeDetail.history.historical')}</span>}
                       </span>
                     ) : null}
                     <span className="flex items-center">
@@ -170,11 +172,11 @@ export default function ResumeDetailPage() {
               </div>
               <div className="flex items-center space-x-2">
                 <Button variant="outline" size="sm" onClick={fetchData}>
-                  Refresh
+                  {t('resumeDetail.refresh')}
                 </Button>
                 <Link href={`/api/resume/${id}/download`} target="_blank">
                   <Button variant="outline" size="sm">
-                    View Original
+                    {t('resumeDetail.viewOriginal')}
                   </Button>
                 </Link>
               </div>
@@ -186,9 +188,9 @@ export default function ResumeDetailPage() {
           {!resume.resume.is_processed ? (
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-12 text-center">
               <SparklesIconSolid className="h-12 w-12 text-indigo-500 mx-auto mb-4 animate-pulse" />
-              <h2 className="text-xl font-semibold text-slate-900">Analysis in Progress</h2>
+              <h2 className="text-xl font-semibold text-slate-900">{t('resumeDetail.analysisInProgress.title')}</h2>
               <p className="text-slate-500 mt-2 max-w-sm mx-auto">
-                We're still processing your resume. This usually takes a few moments.
+                {t('resumeDetail.analysisInProgress.description')}
               </p>
             </div>
           ) : (
@@ -200,7 +202,7 @@ export default function ResumeDetailPage() {
                   <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
                     <h3 className="font-bold text-slate-800 flex items-center">
                       <ClockIcon className="h-5 w-5 mr-2 text-indigo-500" />
-                      History
+                      {t('resumeDetail.history.title')}
                     </h3>
                     <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-black uppercase tracking-widest">
                       {analyses.length} Session{analyses.length !== 1 ? 's' : ''}
@@ -239,7 +241,7 @@ export default function ResumeDetailPage() {
                           {analysis.id === resume.latest_analysis?.id && (
                             <span className="text-emerald-500 flex items-center">
                               <CheckCircleIconSolid className="h-3 w-3 mr-1" />
-                              Latest
+                              {t('resumeDetail.history.latest')}
                             </span>
                           )}
                         </div>
@@ -249,7 +251,7 @@ export default function ResumeDetailPage() {
                       <div className="py-10 text-center">
                         <ListBulletIcon className="h-10 w-10 text-slate-200 mx-auto mb-2" />
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-                          No history yet
+                          {t('resumeDetail.history.noHistory')}
                         </p>
                       </div>
                     )}
@@ -264,11 +266,11 @@ export default function ResumeDetailPage() {
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                   <div className="bg-indigo-50/30 px-6 py-5 border-b border-indigo-100 flex items-center">
                     <LightBulbIcon className="h-6 w-6 text-indigo-600 mr-2" />
-                    <h2 className="text-lg font-bold text-slate-900">Analysis Overview</h2>
+                    <h2 className="text-lg font-bold text-slate-900">{t('resumeDetail.analysisOverview.title')}</h2>
                   </div>
                   <div className="p-8">
                     <p className="text-slate-700 leading-relaxed text-lg">
-                      {analysisData?.overview || "No overview provided."}
+                      {analysisData?.overview || t('resumeDetail.analysisOverview.noOverview')}
                     </p>
                   </div>
                 </div>
@@ -281,7 +283,7 @@ export default function ResumeDetailPage() {
                       <div className="p-2 bg-emerald-100 rounded-xl mr-3">
                         <HandThumbUpIcon className="h-6 w-6 text-emerald-600" />
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900">Strong Points</h3>
+                      <h3 className="text-xl font-bold text-slate-900">{t('resumeDetail.strongPoints.title')}</h3>
                     </div>
                     <ul className="space-y-4">
                       {analysisData?.strongPoints?.map((point, index) => (
@@ -291,7 +293,7 @@ export default function ResumeDetailPage() {
                         </li>
                       ))}
                       {(!analysisData?.strongPoints || analysisData.strongPoints.length === 0) && (
-                        <li className="text-slate-400 italic">None identified.</li>
+                        <li className="text-slate-400 italic">{t('resumeDetail.strongPoints.noneIdentified')}</li>
                       )}
                     </ul>
                   </div>
@@ -302,7 +304,7 @@ export default function ResumeDetailPage() {
                       <div className="p-2 bg-amber-100 rounded-xl mr-3">
                         <ExclamationTriangleIcon className="h-6 w-6 text-amber-600" />
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900">Potential Gaps</h3>
+                      <h3 className="text-xl font-bold text-slate-900">{t('resumeDetail.weaknesses.title')}</h3>
                     </div>
                     <ul className="space-y-4">
                       {analysisData?.weaknesses?.map((point, index) => (
@@ -314,7 +316,7 @@ export default function ResumeDetailPage() {
                         </li>
                       ))}
                       {(!analysisData?.weaknesses || analysisData.weaknesses.length === 0) && (
-                        <li className="text-slate-400 italic">None identified.</li>
+                        <li className="text-slate-400 italic">{t('resumeDetail.weaknesses.noneIdentified')}</li>
                       )}
                     </ul>
                   </div>
@@ -328,7 +330,7 @@ export default function ResumeDetailPage() {
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
                   <div className="relative bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-                      Compatibility Score
+                      {t('resumeDetail.score.title')}
                     </span>
                     <div className="relative flex items-center justify-center">
                       <svg className="w-32 h-32 transform -rotate-90">
@@ -360,7 +362,7 @@ export default function ResumeDetailPage() {
                       </div>
                     </div>
                     <p className="mt-4 text-sm text-slate-600 font-medium">
-                      {score >= 8 ? "Excellent Match!" : score >= 6 ? "Good Potential" : "Significant Gaps Found"}
+                      {score >= 8 ? t('resumeDetail.score.excellentMatch') : score >= 6 ? t('resumeDetail.score.goodPotential') : t('resumeDetail.score.significantGaps')}
                     </p>
                   </div>
                 </div>
@@ -369,26 +371,26 @@ export default function ResumeDetailPage() {
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                   <div className="border-b border-slate-100 px-6 py-4 bg-slate-50/50 flex items-center">
                     <BriefcaseIcon className="h-5 w-5 mr-2 text-slate-500" />
-                    <h2 className="font-semibold text-slate-800 text-sm">Target Context</h2>
+                    <h2 className="font-semibold text-slate-800 text-sm">{t('resumeDetail.jobDescription.title')}</h2>
                   </div>
                   <div className="p-6">
                     <div className="mb-4">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Company</p>
-                       <p className="font-bold text-slate-900">{selectedAnalysis?.target_company || 'N/A'}</p>
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('resumeDetail.jobDescription.company')}</p>
+                       <p className="font-bold text-slate-900">{selectedAnalysis?.target_company || t('resumeDetail.jobDescription.notAvailable')}</p>
                     </div>
                     <div className="text-sm text-slate-600 line-clamp-[8] whitespace-pre-wrap leading-relaxed border-t border-slate-50 pt-4">
-                      {selectedAnalysis?.job_description || "No job description provided."}
+                      {selectedAnalysis?.job_description || t('resumeDetail.jobDescription.noDescription')}
                     </div>
                     <button
                       onClick={() => setIsJDModalOpen(true)}
                       className="mt-4 text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
                     >
-                      View Full Description
+                      {t('resumeDetail.jobDescription.viewFullDescription')}
                     </button>
                     <Modal
                       isOpen={isJDModalOpen}
                       onClose={() => setIsJDModalOpen(false)}
-                      title="Full Job Description"
+                      title={t('resumeDetail.jobDescription.fullTitle')}
                     >
                       <div className="py-4">
                         <div className="bg-slate-50 rounded-xl p-6 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap max-h-[60vh] overflow-y-auto border border-slate-200">
@@ -409,11 +411,11 @@ export default function ResumeDetailPage() {
                       <ClockIcon className="h-5 w-5 text-amber-600 mr-2" />
                     )}
                     <span className={`font-semibold ${isLatest ? 'text-emerald-900' : 'text-amber-900'}`}>
-                      {isLatest ? 'Latest Version' : 'Historical Analysis'}
+                      {isLatest ? t('resumeDetail.version.latest') : t('resumeDetail.version.historical')}
                     </span>
                   </div>
                   <p className={`text-xs mt-2 ${isLatest ? 'text-emerald-700' : 'text-amber-700'}`}>
-                    Match {isLatest ? 'verified' : 'archived'} on {selectedAnalysis?.created_at ? formatDate(selectedAnalysis.created_at) : 'N/A'}.
+                    Match {isLatest ? t('resumeDetail.version.verified') : t('resumeDetail.version.archived')} on {selectedAnalysis?.created_at ? formatDate(selectedAnalysis.created_at) : t('resumeDetail.jobDescription.notAvailable')}.
                   </p>
                 </div>
 

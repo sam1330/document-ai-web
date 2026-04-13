@@ -247,6 +247,116 @@
       "requestNewVerification": "Solicitar nuevo correo de verificación",
       "goToDashboard": "Ir al panel"
     },
+    "resumes": {
+      "title": "Repositorio de Currículums",
+      "subtitle": "Administra tus documentos profesionales y rastrea análisis de IA en varios roles.",
+      "uploadNew": "Subir Nuevo",
+      "searchPlaceholder": "Buscar currículums por nombre de archivo...",
+      "filters": {
+        "all": "todos",
+        "analyzed": "analizados",
+        "pending": "pendientes"
+      },
+      "emptyState": {
+        "title": "Construye tu Biblioteca de Talentos",
+        "description": "Sube tu CV en formato PDF o DOCX. Nuestra IA se encarga de la extracción y el análisis profundo para cualquier rol.",
+        "buttonText": "Selecciona tu Currículum",
+        "supportedFormats": "Compatible con PDF y DOCX (Máx 10MB)"
+      },
+      "fileType": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
+      "analysis": {
+        "latestAnalysis": "Último Análisis",
+        "score": "Puntuación",
+        "readyForAnalysis": "Listo para análisis profundo",
+        "newAnalysis": "Nuevo Análisis",
+        "goDetailedAnalysis": "Análisis Detallado",
+        "viewLastReport": "Ver Último Informe",
+        "atCompany": "en"
+      },
+      "modal": {
+        "title": "Analizar Currículum",
+        "subtitle": "Esta acción te costará 10 créditos",
+        "cancel": "Cancelar",
+        "startAnalysis": "Iniciar Análisis",
+        "targetRole": "Rol Objetivo",
+        "targetRolePlaceholder": "ej. Ingeniero Frontend Senior",
+        "targetCompany": "Empresa Objetivo",
+        "targetCompanyPlaceholder": "ej. Google",
+        "jobDescription": "Descripción del Trabajo",
+        "jobDescriptionPlaceholder": "Pega la descripción completa del trabajo aquí...",
+        "jobDescriptionHint": "Pega la descripción del trabajo a continuación para personalizar el análisis de IA para este rol específico."
+      },
+      "upload": {
+        "success": "¡Currículum subido exitosamente!",
+        "failed": "Error al subir el currículum",
+        "invalidType": "Por favor sube un archivo PDF o DOCX",
+        "invalidSize": "El tamaño del archivo debe ser menor a 10MB"
+      },
+      "delete": {
+        "confirm": "¿Estás seguro de que quieres eliminar este currículum?",
+        "success": "¡Currículum eliminado exitosamente!",
+        "failed": "Error al eliminar el currículum"
+      },
+      "errors": {
+        "failedToLoad": "Error al cargar los currículums",
+        "failedToAnalyze": "Error al analizar el currículum",
+        "allFieldsRequired": "Todos los campos son obligatorios"
+      }
+    },
+    "resumeDetail": {
+      "back": "Volver",
+      "refresh": "Actualizar",
+      "viewOriginal": "Ver Original",
+      "analysisInProgress": {
+        "title": "Análisis en Progreso",
+        "description": "Todavía estamos procesando tu currículum. Esto suele tomar unos momentos."
+      },
+      "history": {
+        "title": "Historial",
+        "sessionCount": "{{count}} Sesión{{count, plural, one{} other{es}}}",
+        "noHistory": "Aún no hay historial",
+        "latest": "Último",
+        "historical": "(Histórico)"
+      },
+      "analysisOverview": {
+        "title": "Resumen del Análisis",
+        "noOverview": "No se proporcionó resumen."
+      },
+      "strongPoints": {
+        "title": "Puntos Fuertes",
+        "noneIdentified": "Ninguno identificado."
+      },
+      "weaknesses": {
+        "title": "Brechas Potenciales",
+        "noneIdentified": "Ninguna identificada."
+      },
+      "score": {
+        "title": "Puntuación de Compatibilidad",
+        "excellentMatch": "¡Excelente Coincidencia!",
+        "goodPotential": "Buen Potencial",
+        "significantGaps": "Se Encontraron Brechas Significativas"
+      },
+      "jobDescription": {
+        "title": "Contexto Objetivo",
+        "company": "Empresa",
+        "notAvailable": "N/D",
+        "noDescription": "No se proporcionó descripción del trabajo.",
+        "viewFullDescription": "Ver Descripción Completa",
+        "fullTitle": "Descripción Completa del Trabajo"
+      },
+      "version": {
+        "latest": "Última Versión",
+        "historical": "Análisis Histórico",
+        "verified": "verificado",
+        "archived": "archivado"
+      },
+      "errors": {
+        "failedToLoad": "Error al cargar los detalles del currículum"
+      }
+    },
     "toast": {
       "signInSuccess": "¡Sesión iniciada exitosamente!",
       "signUpSuccess": "Registrado exitosamente",

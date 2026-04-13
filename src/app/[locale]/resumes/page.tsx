@@ -6,27 +6,25 @@ import Navigation from '@/components/Navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import {
   DocumentTextIcon,
-  PlusIcon,
   TrashIcon,
   EyeIcon,
   SparklesIcon,
   CloudArrowUpIcon,
-  PencilIcon,
   MagnifyingGlassIcon,
   FunnelIcon,
-  ClockIcon,
-  CheckCircleIcon,
   InformationCircleIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import api from '@/lib/api'
-import { Resume, Analysis } from '@/types'
+import { Resume } from '@/types'
 import { formatDate, formatFileSize } from '@/lib/utils'
 import toast from 'react-hot-toast'
 import { Modal, Textarea, Button, Input } from '@/components/ui'
 import { useCredits } from '@/contexts/CreditContext'
+import { useTranslations } from 'next-intl'
 
 export default function ResumesPage() {
+  const t = useTranslations()
   const { user } = useAuth();
   const { getBalance } = useCredits();
 
@@ -66,7 +64,7 @@ export default function ResumesPage() {
       setResumes(response.data.resumes || [])
     } catch (error) {
       console.error('Failed to fetch resumes:', error)
-      toast.error('Failed to load resumes')
+      toast.error(t('resumes.errors.failedToLoad'))
       setResumes([]);
     } finally {
       setResumesLoading(false)
@@ -80,13 +78,13 @@ export default function ResumesPage() {
     // Validate file type
     const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
     if (!allowedTypes.includes(file.type)) {
-      toast.error('Please upload a PDF or DOCX file')
+      toast.error(t('resumes.upload.invalidType'))
       return
     }
 
     // Validate file size (10MB max)
     if (file.size > 10 * 1024 * 1024) {
-      toast.error('File size must be less than 10MB')
+      toast.error(t('resumes.upload.invalidSize'))
       return
     }
 
@@ -100,10 +98,10 @@ export default function ResumesPage() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      toast.success('Resume uploaded successfully!')
+      toast.success(t('resumes.upload.success'))
       fetchResumes()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to upload resume')
+      toast.error(error.response?.data?.message || t('resumes.upload.failed'))
     } finally {
       setUploading(false)
       // Reset file input
@@ -112,14 +110,14 @@ export default function ResumesPage() {
   }
 
   const handleDeleteResume = async (resumeId: string) => {
-    if (!confirm('Are you sure you want to delete this resume?')) return
+    if (!confirm(t('resumes.delete.confirm'))) return
 
     try {
       await api.delete(`/api/resume/${resumeId}`)
-      toast.success('Resume deleted successfully!')
+      toast.success(t('resumes.delete.success'))
       fetchResumes()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to delete resume')
+      toast.error(error.response?.data?.message || t('resumes.delete.failed'))
     }
   }
 
@@ -134,7 +132,7 @@ export default function ResumesPage() {
   const handleConfirmAnalyze = async () => {
     if (!selectedResumeId) return
     if (!jobDescription.trim() || !targetRole.trim() || !targetCompany.trim()) {
-      toast.error('All fields are required')
+      toast.error(t('resumes.errors.allFieldsRequired'))
       return
     }
 
@@ -150,7 +148,7 @@ export default function ResumesPage() {
       setIsAnalyzeModalOpen(false)
       fetchResumes()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to analyze resume')
+      toast.error(error.response?.data?.message || t('resumes.errors.failedToAnalyze'))
     } finally {
       setAnalyzing(false)
     }
@@ -193,16 +191,16 @@ export default function ResumesPage() {
             <div>
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center">
                 <DocumentTextIcon className="h-8 w-8 text-indigo-600 mr-3" />
-                Resume Repository
+                {t('resumes.title')}
               </h1>
               <p className="mt-2 text-slate-500 text-lg">
-                Manage your professional documents and track AI analyses across various roles.
+                {t('resumes.subtitle')}
               </p>
             </div>
             <div className="flex items-center space-x-3">
               <label className="inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 cursor-pointer group">
                 <CloudArrowUpIcon className="h-5 w-5 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                Upload New
+                {t('resumes.uploadNew')}
                 <input type="file" accept=".pdf,.docx" onChange={handleFileUpload} disabled={uploading} className="hidden" />
               </label>
             </div>
@@ -212,9 +210,9 @@ export default function ResumesPage() {
           <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 mb-8">
             <div className="relative flex-1">
               <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="Search resumes by filename..."
+              <input
+                type="text"
+                placeholder={t('resumes.searchPlaceholder')}
                 className="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 text-slate-700 font-medium transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -231,7 +229,7 @@ export default function ResumesPage() {
                       statusFilter === filter ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                     }`}
                   >
-                    {filter}
+                    {t(`resumes.filters.${filter}`)}
                   </button>
                 ))}
               </div>
@@ -246,15 +244,15 @@ export default function ResumesPage() {
                 <div className="p-6 bg-indigo-50 rounded-full mb-6">
                   <DocumentTextIcon className="h-12 w-12 text-indigo-600" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Build your Talent Library</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{t('resumes.emptyState.title')}</h3>
                 <p className="text-slate-500 text-center max-w-sm mb-10">
-                  Upload your CV in PDF or DOCX format. Our AI handles the extraction and deep analysis against any role.
+                  {t('resumes.emptyState.description')}
                 </p>
                 <label className="inline-flex items-center px-10 py-4 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 transition shadow-xl shadow-indigo-200 cursor-pointer">
-                  Select your Resume
+                  {t('resumes.emptyState.buttonText')}
                   <input type="file" accept=".pdf,.docx" onChange={handleFileUpload} disabled={uploading} className="hidden" />
                 </label>
-                <p className="mt-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Supports PDF and DOCX (Max 10MB)</p>
+                <p className="mt-4 text-xs font-bold text-slate-400 uppercase tracking-widest">{t('resumes.emptyState.supportedFormats')}</p>
               </div>
             </div>
           ) : (
@@ -287,24 +285,24 @@ export default function ResumesPage() {
                       {resume.latest_analysis ? (
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Latest Analysis</span>
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('resumes.analysis.latestAnalysis')}</span>
                             <span className={`px-2 py-0.5 rounded-lg text-xs font-black ring-1 ${
-                              resume.latest_analysis.analysis_results.atsScore >= 70 ? 'bg-emerald-50 text-emerald-600 ring-emerald-200' : 
-                              resume.latest_analysis.analysis_results.atsScore >= 40 ? 'bg-amber-50 text-amber-600 ring-amber-200' : 
+                              resume.latest_analysis.analysis_results.atsScore >= 70 ? 'bg-emerald-50 text-emerald-600 ring-emerald-200' :
+                              resume.latest_analysis.analysis_results.atsScore >= 40 ? 'bg-amber-50 text-amber-600 ring-amber-200' :
                               'bg-rose-50 text-rose-600 ring-rose-200'
                             }`}>
-                              Score: {resume.latest_analysis.analysis_results.atsScore}
+                              {t('resumes.analysis.score')}: {resume.latest_analysis.analysis_results.atsScore}
                             </span>
                           </div>
                           <div>
                             <p className="text-sm font-bold text-slate-800 line-clamp-1">{resume.latest_analysis.target_role}</p>
-                            <p className="text-xs font-medium text-slate-500 mt-0.5">at {resume.latest_analysis.target_company}</p>
+                            <p className="text-xs font-medium text-slate-500 mt-0.5">{t('resumes.analysis.atCompany')} {resume.latest_analysis.target_company}</p>
                           </div>
                         </div>
                       ) : (
                         <div className="flex items-center space-x-3 text-slate-400 italic">
                           <InformationCircleIcon className="h-5 w-5 opacity-50" />
-                          <span className="text-xs font-medium">Ready for deep analysis</span>
+                          <span className="text-xs font-medium">{t('resumes.analysis.readyForAnalysis')}</span>
                         </div>
                       )}
                     </div>
@@ -319,14 +317,14 @@ export default function ResumesPage() {
                         className="w-full py-3 text-md bg-indigo-600 text-white font-black rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center disabled:opacity-50"
                       >
                         <SparklesIcon className="h-5 w-5 mr-2" />
-                        {resume.latest_analysis ? 'New Analysis' : 'Go Detailed Analysis'}
+                        {resume.latest_analysis ? t('resumes.analysis.newAnalysis') : t('resumes.analysis.goDetailedAnalysis')}
                       </Button>
-                      
+
                       {resume.latest_analysis && (
                         <Link href={`/resumes/${resume.id}`}>
                           <Button className="w-full py-3 text-md bg-white text-indigo-600 border border-indigo-100 font-bold rounded-xl hover:bg-indigo-50 transition flex items-center justify-center">
                             <EyeIcon className="h-5 w-5 mr-2" />
-                            View Last Report
+                            {t('resumes.analysis.viewLastReport')}
                           </Button>
                         </Link>
                       )}
@@ -343,8 +341,8 @@ export default function ResumesPage() {
       <Modal
         isOpen={isAnalyzeModalOpen}
         onClose={() => !analyzing && setIsAnalyzeModalOpen(false)}
-        title="Analyze Resume"
-        subtitle="This action will cost you 10 credits"
+        title={t('resumes.modal.title')}
+        subtitle={t('resumes.modal.subtitle')}
         footer={
           <>
             <Button
@@ -352,14 +350,14 @@ export default function ResumesPage() {
               onClick={() => setIsAnalyzeModalOpen(false)}
               disabled={analyzing}
             >
-              Cancel
+              {t('resumes.modal.cancel')}
             </Button>
             <Button
               onClick={handleConfirmAnalyze}
               loading={analyzing}
               disabled={!jobDescription.trim()}
             >
-              Start Analysis
+              {t('resumes.modal.startAnalysis')}
             </Button>
           </>
         }
@@ -367,28 +365,28 @@ export default function ResumesPage() {
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Target Role"
+              label={t('resumes.modal.targetRole')}
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
-              placeholder="e.g. Senior Frontend Engineer"
+              placeholder={t('resumes.modal.targetRolePlaceholder')}
               required
             />
             <Input
-              label="Target Company"
+              label={t('resumes.modal.targetCompany')}
               value={targetCompany}
               onChange={(e) => setTargetCompany(e.target.value)}
-              placeholder="e.g. Google"
+              placeholder={t('resumes.modal.targetCompanyPlaceholder')}
               required
             />
           </div>
           <p className="text-sm text-slate-500 font-medium">
-            Paste the job description below to tailor the AI analysis to this specific role.
+            {t('resumes.modal.jobDescriptionHint')}
           </p>
           <Textarea
-            label="Job Description"
+            label={t('resumes.modal.jobDescription')}
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
-            placeholder="Paste the full job description here..."
+            placeholder={t('resumes.modal.jobDescriptionPlaceholder')}
             rows={8}
             className="w-full text-slate-700 rounded-2xl"
             required
