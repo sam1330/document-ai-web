@@ -8,12 +8,14 @@ import { EnvelopeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Input, Button } from '@/components/ui'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 interface ResendForm {
   email: string
 }
 
 function EmailVerificationContent() {
+  const t = useTranslations()
   const searchParams = useSearchParams()
   const { resendVerification } = useAuth()
   const emailFromQuery = searchParams.get('email') || ''
@@ -27,17 +29,17 @@ function EmailVerificationContent() {
     try {
       await resendVerification(data.email)
       setIsSent(true)
-      toast.success('Verification email sent successfully!')
+      toast.success(t('emailVerification.emailSentToast'))
     } catch (error: any) {
       const code = error.response?.data?.code
       const message = error.response?.data?.message || error.response?.data?.error
 
       if (code === 'ALREADY_VERIFIED') {
-        toast.error('Your email is already verified. You can sign in now.')
+        toast.error(t('emailVerification.alreadyVerifiedToast'))
       } else if (code === 'USER_NOT_FOUND') {
-        toast.error('No account found with this email address.')
+        toast.error(t('emailVerification.userNotFound'))
       } else {
-        toast.error(message || 'Failed to send verification email')
+        toast.error(message || t('emailVerification.failedToSend'))
       }
     }
   }
@@ -50,13 +52,13 @@ function EmailVerificationContent() {
             <EnvelopeIcon className="h-10 w-10 text-indigo-600" aria-hidden="true" />
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Check your email
+            {t('emailVerification.checkYourEmail')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            We sent a verification link to your email address.
+            {t('emailVerification.weSentVerification')}
             {emailFromQuery && (
               <>
-                {' '}Please check <span className="font-medium text-gray-900">{emailFromQuery}</span>.
+                {' '}{t('emailVerification.pleaseCheck')} <span className="font-medium text-gray-900">{emailFromQuery}</span>.
               </>
             )}
           </p>
@@ -66,26 +68,26 @@ function EmailVerificationContent() {
           <div className="space-y-6">
             <div className="text-sm text-gray-600 space-y-3">
               <p>
-                <strong>Didn't receive the email?</strong> Enter your email below and we'll send a new verification link.
+                <strong>{t('emailVerification.didntReceiveEmail')}</strong> {t('emailVerification.enterEmailBelow')}
               </p>
               <ul className="list-disc list-inside text-gray-500 space-y-1">
-                <li>Check your spam folder</li>
-                <li>Verification links expire after 24 hours</li>
+                <li>{t('emailVerification.checkSpam')}</li>
+                <li>{t('emailVerification.linksExpire')}</li>
               </ul>
             </div>
 
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 {...register('email', {
-                  required: 'Email is required',
+                  required: t('emailVerification.emailRequired'),
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address'
+                    message: t('emailVerification.invalidEmail')
                   }
                 })}
                 type="email"
-                label="Email address"
-                placeholder="Enter your email"
+                label={t('emailVerification.emailAddress')}
+                placeholder={t('emailVerification.enterYourEmail')}
                 leftIcon={<EnvelopeIcon />}
                 error={errors.email?.message}
                 autoComplete="email"
@@ -99,14 +101,14 @@ function EmailVerificationContent() {
                 loading={isSubmitting}
                 className="w-full"
               >
-                {isSubmitting ? 'Sending...' : 'Resend verification email'}
+                {isSubmitting ? t('emailVerification.sending') : t('emailVerification.resendEmail')}
               </Button>
             </form>
 
             {isSent && (
               <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-sm text-green-800">
-                  Verification email sent! Check your inbox.
+                  {t('emailVerification.emailSentSuccess')}
                 </p>
               </div>
             )}
@@ -117,7 +119,7 @@ function EmailVerificationContent() {
                 className="flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
-                Back to sign in
+                {t('emailVerification.backToSignIn')}
               </Link>
             </div>
           </div>

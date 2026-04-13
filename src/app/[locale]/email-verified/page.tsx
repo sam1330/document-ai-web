@@ -7,10 +7,12 @@ import { useAuth } from '@/contexts/AuthContext'
 import { CheckCircleIcon, XCircleIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Button } from '@/components/ui'
 import toast from 'react-hot-toast'
+import { useTranslations } from 'next-intl'
 
 type VerificationState = 'verifying' | 'success' | 'error' | 'already-verified'
 
 function EmailVerifiedContent() {
+  const t = useTranslations()
   const searchParams = useSearchParams()
   const router = useRouter()
   const { verifyEmail } = useAuth()
@@ -23,7 +25,7 @@ function EmailVerifiedContent() {
       try {
         await verifyEmail(token)
         setState('success')
-        toast.success('Email verified successfully!')
+        toast.success(t('emailVerified.emailVerifiedToast'))
       } catch (error: any) {
         const code = error.response?.data?.code
         const message = error.response?.data?.message || error.response?.data?.error
@@ -32,22 +34,22 @@ function EmailVerifiedContent() {
           setState('already-verified')
         } else if (code === 'TOKEN_EXPIRED') {
           setState('error')
-          setErrorMessage(message || 'Verification token has expired. Please request a new one.')
+          setErrorMessage(message || t('emailVerified.tokenExpired'))
         } else if (code === 'INVALID_TOKEN') {
           setState('error')
-          setErrorMessage(message || 'Invalid verification token.')
+          setErrorMessage(message || t('emailVerified.invalidToken'))
         } else {
           setState('error')
-          setErrorMessage(message || 'Failed to verify email.')
+          setErrorMessage(message || t('emailVerified.failedToVerify'))
         }
-        toast.error(message || 'Email verification failed')
+        toast.error(message || t('emailVerified.emailVerificationFailed'))
       }
     }
 
   useEffect(() => {
     if (!token) {
       setState('error')
-      setErrorMessage('No verification token provided.')
+      setErrorMessage(t('emailVerified.noToken'))
       return
     }
 
@@ -63,10 +65,10 @@ function EmailVerifiedContent() {
               <div className="h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Verifying your email...
+              {t('emailVerified.verifying')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Please wait while we verify your email address.
+              {t('emailVerified.pleaseWait')}
             </p>
           </div>
         )
@@ -78,10 +80,10 @@ function EmailVerifiedContent() {
               <CheckCircleIcon className="h-10 w-10 text-green-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Email verified!
+              {t('emailVerified.emailVerifiedSuccess')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Your email has been successfully verified. You now have full access to all Haku features.
+              {t('emailVerified.emailVerifiedMessage')}
             </p>
           </div>
         )
@@ -93,10 +95,10 @@ function EmailVerifiedContent() {
               <CheckCircleIcon className="h-10 w-10 text-blue-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Email already verified
+              {t('emailVerified.emailAlreadyVerified')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              This email has already been verified. You can sign in to your account.
+              {t('emailVerified.alreadyVerifiedMessage')}
             </p>
           </div>
         )
@@ -108,7 +110,7 @@ function EmailVerifiedContent() {
               <XCircleIcon className="h-10 w-10 text-red-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Verification failed
+              {t('emailVerified.verificationFailed')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               {errorMessage}
@@ -126,12 +128,12 @@ function EmailVerifiedContent() {
         <div className="space-y-3">
           <Link href="/email-verification">
             <Button variant="primary" size="lg" className="w-full">
-              Request new verification email
+              {t('emailVerified.requestNewVerification')}
             </Button>
           </Link>
           <Link href="/login">
             <Button variant="secondary" size="lg" className="w-full">
-              Back to sign in
+              {t('emailVerification.backToSignIn')}
             </Button>
           </Link>
         </div>
@@ -142,7 +144,7 @@ function EmailVerifiedContent() {
       <div className="space-y-3">
         <Link href="/dashboard">
           <Button variant="primary" size="lg" className="w-full">
-            Go to dashboard
+            {t('emailVerified.goToDashboard')}
             <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
           </Button>
         </Link>
@@ -160,8 +162,8 @@ function EmailVerifiedContent() {
             {state !== 'verifying' && (
               <p className="text-sm text-gray-600">
                 {state === 'success' || state === 'already-verified'
-                  ? 'You can now access all features of Haku, including AI-powered resume optimization and job application tracking.'
-                  : 'If your token has expired, you can request a new verification email.'}
+                  ? t('emailVerified.accessAllFeatures')
+                  : t('emailVerified.tokenExpiredInfo')}
               </p>
             )}
 
