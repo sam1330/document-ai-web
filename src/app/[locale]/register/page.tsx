@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, EnvelopeIcon, UserIcon } from '@heroicons/react/24/outline'
 import { Input, Button, Checkbox } from '@/components/ui'
 import toast from 'react-hot-toast'
+import { useTranslations } from 'next-intl'
 
 interface RegisterForm {
   first_name: string
@@ -18,6 +19,7 @@ interface RegisterForm {
 }
 
 export default function RegisterPage() {
+  const t = useTranslations()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const { register: registerUser } = useAuth()
@@ -34,14 +36,14 @@ export default function RegisterPage() {
         email: data.email,
         password: data.password,
       })
-      toast.success('Account created successfully! Please check your email to verify your account.')
+      toast.success(t('auth.accountCreatedSuccess'))
       router.push(`/email-verification?email=${encodeURIComponent(data.email)}`)
     } catch (error: any) {
       const code = error.response?.data?.code
       if (code === 'USER_EXISTS') {
-        toast.error(error.response?.data?.error || 'An account with this email already exists')
+        toast.error(error.response?.data?.error || t('auth.userExistsError'))
       } else {
-        toast.error(error.response?.data?.message || 'Registration failed')
+        toast.error(error.response?.data?.message || t('auth.registrationFailed'))
       }
     }
   }
@@ -51,15 +53,15 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">
-            Create your account
+            {t('auth.createYourAccount')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Get started with Haku or{' '}
+            {t('auth.getStartedWithHaku')}{' '}
             <Link
               href="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
             >
-              sign in to your existing account
+              {t('auth.signInToExistingAccount')}
             </Link>
           </p>
         </div>
@@ -68,19 +70,19 @@ export default function RegisterPage() {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">
               <Input
-                {...register('first_name', { required: 'First name is required' })}
+                {...register('first_name', { required: t('auth.firstNameRequired') })}
                 type="text"
-                label="First name"
-                placeholder="Enter your first name"
+                label={t('auth.firstName')}
+                placeholder={t('auth.firstNamePlaceholder')}
                 leftIcon={<UserIcon />}
                 error={errors.first_name?.message}
                 autoComplete="given-name"
               />
               <Input
-                {...register('last_name', { required: 'Last name is required' })}
+                {...register('last_name', { required: t('auth.lastNameRequired') })}
                 type="text"
-                label="Last name"
-                placeholder="Enter your last name"
+                label={t('auth.lastName')}
+                placeholder={t('auth.lastNamePlaceholder')}
                 leftIcon={<UserIcon />}
                 error={errors.last_name?.message}
                 autoComplete="family-name"
@@ -89,15 +91,15 @@ export default function RegisterPage() {
 
             <Input
               {...register('email', {
-                required: 'Email is required',
+                required: t('auth.emailRequired'),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
+                  message: t('auth.invalidEmail')
                 }
               })}
               type="email"
-              label="Email address"
-              placeholder="Enter your email"
+              label={t('auth.emailAddress')}
+              placeholder={t('auth.emailPlaceholder')}
               leftIcon={<EnvelopeIcon />}
               error={errors.email?.message}
               autoComplete="email"
@@ -105,15 +107,15 @@ export default function RegisterPage() {
 
             <Input
               {...register('password', {
-                required: 'Password is required',
+                required: t('auth.passwordRequired'),
                 minLength: {
                   value: 8,
-                  message: 'Password must be at least 8 characters'
+                  message: t('auth.passwordMinLength')
                 }
               })}
               type={showPassword ? 'text' : 'password'}
-              label="Password"
-              placeholder="Create a password"
+              label={t('auth.password')}
+              placeholder={t('auth.createPassword')}
               rightIcon={
                 <button
                   type="button"
@@ -133,12 +135,12 @@ export default function RegisterPage() {
 
             <Input
               {...register('confirmPassword', {
-                required: 'Please confirm your password',
-                validate: value => value === password || 'Passwords do not match'
+                required: t('auth.confirmPasswordRequired'),
+                validate: value => value === password || t('auth.passwordsDoNotMatch')
               })}
               type={showConfirmPassword ? 'text' : 'password'}
-              label="Confirm password"
-              placeholder="Confirm your password"
+              label={t('auth.confirmPassword')}
+              placeholder={t('auth.confirmPasswordPlaceholder')}
               rightIcon={
                 <button
                   type="button"
@@ -162,13 +164,13 @@ export default function RegisterPage() {
               required
               label={
                 <span>
-                  I agree to the{' '}
+                  {t('auth.agreeToTerms')}{' '}
                   <Link href="/terms" className="text-indigo-600 hover:text-indigo-500 transition-colors">
-                    Terms of Service
+                    {t('auth.termsOfService')}
                   </Link>{' '}
-                  and{' '}
+                  {t('common.and')}{' '}
                   <Link href="/privacy" className="text-indigo-600 hover:text-indigo-500 transition-colors">
-                    Privacy Policy
+                    {t('auth.privacyPolicy')}
                   </Link>
                 </span>
               }
@@ -181,7 +183,7 @@ export default function RegisterPage() {
               loading={isSubmitting}
               className="w-full"
             >
-              {isSubmitting ? 'Creating account...' : 'Create account'}
+              {isSubmitting ? t('auth.creatingAccount') : t('auth.createAccountButton')}
             </Button>
           </form>
         </div>

@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import { Input, Button, Checkbox } from '@/components/ui'
 import toast from 'react-hot-toast'
+import { useTranslations } from 'next-intl'
 
 interface LoginForm {
   email: string
@@ -15,6 +16,8 @@ interface LoginForm {
 }
 
 export default function LoginPage() {
+  const t = useTranslations()
+
   const [showPassword, setShowPassword] = useState(false)
   const [unverifiedEmail, setUnverifiedEmail] = useState('')
   const { login } = useAuth()
@@ -24,15 +27,15 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     try {
       await login(data.email, data.password)
-      toast.success('Successfully logged in!')
+      toast.success(t('auth.toast.signInSuccess'))
       router.push('/dashboard')
     } catch (error: any) {
       const code = error.response?.data?.code
       if (code === 'EMAIL_NOT_VERIFIED') {
         setUnverifiedEmail(data.email)
-        toast.error(error.response?.data?.error || 'Please verify your email before logging in')
+        toast.error(error.response?.data?.error || t('auth.pleaseVerifyEmail'))
       } else {
-        toast.error(error.response?.data?.message || error.response?.data?.error || 'Login failed')
+        toast.error(error.response?.data?.message || error.response?.data?.error || t('auth.loginFailed'))
       }
     }
   }
@@ -42,16 +45,19 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">
-            Welcome back
+            {t('auth.welcomeBack')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Sign in to your account or{' '}
-            <Link
-              href="/register"
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
-            >
-              create a new account
-            </Link>
+            {t.rich('auth.signInSubHeader', {
+              customLink: (chunks) => (
+                <Link
+                  href="/register"
+                  className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                >
+                  {chunks}
+                </Link>
+              )
+            })}
           </p>
         </div>
 
@@ -60,11 +66,11 @@ export default function LoginPage() {
             <div className="flex">
               <div className="flex-1">
                 <h3 className="text-sm font-medium text-yellow-800">
-                  Email not verified
+                  {t('auth.emailNotVerified')}
                 </h3>
                 <div className="mt-2 text-sm text-yellow-700">
                   <p>
-                    Please verify your email <span className="font-medium">{unverifiedEmail}</span> before logging in.
+                    {t('auth.emailNotVerifiedMessage', { email: unverifiedEmail })}
                   </p>
                 </div>
                 <div className="mt-3 space-x-3">
@@ -72,13 +78,13 @@ export default function LoginPage() {
                     href={`/email-verification?email=${encodeURIComponent(unverifiedEmail)}`}
                     className="text-sm font-medium text-yellow-800 hover:text-yellow-700 underline"
                   >
-                    Resend verification email
+                    {t('auth.resendVerificationEmail')}
                   </Link>
                   <button
                     onClick={() => setUnverifiedEmail('')}
                     className="text-sm font-medium text-yellow-600 hover:text-yellow-500"
                   >
-                    Dismiss
+                    {t('auth.dismiss')}
                   </button>
                 </div>
               </div>
@@ -90,25 +96,25 @@ export default function LoginPage() {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
               {...register('email', {
-                required: 'Email is required',
+                required: t('auth.emailRequired'),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
+                  message: t('auth.invalidEmail')
                 }
               })}
               type="email"
-              label="Email address"
-              placeholder="Enter your email"
+              label={t('auth.emailAddress')}
+              placeholder={t('auth.emailPlaceholder')}
               leftIcon={<EnvelopeIcon />}
               error={errors.email?.message}
               autoComplete="email"
             />
 
             <Input
-              {...register('password', { required: 'Password is required' })}
+              {...register('password', { required: t('auth.passwordRequired') })}
               type={showPassword ? 'text' : 'password'}
-              label="Password"
-              placeholder="Enter your password"
+              label={t('auth.password')}
+              placeholder={t('auth.passwordPlaceholder')}
               rightIcon={
                 <button
                   type="button"
@@ -130,13 +136,13 @@ export default function LoginPage() {
               <Checkbox
                 id="remember-me"
                 name="remember-me"
-                label="Remember me"
+                label={t('auth.rememberMe')}
               />
               <Link
                 href="/forgot-password"
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
               >
-                Forgot password?
+                {t('auth.forgotPassword')}
               </Link>
             </div>
 
@@ -147,7 +153,7 @@ export default function LoginPage() {
               loading={isSubmitting}
               className="w-full"
             >
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
+              {isSubmitting ? t('auth.signingIn') : t('auth.signInButton')}
             </Button>
           </form>
         </div>

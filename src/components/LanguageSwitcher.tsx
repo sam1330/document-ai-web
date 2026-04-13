@@ -4,6 +4,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
+import { Button } from './ui';
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
@@ -35,20 +36,21 @@ export default function LanguageSwitcher() {
   const currentLocale = locales.find((l) => l.code === locale);
 
   return (
-    <div className="relative">
-      <button
+    <div className="relative mr-4">
+      <Button
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
         className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors"
         aria-label="Select language"
+        variant='ghost'
       >
         <GlobeAltIcon className="h-5 w-5 text-slate-600" />
         <span className="text-sm font-medium text-slate-700 hidden sm:inline">
-          {currentLocale?.flag} {currentLocale?.name}
+          {currentLocale?.flag}
         </span>
-      </button>
+      </Button>
 
       {isOpen && (
         <div
