@@ -24,8 +24,10 @@ import { DashboardOverview, Resume, JobApplication, ResumeResponse, JobApplicati
 import { formatDate } from '@/lib/utils'
 import { AxiosResponse } from 'axios'
 import { Button } from '@/components/ui'
+import { useTranslations } from 'next-intl'
 
 export default function DashboardPage() {
+  const t = useTranslations()
   const { user } = useAuth()
   const [overview, setOverview] = useState<DashboardOverview | null>({
     overview: {
@@ -106,7 +108,7 @@ export default function DashboardPage() {
 
   const stats = [
     {
-      name: 'Total Resumes',
+      name: t('dashboard.stats.totalResumes'),
       value: overview?.overview.total_resumes || 0,
       icon: DocumentTextIcon,
       change: '+12%',
@@ -114,7 +116,7 @@ export default function DashboardPage() {
       gradient: 'from-blue-500 to-indigo-600',
     },
     {
-      name: 'Applications',
+      name: t('dashboard.stats.applications'),
       value: overview?.overview.total_applications || 0,
       icon: BriefcaseIcon,
       change: '+8%',
@@ -122,7 +124,7 @@ export default function DashboardPage() {
       gradient: 'from-purple-500 to-pink-600',
     },
     {
-      name: 'Avg Match Score',
+      name: t('dashboard.stats.avgMatchScore'),
       value: `${overview?.overview.avg_score || 0}`,
       icon: ArrowTrendingUpIcon,
       change: '+5%',
@@ -130,7 +132,7 @@ export default function DashboardPage() {
       gradient: 'from-emerald-500 to-teal-600',
     },
     {
-      name: 'AI Impact',
+      name: t('dashboard.stats.aiImpact'),
       value: overview?.overview.ai_requests_this_month || 0,
       icon: SparklesIcon,
       change: '+15%',
@@ -149,17 +151,20 @@ export default function DashboardPage() {
           <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Welcome back, {user?.first_name}! 👋
+                {t('dashboard.welcome', { name: user?.first_name || '' })}
               </h1>
               <p className="mt-2 text-slate-500 text-lg">
-                Your AI-powered career assistant has analyzed <span className="text-indigo-600 font-semibold">{overview?.overview.analyzed_count}</span> variations of your profile.
+                {t.rich('dashboard.subtitle', {
+                  counter: overview?.overview.analyzed_count || 0,
+                  count: (chunks) => <span className="text-indigo-600 font-semibold">{chunks}</span>
+                })}
               </p>
             </div>
             <div className="flex space-x-3">
               <Link href="/resumes">
                 <Button className="inline-flex items-center text-md px-4 py-2 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">
                   <PlusIcon className="h-5 w-5 mr-1.5" />
-                  Analyze New
+                  {t('dashboard.analyzeNew')}
                 </Button>
               </Link>
             </div>
@@ -194,10 +199,10 @@ export default function DashboardPage() {
                 <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                   <h3 className="text-xl font-bold text-slate-900 flex items-center">
                     <SparklesIcon className="h-6 w-6 text-indigo-600 mr-2" />
-                    AI Talent Intelligence
+                    {t('dashboard.aiInsights.title')}
                   </h3>
                   <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
-                    Aggregate Analysis
+                    {t('dashboard.aiInsights.badge')}
                   </span>
                 </div>
                 <div className="p-8">
@@ -206,7 +211,7 @@ export default function DashboardPage() {
                     <div>
                       <div className="flex items-center mb-5">
                         <CheckBadgeIcon className="h-5 w-5 text-emerald-500 mr-2" />
-                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">Key Strengths</h4>
+                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">{t('dashboard.aiInsights.keyStrengths')}</h4>
                       </div>
                       <div className="space-y-3">
                         {overview?.resume_analytics.top_strengths.map((strength, i) => (
@@ -221,7 +226,7 @@ export default function DashboardPage() {
                     <div>
                       <div className="flex items-center mb-5">
                         <ExclamationCircleIcon className="h-5 w-5 text-amber-500 mr-2" />
-                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">Growth Areas</h4>
+                        <h4 className="font-bold text-slate-800 uppercase text-sm tracking-wide">{t('dashboard.aiInsights.growthAreas')}</h4>
                       </div>
                       <div className="space-y-3">
                         {overview?.resume_analytics.top_weaknesses.map((weakness, i) => (
@@ -240,7 +245,7 @@ export default function DashboardPage() {
               <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
                 <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center">
                   <ChartBarIcon className="h-6 w-6 text-indigo-600 mr-2" />
-                  Resume Quality Distribution
+                  {t('dashboard.scoreDistribution.title')}
                 </h3>
                 <div className="space-y-6">
                   {(['good', 'average', 'poor'] as const).map((level) => {
@@ -254,8 +259,8 @@ export default function DashboardPage() {
                     return (
                       <div key={level}>
                         <div className="flex justify-between text-sm font-bold text-slate-600 mb-2 uppercase tracking-wide">
-                          <span>{level} Matches</span>
-                          <span>{count} Profiles</span>
+                          <span>{t(`dashboard.scoreDistribution.${level}`)}</span>
+                          <span>{count} {t('dashboard.scoreDistribution.profiles')}</span>
                         </div>
                         <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
                           <div
@@ -275,14 +280,14 @@ export default function DashboardPage() {
               <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                 <h3 className="text-xl font-bold text-slate-900 flex items-center">
                   <ClockIcon className="h-6 w-6 text-indigo-600 mr-2" />
-                  Recent Activity
+                  {t('dashboard.recentActivity.title')}
                 </h3>
               </div>
               <div className="flex-1 overflow-y-auto p-4">
                 <div className="space-y-1">
                   {overview?.recent_activity.length === 0 ? (
                     <div className="p-8 text-center">
-                      <p className="text-slate-400 font-medium">No recent activity detected.</p>
+                      <p className="text-slate-400 font-medium">{t('dashboard.recentActivity.noActivity')}</p>
                     </div>
                   ) : (
                     overview?.recent_activity?.map((activity, i) => (
@@ -323,7 +328,7 @@ export default function DashboardPage() {
               <div className="p-6 border-t border-slate-100">
                 <Link href="/resumes">
                   <button className="w-full py-3 bg-slate-50 text-slate-600 font-bold rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all flex items-center justify-center">
-                    View Comprehensive History
+                    {t('dashboard.recentActivity.viewHistory')}
                     <ArrowRightIcon className="h-4 w-4 ml-2" />
                   </button>
                 </Link>

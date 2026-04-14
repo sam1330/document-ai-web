@@ -29,17 +29,17 @@ function EmailVerificationContent() {
     try {
       await resendVerification(data.email)
       setIsSent(true)
-      toast.success(t('emailVerification.emailSentToast'))
+      toast.success(t('auth.emailVerification.emailSentToast'))
     } catch (error: any) {
       const code = error.response?.data?.code
       const message = error.response?.data?.message || error.response?.data?.error
 
       if (code === 'ALREADY_VERIFIED') {
-        toast.error(t('emailVerification.alreadyVerifiedToast'))
+        toast.error(t('auth.emailVerification.alreadyVerifiedToast'))
       } else if (code === 'USER_NOT_FOUND') {
-        toast.error(t('emailVerification.userNotFound'))
+        toast.error(t('auth.emailVerification.userNotFound'))
       } else {
-        toast.error(message || t('emailVerification.failedToSend'))
+        toast.error(message || t('auth.emailVerification.failedToSend'))
       }
     }
   }
@@ -52,13 +52,13 @@ function EmailVerificationContent() {
             <EnvelopeIcon className="h-10 w-10 text-indigo-600" aria-hidden="true" />
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            {t('emailVerification.checkYourEmail')}
+            {t('auth.emailVerification.checkYourEmail')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            {t('emailVerification.weSentVerification')}
+            {t('auth.emailVerification.weSentVerification')}
             {emailFromQuery && (
               <>
-                {' '}{t('emailVerification.pleaseCheck')} <span className="font-medium text-gray-900">{emailFromQuery}</span>.
+                {' '}{t('auth.emailVerification.pleaseCheck')} <span className="font-medium text-gray-900">{emailFromQuery}</span>.
               </>
             )}
           </p>
@@ -68,26 +68,26 @@ function EmailVerificationContent() {
           <div className="space-y-6">
             <div className="text-sm text-gray-600 space-y-3">
               <p>
-                <strong>{t('emailVerification.didntReceiveEmail')}</strong> {t('emailVerification.enterEmailBelow')}
+                <strong>{t('auth.emailVerification.didntReceiveEmail')}</strong> {t('auth.emailVerification.enterEmailBelow')}
               </p>
               <ul className="list-disc list-inside text-gray-500 space-y-1">
-                <li>{t('emailVerification.checkSpam')}</li>
-                <li>{t('emailVerification.linksExpire')}</li>
+                <li>{t('auth.emailVerification.checkSpam')}</li>
+                <li>{t('auth.emailVerification.linksExpire')}</li>
               </ul>
             </div>
 
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 {...register('email', {
-                  required: t('emailVerification.emailRequired'),
+                  required: t('auth.emailVerification.emailRequired'),
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: t('emailVerification.invalidEmail')
+                    message: t('auth.emailVerification.invalidEmail')
                   }
                 })}
                 type="email"
-                label={t('emailVerification.emailAddress')}
-                placeholder={t('emailVerification.enterYourEmail')}
+                label={t('auth.emailVerification.emailAddress')}
+                placeholder={t('auth.emailVerification.enterYourEmail')}
                 leftIcon={<EnvelopeIcon />}
                 error={errors.email?.message}
                 autoComplete="email"
@@ -101,14 +101,14 @@ function EmailVerificationContent() {
                 loading={isSubmitting}
                 className="w-full"
               >
-                {isSubmitting ? t('emailVerification.sending') : t('emailVerification.resendEmail')}
+                {isSubmitting ? t('auth.emailVerification.sending') : t('auth.emailVerification.resendEmail')}
               </Button>
             </form>
 
             {isSent && (
               <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-sm text-green-800">
-                  {t('emailVerification.emailSentSuccess')}
+                  {t('auth.emailVerification.emailSentSuccess')}
                 </p>
               </div>
             )}
@@ -119,7 +119,7 @@ function EmailVerificationContent() {
                 className="flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
-                {t('emailVerification.backToSignIn')}
+                {t('auth.emailVerification.backToSignIn')}
               </Link>
             </div>
           </div>

@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import Navigation from '@/components/Navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import { 
-  BriefcaseIcon, 
-  CalendarIcon, 
-  LinkIcon, 
-  PencilIcon, 
-  TrashIcon, 
+import {
+  BriefcaseIcon,
+  CalendarIcon,
+  LinkIcon,
+  PencilIcon,
+  TrashIcon,
   SparklesIcon,
   CheckBadgeIcon,
   XCircleIcon,
@@ -28,23 +28,25 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function ApplicationDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const { user } = useAuth()
   const router = useRouter()
-  
+  const t = useTranslations()
+
   const [application, setApplication] = useState<JobApplication | null>(null)
   const [resume, setResume] = useState<Resume | null>(null)
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [coverLetterLoading, setCoverLetterLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
-  
+
   const [isEditingDescription, setIsEditingDescription] = useState(false)
   const [isEditingNotes, setIsEditingNotes] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
-  
+
   const [editNotes, setEditNotes] = useState('')
   const [editJobDescription, setEditJobDescription] = useState('')
   const [editCoverLetter, setEditCoverLetter] = useState('')
@@ -71,7 +73,7 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
       }
     } catch (error) {
       console.error('Failed to fetch application detail:', error)
-      toast.error('Failed to load application details')
+      toast.error(t('applicationDetail.toasts.loadFailed'))
     } finally {
       setLoading(false)
     }
@@ -81,9 +83,9 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
     try {
       await api.put(`/api/job-application/${id}`, { status })
       setApplication(prev => prev ? { ...prev, status: status as any } : null)
-      toast.success('Status updated')
+      toast.success(t('applicationDetail.toasts.statusUpdated'))
     } catch (error) {
-      toast.error('Failed to update status')
+      toast.error(t('applicationDetail.toasts.statusUpdateFailed'))
     }
   }
 
@@ -94,39 +96,39 @@ export default function ApplicationDetailPage({ params }: { params: Promise<{ id
       setApplication(prev => prev ? { ...prev, [field]: editValue } : null)
       setIsEditingDescription(false)
       setIsEditingNotes(false)
-      toast.success('Updated successfully')
+      toast.success(t('applicationDetail.toasts.updateSuccess'))
     } catch (error) {
-      toast.error('Update failed')
+      toast.error(t('applicationDetail.toasts.updateFailed'))
     } finally {
       setIsSaving(false)
     }
   }
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this application?')) return
+    if (!confirm(t('applicationDetail.confirmations.deleteApplication'))) return
     try {
       setDeleteLoading(true)
       await api.delete(`/api/job-application/${id}`)
-      toast.success('Application deleted')
+      toast.success(t('applicationDetail.toasts.deleteSuccess'))
       setDeleteLoading(false)
       router.push('/applications')
     } catch (error) {
       setDeleteLoading(false)
-      toast.error('Delete failed')
+      toast.error(t('applicationDetail.toasts.deleteFailed'))
     }
   }
 
   const handleGenerateCoverLetter = async () => {
      setCoverLetterLoading(true)
     try {
-      toast.loading('Generating cover letter...', { id: 'cl-gen' })
+      toast.loading(t('applicationDetail.toasts.coverLetterGenerating'), { id: 'cl-gen' })
       await api.post(`/api/job-application/${id}/cover-letter`)
-      toast.success('Cover letter generation started!', { id: 'cl-gen' })
+      toast.success(t('applicationDetail.toasts.coverLetterSuccess'), { id: 'cl-gen' })
       setCoverLetterLoading(false)
       fetchDetail()
     } catch (error) {
       setCoverLetterLoading(false)
-      toast.error('Failed to start generation', { id: 'cl-gen' })
+      toast.error(t('applicationDetail.toasts.coverLetterFailed'), { id: 'cl-gen' })
     }
   }
 

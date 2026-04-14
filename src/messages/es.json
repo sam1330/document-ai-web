@@ -247,116 +247,6 @@
       "requestNewVerification": "Solicitar nuevo correo de verificación",
       "goToDashboard": "Ir al panel"
     },
-    "resumes": {
-      "title": "Repositorio de Currículums",
-      "subtitle": "Administra tus documentos profesionales y rastrea análisis de IA en varios roles.",
-      "uploadNew": "Subir Nuevo",
-      "searchPlaceholder": "Buscar currículums por nombre de archivo...",
-      "filters": {
-        "all": "todos",
-        "analyzed": "analizados",
-        "pending": "pendientes"
-      },
-      "emptyState": {
-        "title": "Construye tu Biblioteca de Talentos",
-        "description": "Sube tu CV en formato PDF o DOCX. Nuestra IA se encarga de la extracción y el análisis profundo para cualquier rol.",
-        "buttonText": "Selecciona tu Currículum",
-        "supportedFormats": "Compatible con PDF y DOCX (Máx 10MB)"
-      },
-      "fileType": {
-        "pdf": "PDF",
-        "docx": "DOCX"
-      },
-      "analysis": {
-        "latestAnalysis": "Último Análisis",
-        "score": "Puntuación",
-        "readyForAnalysis": "Listo para análisis profundo",
-        "newAnalysis": "Nuevo Análisis",
-        "goDetailedAnalysis": "Análisis Detallado",
-        "viewLastReport": "Ver Último Informe",
-        "atCompany": "en"
-      },
-      "modal": {
-        "title": "Analizar Currículum",
-        "subtitle": "Esta acción te costará 10 créditos",
-        "cancel": "Cancelar",
-        "startAnalysis": "Iniciar Análisis",
-        "targetRole": "Rol Objetivo",
-        "targetRolePlaceholder": "ej. Ingeniero Frontend Senior",
-        "targetCompany": "Empresa Objetivo",
-        "targetCompanyPlaceholder": "ej. Google",
-        "jobDescription": "Descripción del Trabajo",
-        "jobDescriptionPlaceholder": "Pega la descripción completa del trabajo aquí...",
-        "jobDescriptionHint": "Pega la descripción del trabajo a continuación para personalizar el análisis de IA para este rol específico."
-      },
-      "upload": {
-        "success": "¡Currículum subido exitosamente!",
-        "failed": "Error al subir el currículum",
-        "invalidType": "Por favor sube un archivo PDF o DOCX",
-        "invalidSize": "El tamaño del archivo debe ser menor a 10MB"
-      },
-      "delete": {
-        "confirm": "¿Estás seguro de que quieres eliminar este currículum?",
-        "success": "¡Currículum eliminado exitosamente!",
-        "failed": "Error al eliminar el currículum"
-      },
-      "errors": {
-        "failedToLoad": "Error al cargar los currículums",
-        "failedToAnalyze": "Error al analizar el currículum",
-        "allFieldsRequired": "Todos los campos son obligatorios"
-      }
-    },
-    "resumeDetail": {
-      "back": "Volver",
-      "refresh": "Actualizar",
-      "viewOriginal": "Ver Original",
-      "analysisInProgress": {
-        "title": "Análisis en Progreso",
-        "description": "Todavía estamos procesando tu currículum. Esto suele tomar unos momentos."
-      },
-      "history": {
-        "title": "Historial",
-        "sessionCount": "{{count}} Sesión{{count, plural, one{} other{es}}}",
-        "noHistory": "Aún no hay historial",
-        "latest": "Último",
-        "historical": "(Histórico)"
-      },
-      "analysisOverview": {
-        "title": "Resumen del Análisis",
-        "noOverview": "No se proporcionó resumen."
-      },
-      "strongPoints": {
-        "title": "Puntos Fuertes",
-        "noneIdentified": "Ninguno identificado."
-      },
-      "weaknesses": {
-        "title": "Brechas Potenciales",
-        "noneIdentified": "Ninguna identificada."
-      },
-      "score": {
-        "title": "Puntuación de Compatibilidad",
-        "excellentMatch": "¡Excelente Coincidencia!",
-        "goodPotential": "Buen Potencial",
-        "significantGaps": "Se Encontraron Brechas Significativas"
-      },
-      "jobDescription": {
-        "title": "Contexto Objetivo",
-        "company": "Empresa",
-        "notAvailable": "N/D",
-        "noDescription": "No se proporcionó descripción del trabajo.",
-        "viewFullDescription": "Ver Descripción Completa",
-        "fullTitle": "Descripción Completa del Trabajo"
-      },
-      "version": {
-        "latest": "Última Versión",
-        "historical": "Análisis Histórico",
-        "verified": "verificado",
-        "archived": "archivado"
-      },
-      "errors": {
-        "failedToLoad": "Error al cargar los detalles del currículum"
-      }
-    },
     "toast": {
       "signInSuccess": "¡Sesión iniciada exitosamente!",
       "signUpSuccess": "Registrado exitosamente",
@@ -364,8 +254,382 @@
       "passwordResetSuccess": "Contraseña restablecida exitosamente"
     }
   },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "resumes": "Currículums",
+    "applications": "Solicitudes de Empleo",
+    "settings": "Ajustes",
+    "signOut": "Cerrar Sesión",
+    "creditsAvailable": "Créditos Disponibles"
+  },
   "common": {
     "and": "y",
-    "or": "o"
+    "or": "o",
+    "account": "Cuenta"
+  },
+  "resumes": {
+    "title": "Repositorio de Currículums",
+    "subtitle": "Administra tus documentos profesionales y rastrea análisis de IA en varios roles.",
+    "uploadNew": "Subir Nuevo",
+    "searchPlaceholder": "Buscar currículums por nombre de archivo...",
+    "filters": {
+      "all": "todos",
+      "analyzed": "analizados",
+      "pending": "pendientes"
+    },
+    "emptyState": {
+      "title": "Construye tu Biblioteca de Talentos",
+      "description": "Sube tu CV en formato PDF o DOCX. Nuestra IA se encarga de la extracción y el análisis profundo para cualquier rol.",
+      "buttonText": "Selecciona tu Currículum",
+      "supportedFormats": "Compatible con PDF y DOCX (Máx 10MB)"
+    },
+    "fileType": {
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "analysis": {
+      "latestAnalysis": "Último Análisis",
+      "score": "Puntuación",
+      "readyForAnalysis": "Listo para análisis profundo",
+      "newAnalysis": "Nuevo Análisis",
+      "goDetailedAnalysis": "Análisis Detallado",
+      "viewLastReport": "Ver Último Informe",
+      "atCompany": "en"
+    },
+    "modal": {
+      "title": "Analizar Currículum",
+      "subtitle": "Esta acción te costará 10 créditos",
+      "cancel": "Cancelar",
+      "startAnalysis": "Iniciar Análisis",
+      "targetRole": "Rol Objetivo",
+      "targetRolePlaceholder": "ej. Ingeniero Frontend Senior",
+      "targetCompany": "Empresa Objetivo",
+      "targetCompanyPlaceholder": "ej. Google",
+      "jobDescription": "Descripción del Trabajo",
+      "jobDescriptionPlaceholder": "Pega la descripción completa del trabajo aquí...",
+      "jobDescriptionHint": "Pega la descripción del trabajo a continuación para personalizar el análisis de IA para este rol específico."
+    },
+    "upload": {
+      "success": "¡Currículum subido exitosamente!",
+      "failed": "Error al subir el currículum",
+      "invalidType": "Por favor sube un archivo PDF o DOCX",
+      "invalidSize": "El tamaño del archivo debe ser menor a 10MB"
+    },
+    "delete": {
+      "confirm": "¿Estás seguro de que quieres eliminar este currículum?",
+      "success": "¡Currículum eliminado exitosamente!",
+      "failed": "Error al eliminar el currículum"
+    },
+    "errors": {
+      "failedToLoad": "Error al cargar los currículums",
+      "failedToAnalyze": "Error al analizar el currículum",
+      "allFieldsRequired": "Todos los campos son obligatorios"
+    }
+  },
+  "resumeDetail": {
+    "back": "Volver",
+    "refresh": "Actualizar",
+    "viewOriginal": "Ver Original",
+    "analysisInProgress": {
+      "title": "Análisis en Progreso",
+      "description": "Todavía estamos procesando tu currículum. Esto suele tomar unos momentos."
+    },
+    "history": {
+      "title": "Historial",
+      "sessionCount": "{{count}} Sesión{{count, plural, one{} other{es}}}",
+      "noHistory": "Aún no hay historial",
+      "latest": "Último",
+      "historical": "(Histórico)"
+    },
+    "analysisOverview": {
+      "title": "Resumen del Análisis",
+      "noOverview": "No se proporcionó resumen."
+    },
+    "strongPoints": {
+      "title": "Puntos Fuertes",
+      "noneIdentified": "Ninguno identificado."
+    },
+    "weaknesses": {
+      "title": "Brechas Potenciales",
+      "noneIdentified": "Ninguna identificada."
+    },
+    "score": {
+      "title": "Puntuación de Compatibilidad",
+      "excellentMatch": "¡Excelente Coincidencia!",
+      "goodPotential": "Buen Potencial",
+      "significantGaps": "Se Encontraron Brechas Significativas"
+    },
+    "jobDescription": {
+      "title": "Contexto Objetivo",
+      "company": "Empresa",
+      "notAvailable": "N/D",
+      "noDescription": "No se proporcionó descripción del trabajo.",
+      "viewFullDescription": "Ver Descripción Completa",
+      "fullTitle": "Descripción Completa del Trabajo"
+    },
+    "version": {
+      "latest": "Última Versión",
+      "historical": "Análisis Histórico",
+      "verified": "verificado",
+      "archived": "archivado"
+    },
+    "errors": {
+      "failedToLoad": "Error al cargar los detalles del currículum"
+    }
+  },
+  "dashboard": {
+    "welcome": "¡Bienvenido de nuevo, {name}! 👋",
+    "subtitle": "Tu asistente de carrera impulsado por IA ha analizado <count>{counter}</count> variaciones de tu perfil.",
+    "analyzeNew": "Analizar Nuevo",
+    "stats": {
+      "totalResumes": "Currículums Totales",
+      "applications": "Solicitudes",
+      "avgMatchScore": "Puntuación Promedio",
+      "aiImpact": "Impacto de IA"
+    },
+    "aiInsights": {
+      "title": "Inteligencia de Talento IA",
+      "badge": "Análisis Agregado",
+      "keyStrengths": "Fortalezas Clave",
+      "growthAreas": "Áreas de Crecimiento"
+    },
+    "scoreDistribution": {
+      "title": "Distribución de Calidad de Currículum",
+      "good": "Coincidencias Buenas",
+      "average": "Coincidencias Promedio",
+      "poor": "Coincidencias Deficientes",
+      "profiles": "Perfiles"
+    },
+    "recentActivity": {
+      "title": "Actividad Reciente",
+      "noActivity": "No se detectó actividad reciente.",
+      "viewHistory": "Ver Historial Completo"
+    },
+    "errors": {
+      "failedToFetch": "Error al obtener los datos del panel"
+    }
+  },
+  "profile": {
+    "header": {
+      "accountActive": "Cuenta Activa",
+      "totalCredits": "Créditos Totales",
+      "usagePerMonth": "Uso / Mes"
+    },
+    "tabs": {
+      "creditsBilling": "Créditos y Facturación",
+      "security": "Seguridad",
+      "preferences": "Preferencias"
+    },
+    "account": {
+      "title": "Información Personal",
+      "subtitle": "Actualiza tu nombre y correo electrónico de comunicación.",
+      "firstName": "Nombre",
+      "firstNamePlaceholder": "Ingresa tu nombre",
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastName": "Apellido",
+      "lastNamePlaceholder": "Ingresa tu apellido",
+      "lastNameRequired": "El apellido es obligatorio",
+      "emailAddress": "Dirección de Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo electrónico",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "saveChanges": "Guardar Cambios",
+      "updateSuccess": "¡Perfil actualizado exitosamente!",
+      "updateFailed": "Error al actualizar el perfil"
+    },
+    "credits": {
+      "title": "Centro de Créditos",
+      "subtitle": "Administra tu saldo de tokens y configuración de pago por uso.",
+      "activeBalance": "Saldo Activo",
+      "monthlyQuota": "Cuota Mensual",
+      "availableCredits": "Créditos Disponibles",
+      "weeklyUsage": "Actividad de Uso Semanal",
+      "addCredits": "Agregar Créditos",
+      "packages": {
+        "starter": "Inicial",
+        "grow": "Crecimiento",
+        "power": "Potencia",
+        "recommended": "Recomendado"
+      },
+      "recentActivity": "Actividad Reciente"
+    },
+    "security": {
+      "title": "Escudo de Seguridad",
+      "subtitle": "Protege tu cuenta con una contraseña segura y verificación de 2 pasos.",
+      "currentPassword": "Contraseña Actual",
+      "currentPasswordPlaceholder": "Ingresa tu contraseña actual",
+      "newPassword": "Nueva Contraseña",
+      "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+      "confirmNewPassword": "Confirmar Nueva Contraseña",
+      "confirmNewPasswordPlaceholder": "Confirma tu nueva contraseña",
+      "required": "Obligatorio",
+      "passwordMinLength": "Debe tener al menos 8 caracteres",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "updatePassword": "Actualizar Contraseña",
+      "passwordUpdateSuccess": "¡Contraseña actualizada exitosamente!",
+      "passwordUpdateFailed": "Error al actualizar la contraseña",
+      "dangerZone": "Zona de Peligro",
+      "deleteAccount": {
+        "title": "Eliminar Cuenta",
+        "description": "Elimina permanentemente todos tus currículums, historial y créditos.",
+        "buttonText": "Eliminar Permanentemente"
+      }
+    },
+    "preferences": {
+      "title": "Preferencias de Usuario",
+      "subtitle": "Personaliza tu configuración de notificaciones e idioma.",
+      "emailNotifications": "Notificaciones por Correo Electrónico",
+      "notifications": {
+        "analysisComplete": "Nuevo análisis de IA completado",
+        "weeklyDigest": "Resumen semanal de solicitudes de empleo",
+        "lowCreditAlert": "Alertas de créditos bajos (menos de 500 tokens)"
+      },
+      "systemLanguage": "Idioma del Sistema",
+      "languages": {
+        "english": "Inglés (EE.UU.)",
+        "spanish": "Español",
+        "french": "Francés"
+      }
+    }
+  },
+  "applications": {
+    "title": "Solicitudes de Empleo",
+    "subtitle": "Administra tu pipeline de carrera y activos generados por IA.",
+    "newApplication": "Nueva Solicitud",
+    "searchPlaceholder": "Buscar por empresa o puesto...",
+    "filters": "Filtros",
+    "stats": {
+      "totalApplications": "Total de Solicitudes",
+      "interviewing": "En Entrevista",
+      "responseRate": "Tasa de Respuesta",
+      "jobOffers": "Ofertas de Trabajo"
+    },
+    "emptyState": {
+      "title": "Aún no hay solicitudes",
+      "description": "Comienza a rastrear tu trayectoria profesional. Cada oportunidad conduce al crecimiento.",
+      "buttonText": "Crea tu primera solicitud"
+    },
+    "columns": {
+      "drafts": "Borradores",
+      "applied": "Enviadas",
+      "interviewing": "En Entrevista",
+      "offers": "Ofertas",
+      "rejected": "Rechazadas"
+    },
+    "addItem": "Agregar Elemento",
+    "table": {
+      "positionAndCompany": "Puesto y Empresa",
+      "appliedOn": "Enviado El",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "modal": {
+      "title": "Rastrear Nueva Oportunidad",
+      "companyName": "Nombre de la Empresa",
+      "companyNamePlaceholder": "ej. Google",
+      "positionTitle": "Título del Puesto",
+      "positionTitlePlaceholder": "ej. Ingeniero Frontend Senior",
+      "jobDescription": "Descripción del Trabajo",
+      "jobDescriptionPlaceholder": "Pega los requisitos aquí para análisis de IA...",
+      "jobUrl": "URL del Trabajo",
+      "jobUrlPlaceholder": "https://career.site/job",
+      "deadline": "Fecha Límite",
+      "selectedResume": "Currículum Seleccionado",
+      "cancel": "Cancelar",
+      "addApplication": "Agregar Solicitud"
+    },
+    "status": {
+      "draft": "Borrador",
+      "applied": "Enviado",
+      "interview": "Entrevista",
+      "offer": "Oferta",
+      "rejected": "Rechazado"
+    },
+    "actions": {
+      "aiCoverLetter": "Carta de Presentación IA",
+      "viewDetails": "Ver Detalles",
+      "delete": "Eliminar"
+    },
+    "confirmations": {
+      "deleteApplication": "¿Estás seguro de que quieres eliminar esta solicitud?"
+    },
+    "toasts": {
+      "loadFailed": "Error al cargar las solicitudes",
+      "createSuccess": "¡Solicitud creada exitosamente!",
+      "createFailed": "Error al crear la solicitud",
+      "deleteSuccess": "¡Solicitud eliminada exitosamente!",
+      "deleteFailed": "Error al eliminar la solicitud",
+      "statusUpdateSuccess": "¡Estado actualizado exitosamente!",
+      "statusUpdateFailed": "Error al actualizar el estado",
+      "coverLetterSuccess": "¡Generación de carta de presentación iniciada! Vuelve en unos minutos.",
+      "coverLetterFailed": "Error al generar la carta de presentación"
+    },
+    "validation": {
+      "companyNameMin": "El nombre de la empresa debe tener al menos 2 caracteres",
+      "positionTitleMin": "El título del puesto debe tener al menos 2 caracteres",
+      "jobDescriptionMin": "La descripción del trabajo debe tener al menos 50 caracteres para un mejor análisis de IA",
+      "invalidUrl": "Debe ser una URL válida",
+      "notesMax": "Las notas deben tener menos de 1000 caracteres",
+      "selectResume": "Por favor selecciona un currículum válido"
+    }
+  },
+  "applicationDetail": {
+    "breadcrumbs": {
+      "applications": "Solicitudes de Empleo"
+    },
+    "notFound": {
+      "title": "Solicitud no encontrada",
+      "backLink": "Volver a Solicitudes"
+    },
+    "actions": {
+      "delete": "Eliminar",
+      "generateCoverLetter": "Generar Carta de Presentación IA"
+    },
+    "sections": {
+      "jobDescription": "Descripción del Trabajo",
+      "personalNotes": "Notas Personales",
+      "coverLetter": "Carta de Presentación",
+      "aiMatchAnalysis": "Análisis de Coincidencia IA",
+      "pipelineStage": "Etapa del Pipeline",
+      "quickInfo": "Información Rápida"
+    },
+    "edit": {
+      "cancel": "Cancelar",
+      "saveChanges": "Guardar cambios",
+      "saveNotes": "Guardar Notas",
+      "saveCoverLetter": "Guardar Carta de Presentación",
+      "notesPlaceholder": "Puntos clave de la entrevista, nombres de reclutadores, etc.",
+      "noDescription": "No se proporcionó descripción.",
+      "noNotes": "Aún no se agregaron notas. Usa este espacio para nombres de reclutadores, fechas de entrevista o trabajo de preparación.",
+      "noCoverLetter": "Aún no se agregó carta de presentación."
+    },
+    "matchScore": {
+      "atsCompatibility": "Puntuación de Compatibilidad ATS",
+      "viewReport": "Ver informe completo de análisis →",
+      "lowDataHint": "Registra más datos para una puntuación de alta fidelidad.",
+      "scoreNotAvailable": "N/D"
+    },
+    "quickInfo": {
+      "creationDate": "Fecha de Creación",
+      "deadline": "Fecha Límite",
+      "jobUrl": "URL del Trabajo",
+      "notSpecified": "No especificado",
+      "linkedAssets": "Activos Vinculados",
+      "activeResume": "Currículum Activo"
+    },
+    "confirmations": {
+      "deleteApplication": "¿Estás seguro de que quieres eliminar esta solicitud?"
+    },
+    "toasts": {
+      "loadFailed": "Error al cargar los detalles de la solicitud",
+      "statusUpdated": "Estado actualizado",
+      "statusUpdateFailed": "Error al actualizar el estado",
+      "updateSuccess": "Actualizado exitosamente",
+      "updateFailed": "Error al actualizar",
+      "deleteSuccess": "Solicitud eliminada",
+      "deleteFailed": "Error al eliminar",
+      "coverLetterGenerating": "Generando carta de presentación...",
+      "coverLetterSuccess": "¡Generación de carta de presentación iniciada!",
+      "coverLetterFailed": "Error al iniciar la generación"
+    }
   }
 }

@@ -32,20 +32,10 @@ import { AxiosResponse } from 'axios'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
-const jobApplicationSchema = z.object({
-  company_name: z.string().min(2, 'Company name must be at least 2 characters').max(100),
-  position_title: z.string().min(2, 'Position title must be at least 2 characters').max(100),
-  job_description: z.string().min(50, 'Job description must be at least 50 characters for better AI analysis').max(10000),
-  application_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-  application_deadline: z.string().optional().or(z.literal('')),
-  notes: z.string().max(1000, 'Notes must be under 1000 characters').optional().or(z.literal('')),
-  resume_id: z.string().uuid('Please select a valid resume'),
-})
-
-type JobApplicationFormData = z.infer<typeof jobApplicationSchema>
+import { useTranslations } from 'next-intl'
 
 export default function ApplicationsPage() {
+  const t = useTranslations()
   const { user } = useAuth()
   const [applications, setApplications] = useState<JobApplication[]>([])
   const [resumes, setResumes] = useState<Resume[]>([])
@@ -53,6 +43,18 @@ export default function ApplicationsPage() {
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [viewMode, setViewMode] = useState<'kanban' | 'list'>('kanban')
   const [searchQuery, setSearchQuery] = useState('')
+
+  const jobApplicationSchema = z.object({
+    company_name: z.string().min(2, t('applications.validation.companyNameMin')).max(100),
+    position_title: z.string().min(2, t('applications.validation.positionTitleMin')).max(100),
+    job_description: z.string().min(50, t('applications.validation.jobDescriptionMin')).max(10000),
+    application_url: z.string().url(t('applications.validation.invalidUrl')).optional().or(z.literal('')),
+    application_deadline: z.string().optional().or(z.literal('')),
+    notes: z.string().max(1000, t('applications.validation.notesMax')).optional().or(z.literal('')),
+    resume_id: z.string().uuid(t('applications.validation.selectResume')),
+  })
+
+  type JobApplicationFormData = z.infer<typeof jobApplicationSchema>
 
   const {
     register,
@@ -91,7 +93,7 @@ export default function ApplicationsPage() {
       setResumes(resumesRes.data.resumes)
     } catch (error) {
       console.error('Failed to fetch data:', error)
-      toast.error('Failed to load applications')
+      toast.error(t('applications.toasts.loadFailed'))
     } finally {
       setApplicationsLoading(false)
     }
@@ -100,44 +102,44 @@ export default function ApplicationsPage() {
   const handleCreateApplication = async (data: JobApplicationFormData) => {
     try {
       await api.post('/api/job-application', data)
-      toast.success('Application created successfully!')
+      toast.success(t('applications.toasts.createSuccess'))
       setShowCreateForm(false)
       reset()
       fetchData()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to create application')
+      toast.error(error.response?.data?.message || t('applications.toasts.createFailed'))
     }
   }
 
   const handleDeleteApplication = async (applicationId: string) => {
-    if (!confirm('Are you sure you want to delete this application?')) return
+    if (!confirm(t('applications.confirmations.deleteApplication'))) return
 
     try {
       await api.delete(`/api/job-application/${applicationId}`)
-      toast.success('Application deleted successfully!')
+      toast.success(t('applications.toasts.deleteSuccess'))
       fetchData()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to delete application')
+      toast.error(error.response?.data?.message || t('applications.toasts.deleteFailed'))
     }
   }
 
   const handleUpdateStatus = async (applicationId: string, status: string) => {
     try {
       await api.put(`/api/job-application/${applicationId}`, { status })
-      toast.success('Status updated successfully!')
+      toast.success(t('applications.toasts.statusUpdateSuccess'))
       fetchData()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to update status')
+      toast.error(error.response?.data?.message || t('applications.toasts.statusUpdateFailed'))
     }
   }
 
   const handleGenerateCoverLetter = async (applicationId: string) => {
     try {
       await api.post(`/api/job-application/${applicationId}/cover-letter`)
-      toast.success('Cover letter generation started! Check back in a few minutes.')
+      toast.success(t('applications.toasts.coverLetterSuccess'))
       fetchData()
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to generate cover letter')
+      toast.error(error.response?.data?.message || t('applications.toasts.coverLetterFailed'))
     }
   }
 
@@ -167,11 +169,11 @@ export default function ApplicationsPage() {
   }
 
   const columns = [
-    { id: 'draft', title: 'Drafts', icon: PencilIcon, color: 'text-slate-400' },
-    { id: 'applied', title: 'Applied', icon: BriefcaseIcon, color: 'text-indigo-500' },
-    { id: 'interview', title: 'Interviewing', icon: UserIcon, color: 'text-amber-500' },
-    { id: 'accepted', title: 'Offers', icon: CheckBadgeIcon, color: 'text-emerald-500' },
-    { id: 'rejected', title: 'Rejected', icon: XCircleIcon, color: 'text-rose-500' },
+    { id: 'draft', title: t('applications.columns.drafts'), icon: PencilIcon, color: 'text-slate-400' },
+    { id: 'applied', title: t('applications.columns.applied'), icon: BriefcaseIcon, color: 'text-indigo-500' },
+    { id: 'interview', title: t('applications.columns.interviewing'), icon: UserIcon, color: 'text-amber-500' },
+    { id: 'accepted', title: t('applications.columns.offers'), icon: CheckBadgeIcon, color: 'text-emerald-500' },
+    { id: 'rejected', title: t('applications.columns.rejected'), icon: XCircleIcon, color: 'text-rose-500' },
   ]
 
   if (applicationsLoading) {
@@ -208,16 +210,16 @@ export default function ApplicationsPage() {
 
           {/* Stats Header */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <StatCard title="Total Applications" value={stats.total} icon={<BriefcaseIcon className="h-6 w-6" />} color="indigo" />
-            <StatCard title="Interviewing" value={stats.interviewing} icon={<CalendarIcon className="h-6 w-6" />} color="amber" />
-            <StatCard title="Response Rate" value={`${stats.responseRate}%`} icon={<SparklesIcon className="h-6 w-6" />} color="violet" />
-            <StatCard title="Job Offers" value={stats.offers} icon={<CheckBadgeIcon className="h-6 w-6" />} color="emerald" />
+            <StatCard title={t('applications.stats.totalApplications')} value={stats.total} icon={<BriefcaseIcon className="h-6 w-6" />} color="indigo" />
+            <StatCard title={t('applications.stats.interviewing')} value={stats.interviewing} icon={<CalendarIcon className="h-6 w-6" />} color="amber" />
+            <StatCard title={t('applications.stats.responseRate')} value={`${stats.responseRate}%`} icon={<SparklesIcon className="h-6 w-6" />} color="violet" />
+            <StatCard title={t('applications.stats.jobOffers')} value={stats.offers} icon={<CheckBadgeIcon className="h-6 w-6" />} color="emerald" />
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">Applications</h1>
-              <p className="text-slate-500 text-sm mt-1">Manage your career pipeline and AI-generated assets.</p>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight">{t('applications.title')}</h1>
+              <p className="text-slate-500 text-sm mt-1">{t('applications.subtitle')}</p>
             </div>
             <div className="flex items-center space-x-3">
               <div className="flex items-center bg-white rounded-2xl p-1 border border-slate-200 shadow-sm">
@@ -239,7 +241,7 @@ export default function ApplicationsPage() {
                 className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-6 py-2.5 flex items-center shadow-lg shadow-indigo-100"
               >
                 <PlusIcon className="h-5 w-5 mr-2" />
-                New Application
+                {t('applications.newApplication')}
               </Button>
             </div>
           </div>
@@ -250,7 +252,7 @@ export default function ApplicationsPage() {
               <MagnifyingGlassIcon className="h-5 w-5 text-slate-400 mr-3" />
               <input
                 type="text"
-                placeholder="Search by company or position..."
+                placeholder={t('applications.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-transparent border-none focus:ring-0 text-sm py-2"
@@ -259,7 +261,7 @@ export default function ApplicationsPage() {
             <div className="h-8 border-l border-slate-100 mx-2 hidden md:block"></div>
             <button className="hidden md:flex items-center space-x-2 px-4 py-2 text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">
               <AdjustmentsHorizontalIcon className="h-5 w-5" />
-              <span>Filters</span>
+              <span>{t('applications.filters')}</span>
             </button>
           </div>
 
@@ -269,15 +271,15 @@ export default function ApplicationsPage() {
               <div className="h-20 w-20 bg-slate-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
                 <BriefcaseIcon className="h-10 w-10 text-slate-300" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">No applications yet</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">{t('applications.emptyState.title')}</h3>
               <p className="text-slate-500 max-w-xs mx-auto mb-8">
-                Start tracking your career journey. Every opportunity leads to growth.
+                {t('applications.emptyState.description')}
               </p>
               <Button
                 onClick={() => setShowCreateForm(true)}
                 className="bg-slate-900 hover:bg-slate-800 text-white rounded-2xl px-8 py-3"
               >
-                Create your first application
+                {t('applications.emptyState.buttonText')}
               </Button>
             </div>
           ) : viewMode === 'kanban' ? (
@@ -307,6 +309,7 @@ export default function ApplicationsPage() {
                           onUpdateStatus={handleUpdateStatus}
                           onGenerateCoverLetter={handleGenerateCoverLetter}
                           getStatusColor={getStatusColor}
+                          t={t}
                         />
                       ))}
                     <button
@@ -325,7 +328,7 @@ export default function ApplicationsPage() {
                       className="w-full py-4 border-2 border-dashed border-slate-200 rounded-3xl text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all flex items-center justify-center space-x-2"
                     >
                       <PlusIcon className="h-5 w-5" />
-                      <span className="text-xs font-bold uppercase tracking-widest">Add Item</span>
+                      <span className="text-xs font-bold uppercase tracking-widest">{t('applications.addItem')}</span>
                     </button>
                   </div>
                 </div>
@@ -336,10 +339,10 @@ export default function ApplicationsPage() {
               <table className="w-full text-left">
                 <thead className="bg-slate-50/50 border-b border-slate-100">
                   <tr>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Position & Company</th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Applied On</th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('applications.table.positionAndCompany')}</th>
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('applications.table.appliedOn')}</th>
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('applications.table.status')}</th>
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">{t('applications.table.actions')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
@@ -385,20 +388,20 @@ export default function ApplicationsPage() {
           <Modal
             isOpen={showCreateForm}
             onClose={() => setShowCreateForm(false)}
-            title="Track New Opportunity"
+            title={t('applications.modal.title')}
           >
             <form onSubmit={handleSubmit(handleCreateApplication)} className="space-y-6 pt-4">
               <div className="grid grid-cols-2 gap-4">
                 <Input
                   {...register('company_name')}
-                  label="Company Name"
-                  placeholder="e.g. Google"
+                  label={t('applications.modal.companyName')}
+                  placeholder={t('applications.modal.companyNamePlaceholder')}
                   error={errors.company_name?.message}
                 />
                 <Input
                   {...register('position_title')}
-                  label="Position Title"
-                  placeholder="e.g. Senior Frontend Engineer"
+                  label={t('applications.modal.positionTitle')}
+                  placeholder={t('applications.modal.positionTitlePlaceholder')}
                   error={errors.position_title?.message}
                 />
               </div>
@@ -406,8 +409,8 @@ export default function ApplicationsPage() {
               <div className="relative">
                 <Textarea
                   {...register('job_description')}
-                  label="Job Description"
-                  placeholder="Paste the requirements here for AI analysis..."
+                  label={t('applications.modal.jobDescription')}
+                  placeholder={t('applications.modal.jobDescriptionPlaceholder')}
                   rows={6}
                   error={errors.job_description?.message}
                 />
@@ -422,34 +425,34 @@ export default function ApplicationsPage() {
                 <Input
                   {...register('application_url')}
                   type="url"
-                  label="Job URL"
-                  placeholder="https://career.site/job"
+                  label={t('applications.modal.jobUrl')}
+                  placeholder={t('applications.modal.jobUrlPlaceholder')}
                   error={errors.application_url?.message}
                 />
                 <Input
                   {...register('application_deadline')}
                   type="date"
-                  label="Deadline"
+                  label={t('applications.modal.deadline')}
                   error={errors.application_deadline?.message}
                 />
               </div>
 
               <Select
                 {...register('resume_id')}
-                label="Selected Resume"
+                label={t('applications.modal.selectedResume')}
                 options={resumes.map(r => ({ value: r.id, label: r.original_filename }))}
                 error={errors.resume_id?.message}
               />
 
               <div className="flex space-x-3 pt-6 border-t border-slate-100">
-                <Button variant="outline" className="flex-1 rounded-xl" onClick={() => setShowCreateForm(false)}>Cancel</Button>
+                <Button variant="outline" className="flex-1 rounded-xl" onClick={() => setShowCreateForm(false)}>{t('applications.modal.cancel')}</Button>
                 <Button
                   variant="primary"
                   className="flex-1 rounded-xl bg-indigo-600"
                   type="submit"
                   loading={isSubmitting}
                 >
-                  Add Application
+                  {t('applications.modal.addApplication')}
                 </Button>
               </div>
             </form>
@@ -480,12 +483,13 @@ function StatCard({ title, value, icon, color }: { title: string, value: any, ic
   )
 }
 
-function ApplicationCard({ application, onDelete, onUpdateStatus, onGenerateCoverLetter, getStatusColor }: {
+function ApplicationCard({ application, onDelete, onUpdateStatus, onGenerateCoverLetter, getStatusColor, t }: {
   application: JobApplication,
   onDelete: (id: string) => void,
   onUpdateStatus: (id: string, s: string) => void,
   onGenerateCoverLetter: (id: string) => void,
-  getStatusColor: (s: string) => string
+  getStatusColor: (s: string) => string,
+  t: any
 }) {
   return (
     <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm hover:border-indigo-100 hover:shadow-md transition-all group">
@@ -524,23 +528,24 @@ function ApplicationCard({ application, onDelete, onUpdateStatus, onGenerateCove
           onChange={(e) => onUpdateStatus(application.id, e.target.value)}
           className="text-[10px] font-black uppercase tracking-tight bg-slate-50 border-none rounded-lg focus:ring-0 py-1 pl-2 pr-6 h-7"
         >
-          <option value="draft">Draft</option>
-          <option value="applied">Applied</option>
-          <option value="interview">Interview</option>
-          <option value="accepted">Offer</option>
-          <option value="rejected">Rejected</option>
+          <option value="draft">{t('applications.status.draft')}</option>
+          <option value="applied">{t('applications.status.applied')}</option>
+          <option value="interview">{t('applications.status.interview')}</option>
+          <option value="accepted">{t('applications.status.offer')}</option>
+          <option value="rejected">{t('applications.status.rejected')}</option>
         </select>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => onGenerateCoverLetter(application.id)}
             className="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white transition-all shadow-sm shadow-indigo-50"
-            title="AI Cover Letter"
+            title={t('applications.actions.aiCoverLetter')}
           >
             <SparklesIcon className="h-3.5 w-3.5" />
           </button>
           <Link
             href={`/applications/${application.id}`}
             className="p-1.5 bg-slate-50 text-slate-400 rounded-lg hover:bg-slate-900 hover:text-white transition-all"
+            title={t('applications.actions.viewDetails')}
           >
             <EyeIcon className="h-3.5 w-3.5" />
           </Link>

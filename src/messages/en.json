@@ -157,6 +157,7 @@
       "selectLanguage": "Select Language"
     }
   },
+
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -247,116 +248,6 @@
       "requestNewVerification": "Request new verification email",
       "goToDashboard": "Go to dashboard"
     },
-    "resumes": {
-      "title": "Resume Repository",
-      "subtitle": "Manage your professional documents and track AI analyses across various roles.",
-      "uploadNew": "Upload New",
-      "searchPlaceholder": "Search resumes by filename...",
-      "filters": {
-        "all": "all",
-        "analyzed": "analyzed",
-        "pending": "pending"
-      },
-      "emptyState": {
-        "title": "Build your Talent Library",
-        "description": "Upload your CV in PDF or DOCX format. Our AI handles the extraction and deep analysis against any role.",
-        "buttonText": "Select your Resume",
-        "supportedFormats": "Supports PDF and DOCX (Max 10MB)"
-      },
-      "fileType": {
-        "pdf": "PDF",
-        "docx": "DOCX"
-      },
-      "analysis": {
-        "latestAnalysis": "Latest Analysis",
-        "score": "Score",
-        "readyForAnalysis": "Ready for deep analysis",
-        "newAnalysis": "New Analysis",
-        "goDetailedAnalysis": "Go Detailed Analysis",
-        "viewLastReport": "View Last Report",
-        "atCompany": "at"
-      },
-      "modal": {
-        "title": "Analyze Resume",
-        "subtitle": "This action will cost you 10 credits",
-        "cancel": "Cancel",
-        "startAnalysis": "Start Analysis",
-        "targetRole": "Target Role",
-        "targetRolePlaceholder": "e.g. Senior Frontend Engineer",
-        "targetCompany": "Target Company",
-        "targetCompanyPlaceholder": "e.g. Google",
-        "jobDescription": "Job Description",
-        "jobDescriptionPlaceholder": "Paste the full job description here...",
-        "jobDescriptionHint": "Paste the job description below to tailor the AI analysis to this specific role."
-      },
-      "upload": {
-        "success": "Resume uploaded successfully!",
-        "failed": "Failed to upload resume",
-        "invalidType": "Please upload a PDF or DOCX file",
-        "invalidSize": "File size must be less than 10MB"
-      },
-      "delete": {
-        "confirm": "Are you sure you want to delete this resume?",
-        "success": "Resume deleted successfully!",
-        "failed": "Failed to delete resume"
-      },
-      "errors": {
-        "failedToLoad": "Failed to load resumes",
-        "failedToAnalyze": "Failed to analyze resume",
-        "allFieldsRequired": "All fields are required"
-      }
-    },
-    "resumeDetail": {
-      "back": "Back",
-      "refresh": "Refresh",
-      "viewOriginal": "View Original",
-      "analysisInProgress": {
-        "title": "Analysis in Progress",
-        "description": "We're still processing your resume. This usually takes a few moments."
-      },
-      "history": {
-        "title": "History",
-        "sessionCount": "{{count}} Session{{count, plural, one{} other{s}}}",
-        "noHistory": "No history yet",
-        "latest": "Latest",
-        "historical": "(Historical)"
-      },
-      "analysisOverview": {
-        "title": "Analysis Overview",
-        "noOverview": "No overview provided."
-      },
-      "strongPoints": {
-        "title": "Strong Points",
-        "noneIdentified": "None identified."
-      },
-      "weaknesses": {
-        "title": "Potential Gaps",
-        "noneIdentified": "None identified."
-      },
-      "score": {
-        "title": "Compatibility Score",
-        "excellentMatch": "Excellent Match!",
-        "goodPotential": "Good Potential",
-        "significantGaps": "Significant Gaps Found"
-      },
-      "jobDescription": {
-        "title": "Target Context",
-        "company": "Company",
-        "notAvailable": "N/A",
-        "noDescription": "No job description provided.",
-        "viewFullDescription": "View Full Description",
-        "fullTitle": "Full Job Description"
-      },
-      "version": {
-        "latest": "Latest Version",
-        "historical": "Historical Analysis",
-        "verified": "verified",
-        "archived": "archived"
-      },
-      "errors": {
-        "failedToLoad": "Failed to load resume details"
-      }
-    },
     "toast": {
       "signInSuccess": "Successfully logged in!",
       "signUpSuccess": "Signed up successfully",
@@ -364,8 +255,382 @@
       "passwordResetSuccess": "Password reset successfully"
     }
   },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "resumes": "Resumes",
+    "applications": "Applications",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "creditsAvailable": "Credits Available"
+  },
   "common": {
     "and": "and",
-    "or": "or"
+    "or": "or",
+    "account": "Account"
+  },
+  "resumes": {
+    "title": "Resume Repository",
+    "subtitle": "Manage your professional documents and track AI analyses across various roles.",
+    "uploadNew": "Upload New",
+    "searchPlaceholder": "Search resumes by filename...",
+    "filters": {
+      "all": "all",
+      "analyzed": "analyzed",
+      "pending": "pending"
+    },
+    "emptyState": {
+      "title": "Build your Talent Library",
+      "description": "Upload your CV in PDF or DOCX format. Our AI handles the extraction and deep analysis against any role.",
+      "buttonText": "Select your Resume",
+      "supportedFormats": "Supports PDF and DOCX (Max 10MB)"
+    },
+    "fileType": {
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "analysis": {
+      "latestAnalysis": "Latest Analysis",
+      "score": "Score",
+      "readyForAnalysis": "Ready for deep analysis",
+      "newAnalysis": "New Analysis",
+      "goDetailedAnalysis": "Go Detailed Analysis",
+      "viewLastReport": "View Last Report",
+      "atCompany": "at"
+    },
+    "modal": {
+      "title": "Analyze Resume",
+      "subtitle": "This action will cost you 10 credits",
+      "cancel": "Cancel",
+      "startAnalysis": "Start Analysis",
+      "targetRole": "Target Role",
+      "targetRolePlaceholder": "e.g. Senior Frontend Engineer",
+      "targetCompany": "Target Company",
+      "targetCompanyPlaceholder": "e.g. Google",
+      "jobDescription": "Job Description",
+      "jobDescriptionPlaceholder": "Paste the full job description here...",
+      "jobDescriptionHint": "Paste the job description below to tailor the AI analysis to this specific role."
+    },
+    "upload": {
+      "success": "Resume uploaded successfully!",
+      "failed": "Failed to upload resume",
+      "invalidType": "Please upload a PDF or DOCX file",
+      "invalidSize": "File size must be less than 10MB"
+    },
+    "delete": {
+      "confirm": "Are you sure you want to delete this resume?",
+      "success": "Resume deleted successfully!",
+      "failed": "Failed to delete resume"
+    },
+    "errors": {
+      "failedToLoad": "Failed to load resumes",
+      "failedToAnalyze": "Failed to analyze resume",
+      "allFieldsRequired": "All fields are required"
+    }
+  },
+  "resumeDetail": {
+    "back": "Back",
+    "refresh": "Refresh",
+    "viewOriginal": "View Original",
+    "analysisInProgress": {
+      "title": "Analysis in Progress",
+      "description": "We're still processing your resume. This usually takes a few moments."
+    },
+    "history": {
+      "title": "History",
+      "sessionCount": "{{count}} Session{{count, plural, one{} other{s}}}",
+      "noHistory": "No history yet",
+      "latest": "Latest",
+      "historical": "(Historical)"
+    },
+    "analysisOverview": {
+      "title": "Analysis Overview",
+      "noOverview": "No overview provided."
+    },
+    "strongPoints": {
+      "title": "Strong Points",
+      "noneIdentified": "None identified."
+    },
+    "weaknesses": {
+      "title": "Potential Gaps",
+      "noneIdentified": "None identified."
+    },
+    "score": {
+      "title": "Compatibility Score",
+      "excellentMatch": "Excellent Match!",
+      "goodPotential": "Good Potential",
+      "significantGaps": "Significant Gaps Found"
+    },
+    "jobDescription": {
+      "title": "Target Context",
+      "company": "Company",
+      "notAvailable": "N/A",
+      "noDescription": "No job description provided.",
+      "viewFullDescription": "View Full Description",
+      "fullTitle": "Full Job Description"
+    },
+    "version": {
+      "latest": "Latest Version",
+      "historical": "Historical Analysis",
+      "verified": "verified",
+      "archived": "archived"
+    },
+    "errors": {
+      "failedToLoad": "Failed to load resume details"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}! 👋",
+    "subtitle": "Your AI-powered career assistant has analyzed <count>{counter}</count> variations of your profile.",
+    "analyzeNew": "Analyze New",
+    "stats": {
+      "totalResumes": "Total Resumes",
+      "applications": "Applications",
+      "avgMatchScore": "Avg Match Score",
+      "aiImpact": "AI Impact"
+    },
+    "aiInsights": {
+      "title": "AI Talent Intelligence",
+      "badge": "Aggregate Analysis",
+      "keyStrengths": "Key Strengths",
+      "growthAreas": "Growth Areas"
+    },
+    "scoreDistribution": {
+      "title": "Resume Quality Distribution",
+      "good": "Good Matches",
+      "average": "Average Matches",
+      "poor": "Poor Matches",
+      "profiles": "Profiles"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "noActivity": "No recent activity detected.",
+      "viewHistory": "View Comprehensive History"
+    },
+    "errors": {
+      "failedToFetch": "Failed to fetch dashboard data"
+    }
+  },
+  "profile": {
+    "header": {
+      "accountActive": "Account Active",
+      "totalCredits": "Total Credits",
+      "usagePerMonth": "Usage / Month"
+    },
+    "tabs": {
+      "creditsBilling": "Credits & Billing",
+      "security": "Security",
+      "preferences": "Preferences"
+    },
+    "account": {
+      "title": "Personal Information",
+      "subtitle": "Update your name and communication email.",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "firstNameRequired": "First name is required",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "lastNameRequired": "Last name is required",
+      "emailAddress": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "emailRequired": "Email is required",
+      "saveChanges": "Save Changes",
+      "updateSuccess": "Profile updated successfully!",
+      "updateFailed": "Failed to update profile"
+    },
+    "credits": {
+      "title": "Credits Hub",
+      "subtitle": "Manage your token balance and pay-as-you-go settings.",
+      "activeBalance": "Active Balance",
+      "monthlyQuota": "Monthly Quota",
+      "availableCredits": "Available Credits",
+      "weeklyUsage": "Weekly Usage Activity",
+      "addCredits": "Add Credits",
+      "packages": {
+        "starter": "Starter",
+        "grow": "Grow",
+        "power": "Power",
+        "recommended": "Recommended"
+      },
+      "recentActivity": "Recent Activity"
+    },
+    "security": {
+      "title": "Security Shield",
+      "subtitle": "Protect your account with a secure password and 2-step verification.",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmNewPassword": "Confirm New Password",
+      "confirmNewPasswordPlaceholder": "Confirm new password",
+      "required": "Required",
+      "passwordMinLength": "Must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "updatePassword": "Update Password",
+      "passwordUpdateSuccess": "Password updated successfully!",
+      "passwordUpdateFailed": "Failed to update password",
+      "dangerZone": "Danger Zone",
+      "deleteAccount": {
+        "title": "Delete Account",
+        "description": "Permanently remove all your resumes, history and credits.",
+        "buttonText": "Delete Permanently"
+      }
+    },
+    "preferences": {
+      "title": "User Preferences",
+      "subtitle": "Customize your notification and language settings.",
+      "emailNotifications": "Email Notifications",
+      "notifications": {
+        "analysisComplete": "New AI analysis complete",
+        "weeklyDigest": "Weekly job application digest",
+        "lowCreditAlert": "Low credit alerts (under 500 tokens)"
+      },
+      "systemLanguage": "System Language",
+      "languages": {
+        "english": "English (US)",
+        "spanish": "Spanish",
+        "french": "French"
+      }
+    }
+  },
+  "applications": {
+    "title": "Applications",
+    "subtitle": "Manage your career pipeline and AI-generated assets.",
+    "newApplication": "New Application",
+    "searchPlaceholder": "Search by company or position...",
+    "filters": "Filters",
+    "stats": {
+      "totalApplications": "Total Applications",
+      "interviewing": "Interviewing",
+      "responseRate": "Response Rate",
+      "jobOffers": "Job Offers"
+    },
+    "emptyState": {
+      "title": "No applications yet",
+      "description": "Start tracking your career journey. Every opportunity leads to growth.",
+      "buttonText": "Create your first application"
+    },
+    "columns": {
+      "drafts": "Drafts",
+      "applied": "Applied",
+      "interviewing": "Interviewing",
+      "offers": "Offers",
+      "rejected": "Rejected"
+    },
+    "addItem": "Add Item",
+    "table": {
+      "positionAndCompany": "Position & Company",
+      "appliedOn": "Applied On",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "modal": {
+      "title": "Track New Opportunity",
+      "companyName": "Company Name",
+      "companyNamePlaceholder": "e.g. Google",
+      "positionTitle": "Position Title",
+      "positionTitlePlaceholder": "e.g. Senior Frontend Engineer",
+      "jobDescription": "Job Description",
+      "jobDescriptionPlaceholder": "Paste the requirements here for AI analysis...",
+      "jobUrl": "Job URL",
+      "jobUrlPlaceholder": "https://career.site/job",
+      "deadline": "Deadline",
+      "selectedResume": "Selected Resume",
+      "cancel": "Cancel",
+      "addApplication": "Add Application"
+    },
+    "status": {
+      "draft": "Draft",
+      "applied": "Applied",
+      "interview": "Interview",
+      "offer": "Offer",
+      "rejected": "Rejected"
+    },
+    "actions": {
+      "aiCoverLetter": "AI Cover Letter",
+      "viewDetails": "View Details",
+      "delete": "Delete"
+    },
+    "confirmations": {
+      "deleteApplication": "Are you sure you want to delete this application?"
+    },
+    "toasts": {
+      "loadFailed": "Failed to load applications",
+      "createSuccess": "Application created successfully!",
+      "createFailed": "Failed to create application",
+      "deleteSuccess": "Application deleted successfully!",
+      "deleteFailed": "Failed to delete application",
+      "statusUpdateSuccess": "Status updated successfully!",
+      "statusUpdateFailed": "Failed to update status",
+      "coverLetterSuccess": "Cover letter generation started! Check back in a few minutes.",
+      "coverLetterFailed": "Failed to generate cover letter"
+    },
+    "validation": {
+      "companyNameMin": "Company name must be at least 2 characters",
+      "positionTitleMin": "Position title must be at least 2 characters",
+      "jobDescriptionMin": "Job description must be at least 50 characters for better AI analysis",
+      "invalidUrl": "Must be a valid URL",
+      "notesMax": "Notes must be under 1000 characters",
+      "selectResume": "Please select a valid resume"
+    }
+  },
+  "applicationDetail": {
+    "breadcrumbs": {
+      "applications": "Applications"
+    },
+    "notFound": {
+      "title": "Application not found",
+      "backLink": "Back to Applications"
+    },
+    "actions": {
+      "delete": "Delete",
+      "generateCoverLetter": "Generate AI Cover Letter"
+    },
+    "sections": {
+      "jobDescription": "Job Description",
+      "personalNotes": "Personal Notes",
+      "coverLetter": "Cover Letter",
+      "aiMatchAnalysis": "AI Match Analysis",
+      "pipelineStage": "Pipeline Stage",
+      "quickInfo": "Quick Info"
+    },
+    "edit": {
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "saveNotes": "Save Notes",
+      "saveCoverLetter": "Save Cover Letter",
+      "notesPlaceholder": "Key interview points, names of recruiters, etc.",
+      "noDescription": "No description provided.",
+      "noNotes": "No notes added yet. Use this space for recruiter names, interview dates, or prep work.",
+      "noCoverLetter": "No cover letter added yet."
+    },
+    "matchScore": {
+      "atsCompatibility": "ATS Compatibility Score",
+      "viewReport": "View full analysis report →",
+      "lowDataHint": "Register more data for high-fidelity scoring.",
+      "scoreNotAvailable": "N/A"
+    },
+    "quickInfo": {
+      "creationDate": "Creation Date",
+      "deadline": "Deadline",
+      "jobUrl": "Job URL",
+      "notSpecified": "Not specified",
+      "linkedAssets": "Linked Assets",
+      "activeResume": "Active Resume"
+    },
+    "confirmations": {
+      "deleteApplication": "Are you sure you want to delete this application?"
+    },
+    "toasts": {
+      "loadFailed": "Failed to load application details",
+      "statusUpdated": "Status updated",
+      "statusUpdateFailed": "Failed to update status",
+      "updateSuccess": "Updated successfully",
+      "updateFailed": "Update failed",
+      "deleteSuccess": "Application deleted",
+      "deleteFailed": "Delete failed",
+      "coverLetterGenerating": "Generating cover letter...",
+      "coverLetterSuccess": "Cover letter generation started!",
+      "coverLetterFailed": "Failed to start generation"
+    }
   }
 }

@@ -25,7 +25,7 @@ function EmailVerifiedContent() {
       try {
         await verifyEmail(token)
         setState('success')
-        toast.success(t('emailVerified.emailVerifiedToast'))
+        toast.success(t('auth.emailVerified.emailVerifiedToast'))
       } catch (error: any) {
         const code = error.response?.data?.code
         const message = error.response?.data?.message || error.response?.data?.error
@@ -34,22 +34,22 @@ function EmailVerifiedContent() {
           setState('already-verified')
         } else if (code === 'TOKEN_EXPIRED') {
           setState('error')
-          setErrorMessage(message || t('emailVerified.tokenExpired'))
+          setErrorMessage(message || t('auth.emailVerified.tokenExpired'))
         } else if (code === 'INVALID_TOKEN') {
           setState('error')
-          setErrorMessage(message || t('emailVerified.invalidToken'))
+          setErrorMessage(message || t('auth.emailVerified.invalidToken'))
         } else {
           setState('error')
-          setErrorMessage(message || t('emailVerified.failedToVerify'))
+          setErrorMessage(message || t('auth.emailVerified.failedToVerify'))
         }
-        toast.error(message || t('emailVerified.emailVerificationFailed'))
+        toast.error(message || t('auth.emailVerified.emailVerificationFailed'))
       }
     }
 
   useEffect(() => {
     if (!token) {
       setState('error')
-      setErrorMessage(t('emailVerified.noToken'))
+      setErrorMessage(t('auth.emailVerified.noToken'))
       return
     }
 
@@ -65,10 +65,10 @@ function EmailVerifiedContent() {
               <div className="h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              {t('emailVerified.verifying')}
+              {t('auth.emailVerified.verifying')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              {t('emailVerified.pleaseWait')}
+              {t('auth.emailVerified.pleaseWait')}
             </p>
           </div>
         )
@@ -80,10 +80,10 @@ function EmailVerifiedContent() {
               <CheckCircleIcon className="h-10 w-10 text-green-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              {t('emailVerified.emailVerifiedSuccess')}
+              {t('auth.emailVerified.emailVerifiedSuccess')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              {t('emailVerified.emailVerifiedMessage')}
+              {t('auth.emailVerified.emailVerifiedMessage')}
             </p>
           </div>
         )
@@ -95,10 +95,10 @@ function EmailVerifiedContent() {
               <CheckCircleIcon className="h-10 w-10 text-blue-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              {t('emailVerified.emailAlreadyVerified')}
+              {t('auth.emailVerified.emailAlreadyVerified')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              {t('emailVerified.alreadyVerifiedMessage')}
+              {t('auth.emailVerified.alreadyVerifiedMessage')}
             </p>
           </div>
         )
@@ -110,7 +110,7 @@ function EmailVerifiedContent() {
               <XCircleIcon className="h-10 w-10 text-red-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              {t('emailVerified.verificationFailed')}
+              {t('auth.emailVerified.verificationFailed')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               {errorMessage}
@@ -128,7 +128,7 @@ function EmailVerifiedContent() {
         <div className="space-y-3">
           <Link href="/email-verification">
             <Button variant="primary" size="lg" className="w-full">
-              {t('emailVerified.requestNewVerification')}
+              {t('auth.emailVerified.requestNewVerification')}
             </Button>
           </Link>
           <Link href="/login">
@@ -144,7 +144,7 @@ function EmailVerifiedContent() {
       <div className="space-y-3">
         <Link href="/dashboard">
           <Button variant="primary" size="lg" className="w-full">
-            {t('emailVerified.goToDashboard')}
+            {t('auth.emailVerified.goToDashboard')}
             <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
           </Button>
         </Link>
@@ -162,8 +162,8 @@ function EmailVerifiedContent() {
             {state !== 'verifying' && (
               <p className="text-sm text-gray-600">
                 {state === 'success' || state === 'already-verified'
-                  ? t('emailVerified.accessAllFeatures')
-                  : t('emailVerified.tokenExpiredInfo')}
+                  ? t('auth.emailVerified.accessAllFeatures')
+                  : t('auth.emailVerified.tokenExpiredInfo')}
               </p>
             )}
 

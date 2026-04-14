@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Input, Button, Checkbox, Select } from '@/components/ui'
+import { useTranslations } from 'next-intl'
 
 interface ProfileForm {
    first_name: string
@@ -32,6 +33,7 @@ interface PasswordForm {
 }
 
 export default function ProfilePage() {
+   const t = useTranslations()
    const { user, updateProfile, loading } = useAuth()
    const [activeTab, setActiveTab] = useState('account')
    const [isUpdating, setIsUpdating] = useState(false)
@@ -65,9 +67,9 @@ export default function ProfilePage() {
       setIsUpdating(true)
       try {
          await updateProfile(data)
-         toast.success('Profile updated successfully!')
+         toast.success(t('profile.account.updateSuccess'))
       } catch (error: any) {
-         toast.error(error.response?.data?.message || 'Failed to update profile')
+         toast.error(error.response?.data?.message || t('profile.account.updateFailed'))
       } finally {
          setIsUpdating(false)
       }
@@ -76,10 +78,10 @@ export default function ProfilePage() {
    const onPasswordSubmit = async (data: PasswordForm) => {
       setIsUpdating(true)
       try {
-         toast.success('Password updated successfully!')
+         toast.success(t('profile.security.passwordUpdateSuccess'))
          resetPassword()
       } catch (error: any) {
-         toast.error(error.response?.data?.message || 'Failed to update password')
+         toast.error(error.response?.data?.message || t('profile.security.passwordUpdateFailed'))
       } finally {
          setIsUpdating(false)
       }
@@ -107,10 +109,10 @@ export default function ProfilePage() {
    if (!user) return null
 
    const tabs = [
-      { id: 'account', name: 'Account', icon: UserIcon },
-      { id: 'credits', name: 'Credits & Billing', icon: WalletIcon },
-      { id: 'security', name: 'Security', icon: ShieldCheckIcon },
-      { id: 'preferences', name: 'Preferences', icon: BellIcon },
+      { id: 'account', name: t('profile.tabs.account'), icon: UserIcon },
+      { id: 'credits', name: t('profile.tabs.creditsBilling'), icon: WalletIcon },
+      { id: 'security', name: t('profile.tabs.security'), icon: ShieldCheckIcon },
+      { id: 'preferences', name: t('profile.tabs.preferences'), icon: BellIcon },
    ]
 
    return (
@@ -140,18 +142,18 @@ export default function ProfilePage() {
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
                            <p className="text-slate-500 font-medium">{user.email}</p>
                            <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest border border-indigo-100">
-                              Account Active
+                              {t('profile.header.accountActive')}
                            </span>
                         </div>
                      </div>
                      <div className="md:ml-auto flex items-center bg-slate-50 p-4 rounded-3xl border border-slate-100 space-x-6">
                         <div className="text-center">
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Credits</p>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('profile.header.totalCredits')}</p>
                            <p className="text-xl font-black text-slate-900">{tokenBalance.toLocaleString()}</p>
                         </div>
                         <div className="h-10 border-l border-slate-200"></div>
                         <div className="text-center">
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Usage / Month</p>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('profile.header.usagePerMonth')}</p>
                            <p className="text-xl font-black text-slate-900">8.4k</p>
                         </div>
                      </div>
@@ -189,35 +191,35 @@ export default function ProfilePage() {
                            {activeTab === 'account' && (
                               <div className="space-y-10">
                                  <div>
-                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Personal Information</h2>
-                                    <p className="text-sm text-slate-500 font-medium">Update your name and communication email.</p>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">{t('profile.account.title')}</h2>
+                                    <p className="text-sm text-slate-500 font-medium">{t('profile.account.subtitle')}</p>
                                  </div>
 
                                  <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                        <Input
-                                          {...registerProfile('first_name', { required: 'First name is required' })}
-                                          label="First Name"
-                                          placeholder="Enter your first name"
+                                          {...registerProfile('first_name', { required: t('profile.account.firstNameRequired') })}
+                                          label={t('profile.account.firstName')}
+                                          placeholder={t('profile.account.firstNamePlaceholder')}
                                           error={profileErrors.first_name?.message}
                                        />
                                        <Input
-                                          {...registerProfile('last_name', { required: 'Last name is required' })}
-                                          label="Last Name"
-                                          placeholder="Enter your last name"
+                                          {...registerProfile('last_name', { required: t('profile.account.lastNameRequired') })}
+                                          label={t('profile.account.lastName')}
+                                          placeholder={t('profile.account.lastNamePlaceholder')}
                                           error={profileErrors.last_name?.message}
                                        />
                                     </div>
                                     <Input
-                                       {...registerProfile('email', { required: 'Email is required' })}
-                                       label="Email Address"
+                                       {...registerProfile('email', { required: t('profile.account.emailRequired') })}
+                                       label={t('profile.account.emailAddress')}
                                        type="email"
-                                       placeholder="Enter your email"
+                                       placeholder={t('profile.account.emailPlaceholder')}
                                        error={profileErrors.email?.message}
                                     />
                                     <div className="flex justify-end pt-4">
                                        <Button type="submit" loading={isUpdating} className="rounded-2xl px-10 bg-indigo-600 shadow-lg shadow-indigo-50">
-                                          Save Changes
+                                          {t('profile.account.saveChanges')}
                                        </Button>
                                     </div>
                                  </form>
@@ -229,12 +231,12 @@ export default function ProfilePage() {
                               <div className="space-y-10">
                                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                                     <div>
-                                       <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Credits Hub</h2>
-                                       <p className="text-sm text-slate-500 font-medium">Manage your token balance and pay-as-you-go settings.</p>
+                                       <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">{t('profile.credits.title')}</h2>
+                                       <p className="text-sm text-slate-500 font-medium">{t('profile.credits.subtitle')}</p>
                                     </div>
                                     <div className="flex items-center space-x-2 bg-emerald-50 text-emerald-600 px-4 py-2 rounded-2xl border border-emerald-100">
                                        <SparklesIcon className="h-4 w-4" />
-                                       <span className="text-xs font-black uppercase tracking-widest">Active Balance</span>
+                                       <span className="text-xs font-black uppercase tracking-widest">{t('profile.credits.activeBalance')}</span>
                                     </div>
                                  </div>
 
@@ -253,16 +255,16 @@ export default function ProfilePage() {
                                           </svg>
                                           <div className="absolute flex flex-col items-center">
                                              <span className="text-2xl font-black text-slate-900">75%</span>
-                                             <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Monthly Quota</span>
+                                             <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{t('profile.credits.monthlyQuota')}</span>
                                           </div>
                                        </div>
                                        <h3 className="text-4xl font-black text-slate-900 mb-2">{tokenBalance.toLocaleString()}</h3>
-                                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Available Credits</p>
+                                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('profile.credits.availableCredits')}</p>
                                     </div>
 
                                     <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-inner">
                                        <div className="flex items-center justify-between mb-8">
-                                          <h3 className="font-black text-slate-800 uppercase text-[10px] tracking-widest">Weekly Usage Activity</h3>
+                                          <h3 className="font-black text-slate-800 uppercase text-[10px] tracking-widest">{t('profile.credits.weeklyUsage')}</h3>
                                           <ChartBarIcon className="h-4 w-4 text-slate-400" />
                                        </div>
                                        <div className="flex items-end justify-between h-32 space-x-2">
@@ -291,16 +293,16 @@ export default function ProfilePage() {
 
                                  {/* Buy Credits */}
                                  <div className="space-y-6 pt-6">
-                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">Add Credits</h3>
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">{t('profile.credits.addCredits')}</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                        {[
-                                          { name: 'Starter', price: '$5', tokens: '5,000', color: 'indigo' },
-                                          { name: 'Grow', price: '$15', tokens: '20,000', color: 'violet', recommended: true },
-                                          { name: 'Power', price: '$40', tokens: '60,000', color: 'slate' },
+                                          { name: t('profile.credits.packages.starter'), price: '$5', tokens: '5,000', color: 'indigo' },
+                                          { name: t('profile.credits.packages.grow'), price: '$15', tokens: '20,000', color: 'violet', recommended: true },
+                                          { name: t('profile.credits.packages.power'), price: '$40', tokens: '60,000', color: 'slate' },
                                        ].map((pkg) => (
                                           <div key={pkg.name} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
                                              {pkg.recommended && (
-                                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Recommended</span>
+                                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full">{t('profile.credits.packages.recommended')}</span>
                                              )}
                                              <p className="text-xs font-bold text-slate-400 mb-1">{pkg.name}</p>
                                              <p className="text-2xl font-black text-slate-900 mb-4">{pkg.tokens}</p>
@@ -317,7 +319,7 @@ export default function ProfilePage() {
 
                                  {/* Transactions */}
                                  <div className="pt-6">
-                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">Recent Activity</h3>
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">{t('profile.credits.recentActivity')}</h3>
                                     <div className="space-y-4">
                                        {recentTransactions.map((tx) => (
                                           <div key={tx.id} className="flex items-center justify-between p-4 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors bg-slate-50/50">
@@ -344,50 +346,50 @@ export default function ProfilePage() {
                            {activeTab === 'security' && (
                               <div className="space-y-10">
                                  <div>
-                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">Security Shield</h2>
-                                    <p className="text-sm text-slate-500 font-medium">Protect your account with a secure password and 2-step verification.</p>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">{t('profile.security.title')}</h2>
+                                    <p className="text-sm text-slate-500 font-medium">{t('profile.security.subtitle')}</p>
                                  </div>
 
                                  <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-6">
                                     <Input
-                                       {...registerPassword('current_password', { required: 'Required' })}
-                                       label="Current Password"
+                                       {...registerPassword('current_password', { required: t('profile.security.required') })}
+                                       label={t('profile.security.currentPassword')}
                                        type="password"
-                                       placeholder="Enter current password"
+                                       placeholder={t('profile.security.currentPasswordPlaceholder')}
                                        error={passwordErrors.current_password?.message}
                                     />
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                        <Input
-                                          {...registerPassword('new_password', { required: 'Required', minLength: 8 })}
-                                          label="New Password"
+                                          {...registerPassword('new_password', { required: t('profile.security.required'), minLength: { value: 8, message: t('profile.security.passwordMinLength') } })}
+                                          label={t('profile.security.newPassword')}
                                           type="password"
-                                          placeholder="Enter new password"
+                                          placeholder={t('profile.security.newPasswordPlaceholder')}
                                           error={passwordErrors.new_password?.message}
                                        />
                                        <Input
-                                          {...registerPassword('confirm_password', { required: 'Required', validate: v => v === newPassword || 'Mismatch' })}
-                                          label="Confirm New Password"
+                                          {...registerPassword('confirm_password', { required: t('profile.security.required'), validate: v => v === newPassword || t('profile.security.passwordMismatch') })}
+                                          label={t('profile.security.confirmNewPassword')}
                                           type="password"
-                                          placeholder="Confirm new password"
+                                          placeholder={t('profile.security.confirmNewPasswordPlaceholder')}
                                           error={passwordErrors.confirm_password?.message}
                                        />
                                     </div>
                                     <div className="flex justify-end pt-4">
                                        <Button type="submit" loading={isUpdating} className="rounded-2xl px-10 bg-indigo-600 shadow-lg shadow-indigo-50">
-                                          Update Password
+                                          {t('profile.security.updatePassword')}
                                        </Button>
                                     </div>
                                  </form>
 
                                  <div className="pt-10 border-t border-slate-100">
-                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">Danger Zone</h3>
+                                    <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">{t('profile.security.dangerZone')}</h3>
                                     <div className="p-6 rounded-3xl border border-rose-100 bg-rose-50/30 flex flex-col md:flex-row items-center justify-between gap-6">
                                        <div>
-                                          <p className="text-sm font-bold text-rose-900">Delete Account</p>
-                                          <p className="text-xs text-rose-600 font-medium">Permanently remove all your resumes, history and credits.</p>
+                                          <p className="text-sm font-bold text-rose-900">{t('profile.security.deleteAccount.title')}</p>
+                                          <p className="text-xs text-rose-600 font-medium">{t('profile.security.deleteAccount.description')}</p>
                                        </div>
                                        <Button variant="outline" className="border-rose-200 text-rose-600 hover:bg-rose-600 hover:text-white rounded-2xl">
-                                          Delete Permanently
+                                          {t('profile.security.deleteAccount.buttonText')}
                                        </Button>
                                     </div>
                                  </div>
@@ -398,28 +400,28 @@ export default function ProfilePage() {
                            {activeTab === 'preferences' && (
                               <div className="space-y-10">
                                  <div>
-                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">User Preferences</h2>
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">{t('profile.preferences.title')}</h2>
                                     <p className="text-sm text-slate-500 font-medium">Customize your dashboard experience and notifications.</p>
                                  </div>
 
                                  <div className="space-y-10">
                                     <div className="space-y-4">
-                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">Email Notifications</h3>
+                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">{t('profile.preferences.emailNotifications')}</h3>
                                        <div className="space-y-3">
-                                          <Checkbox id="notif-1" label="New AI analysis complete" defaultChecked />
-                                          <Checkbox id="notif-2" label="Weekly job application digest" defaultChecked />
-                                          <Checkbox id="notif-3" label="Low credit alerts (under 500 tokens)" defaultChecked />
+                                          <Checkbox id="notif-1" label={t('profile.preferences.notifications.analysisComplete')} defaultChecked />
+                                          <Checkbox id="notif-2" label={t('profile.preferences.notifications.weeklyDigest')} defaultChecked />
+                                          <Checkbox id="notif-3" label={t('profile.preferences.notifications.lowCreditAlert')} defaultChecked />
                                        </div>
                                     </div>
 
                                     <div className="space-y-4 pt-6 border-t border-slate-100">
-                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">System Language</h3>
+                                       <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">{t('profile.preferences.systemLanguage')}</h3>
                                        <div className="max-w-xs">
                                           <Select
                                              options={[
-                                                { value: 'en', label: 'English (US)' },
-                                                { value: 'es', label: 'Spanish' },
-                                                { value: 'fr', label: 'French' }
+                                                { value: 'en', label: t('profile.preferences.languages.english') },
+                                                { value: 'es', label: t('profile.preferences.languages.spanish') },
+                                                { value: 'fr', label: t('profile.preferences.languages.french') }
                                              ]}
                                              defaultValue="en"
                                           />
