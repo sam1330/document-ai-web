@@ -265,12 +265,14 @@
   "common": {
     "and": "y",
     "or": "o",
-    "account": "Cuenta"
+    "account": "Cuenta",
+    "saveChanges": "Guardar Cambios"
   },
   "resumes": {
     "title": "Repositorio de Currículums",
     "subtitle": "Administra tus documentos profesionales y rastrea análisis de IA en varios roles.",
     "uploadNew": "Subir Nuevo",
+    "createNew": "Crear Nuevo",
     "searchPlaceholder": "Buscar currículums por nombre de archivo...",
     "filters": {
       "all": "todos",
@@ -324,6 +326,116 @@
       "failedToLoad": "Error al cargar los currículums",
       "failedToAnalyze": "Error al analizar el currículum",
       "allFieldsRequired": "Todos los campos son obligatorios"
+    },
+    "builder": {
+      "title": "Currículum Builder",
+      "content": "Contenido",
+      "designText": "Diseño",
+      "previewtext": "Previsualización",
+      "downloadPDF": "Descargar PDF",
+      "template": "Plantilla",
+      "scale": "Escala",
+      "fitToWidth": "Ajustar al Ancho",
+      "toasts": {
+        "generatingPDF": "Generando tu PDF premium...",
+        "downloadSuccess": "¡Currículum descargado exitosamente!",
+        "downloadFailed": "Error al generar el PDF. Asegúrate de que el microservicio de PDF esté funcionando.",
+        "enterText": "Por favor ingresa un texto para mejorar",
+        "enhancing": "La IA está puliendo tu punto clave...",
+        "enhanceSuccess": "¡Mejorado!",
+        "enhanceFailed": "Error al mejorar"
+      },
+      "form": {
+        "sections": {
+          "personalInfo": "Información Personal",
+          "summary": "Resumen Profesional",
+          "experience": "Experiencia",
+          "education": "Educación",
+          "skills": "Habilidades"
+        },
+        "fields": {
+          "fullName": "Nombre Completo",
+          "location": "Ubicación",
+          "email": "Correo Electrónico",
+          "phone": "Teléfono",
+          "website": "Sitio Web",
+          "company": "Empresa",
+          "position": "Cargo",
+          "jobLocation": "Ubicación",
+          "startDate": "Fecha de Inicio",
+          "endDate": "Fecha de Fin",
+          "highlights": "Puntos Clave",
+          "skillCategory": "Categoría de Habilidad",
+          "skillDetails": "Habilidades",
+          "institution": "Institución",
+          "degree": "Título",
+          "area": "Área de Estudio"
+        },
+        "placeholders": {
+          "fullName": "Juan Pérez",
+          "location": "Ciudad, País",
+          "email": "juan@example.com",
+          "phone": "+1 234 567 890",
+          "website": "https://tusitioweb.com",
+          "summary": "Un breve resumen de tu trayectoria profesional...",
+          "company": "Nombre de la Empresa",
+          "position": "Título del Puesto",
+          "jobLocation": "Remoto / Ciudad",
+          "date": "MM/AAAA",
+          "endDate": "MM/AAAA o Presente",
+          "institution": "Nombre de la Universidad",
+          "degree": "Maestría en Ciencias",
+          "area": "Ciencias de la Computación",
+          "skillCategory": "ej. Idiomas",
+          "skillDetails": "JavaScript, React, Node.js"
+        },
+        "actions": {
+          "addBullet": "Agregar Punto",
+          "addExperience": "Agregar Experiencia",
+          "addEducation": "Agregar Educación",
+          "addSkill": "Agregar Categoría de Habilidad"
+        },
+        "credits": {
+          "oneCredit": "1 Crédito"
+        }
+      },
+      "design": {
+        "appearance": "Apariencia",
+        "typography": "Tipografía",
+        "advancedControls": "Controles Avanzados",
+        "proOnly": "Disponible en Pro",
+        "proDescription": "Márgenes, interlineado y personalizador de color.",
+        "placeholder": "Marcador",
+        "templates": {
+          "classic": {
+            "name": "Clásico",
+            "description": "Diseño serif limpio y profesional."
+          },
+          "modern": {
+            "name": "Moderno",
+            "description": "Sans-serif contemporáneo con encabezados llamativos."
+          },
+          "engineering": {
+            "name": "Ingeniería",
+            "description": "Diseño compacto y técnico para desarrolladores."
+          }
+        },
+        "fonts": {
+          "serif": "Serif (Clásico Profesional)",
+          "sans": "Sans (Minimalista Moderno)",
+          "mono": "Mono (Técnico/Desarrollador)"
+        }
+      },
+      "preview": {
+        "placeholderName": "TU NOMBRE",
+        "modePlaceholder": "Modo {template} (Marcador)",
+        "sections": {
+          "summary": "Resumen Profesional",
+          "experience": "Experiencia",
+          "education": "Educación",
+          "skills": "Habilidades"
+        }
+      }
     }
   },
   "resumeDetail": {
@@ -432,7 +544,6 @@
       "emailAddress": "Dirección de Correo Electrónico",
       "emailPlaceholder": "Ingresa tu correo electrónico",
       "emailRequired": "El correo electrónico es obligatorio",
-      "saveChanges": "Guardar Cambios",
       "updateSuccess": "¡Perfil actualizado exitosamente!",
       "updateFailed": "Error al actualizar el perfil"
     },
@@ -594,7 +705,6 @@
     },
     "edit": {
       "cancel": "Cancelar",
-      "saveChanges": "Guardar cambios",
       "saveNotes": "Guardar Notas",
       "saveCoverLetter": "Guardar Carta de Presentación",
       "notesPlaceholder": "Puntos clave de la entrevista, nombres de reclutadores, etc.",

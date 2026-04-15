@@ -86,8 +86,8 @@ export default function ApplicationsPage() {
   const fetchData = async () => {
     try {
       const [applicationsRes, resumesRes]: [AxiosResponse<JobApplicationResponse>, AxiosResponse<ResumeResponse>] = await Promise.all([
-        api.get('/api/job-application'),
-        api.get('/api/resume')
+        api.get('/api/job-applications'),
+        api.get('/api/resumes')
       ])
       setApplications(applicationsRes.data.job_applications)
       setResumes(resumesRes.data.resumes)
@@ -101,7 +101,7 @@ export default function ApplicationsPage() {
 
   const handleCreateApplication = async (data: JobApplicationFormData) => {
     try {
-      await api.post('/api/job-application', data)
+      await api.post('/api/job-applications', data)
       toast.success(t('applications.toasts.createSuccess'))
       setShowCreateForm(false)
       reset()
@@ -115,7 +115,7 @@ export default function ApplicationsPage() {
     if (!confirm(t('applications.confirmations.deleteApplication'))) return
 
     try {
-      await api.delete(`/api/job-application/${applicationId}`)
+      await api.delete(`/api/job-applications/${applicationId}`)
       toast.success(t('applications.toasts.deleteSuccess'))
       fetchData()
     } catch (error: any) {
@@ -125,7 +125,7 @@ export default function ApplicationsPage() {
 
   const handleUpdateStatus = async (applicationId: string, status: string) => {
     try {
-      await api.put(`/api/job-application/${applicationId}`, { status })
+      await api.put(`/api/job-applications/${applicationId}`, { status })
       toast.success(t('applications.toasts.statusUpdateSuccess'))
       fetchData()
     } catch (error: any) {
@@ -135,7 +135,7 @@ export default function ApplicationsPage() {
 
   const handleGenerateCoverLetter = async (applicationId: string) => {
     try {
-      await api.post(`/api/job-application/${applicationId}/cover-letter`)
+      await api.post(`/api/job-applications/${applicationId}/cover-letter`)
       toast.success(t('applications.toasts.coverLetterSuccess'))
       fetchData()
     } catch (error: any) {

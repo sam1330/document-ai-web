@@ -3,12 +3,14 @@
 import React from 'react'
 import { ResumeData } from '@/types/resume'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface ClassicThemeProps {
   data: ResumeData
 }
 
 export function ClassicTheme({ data }: ClassicThemeProps) {
+  const t = useTranslations()
   const { cv } = data.cv_body
   const { font, theme } = data.cv_body.design
   
@@ -31,14 +33,14 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       {/* Template Placeholder Indicator */}
       {data.template !== 'classic' && (
         <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest z-50 animate-bounce">
-          {data.template} Mode (Placeholder)
+          {t('resumes.builder.preview.modePlaceholder', { template: data.template })}
         </div>
       )}
 
       {/* Header */}
       <header className="text-center mb-6">
         <h1 className="text-3xl font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-2">
-          {cv.name || "YOUR NAME"}
+          {cv.name || t('resumes.builder.preview.placeholderName')}
         </h1>
         <div className="text-sm space-x-2 text-slate-700">
           <span>{cv.location}</span>
@@ -59,7 +61,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       {cv.sections.summary && cv.sections.summary.length > 0 && (
         <section className="mb-6">
           <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-2">
-            Professional Summary
+            {t('resumes.builder.preview.sections.summary')}
           </h2>
           <p className="text-sm leading-relaxed text-slate-800">
             {cv.sections.summary[0]}
@@ -70,7 +72,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       {/* Experience */}
       <section className="mb-6">
         <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-3">
-          Experience
+          {t('resumes.builder.preview.sections.experience')}
         </h2>
         <div className="space-y-4">
           {cv.sections.experience.map((exp, i) => (
@@ -103,7 +105,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       {/* Education */}
       <section className="mb-6">
         <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-3">
-          Education
+          {t('resumes.builder.preview.sections.education')}
         </h2>
         <div className="space-y-3">
           {cv.sections.education.map((edu, i) => (
@@ -124,7 +126,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       {/* Skills */}
       <section className="mb-6">
         <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-2">
-          Skills
+          {t('resumes.builder.preview.sections.skills')}
         </h2>
         <div className="space-y-1">
           {cv.sections.skills.map((skill, i) => (

@@ -157,7 +157,6 @@
       "selectLanguage": "Select Language"
     }
   },
-
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -266,12 +265,14 @@
   "common": {
     "and": "and",
     "or": "or",
-    "account": "Account"
+    "account": "Account",
+    "saveChanges": "Save changes"
   },
   "resumes": {
     "title": "Resume Repository",
     "subtitle": "Manage your professional documents and track AI analyses across various roles.",
     "uploadNew": "Upload New",
+    "createNew": "Create New",
     "searchPlaceholder": "Search resumes by filename...",
     "filters": {
       "all": "all",
@@ -325,6 +326,116 @@
       "failedToLoad": "Failed to load resumes",
       "failedToAnalyze": "Failed to analyze resume",
       "allFieldsRequired": "All fields are required"
+    },
+    "builder": {
+      "title": "Resume Builder",
+      "content": "Content",
+      "designText": "Design",
+      "previewText": "Preview",
+      "downloadPDF": "Download PDF",
+      "template": "Template",
+      "scale": "Scale",
+      "fitToWidth": "Fit to Width",
+      "toasts": {
+        "generatingPDF": "Generating your premium PDF...",
+        "downloadSuccess": "Resume downloaded successfully!",
+        "downloadFailed": "Failed to generate PDF. Make sure the PDF microservice is running.",
+        "enterText": "Please enter some text to enhance",
+        "enhancing": "AI is polishing your bullet point...",
+        "enhanceSuccess": "Enhanced!",
+        "enhanceFailed": "Failed to enhance"
+      },
+      "form": {
+        "sections": {
+          "personalInfo": "Personal Information",
+          "summary": "Professional Summary",
+          "experience": "Experience",
+          "education": "Education",
+          "skills": "Skills"
+        },
+        "fields": {
+          "fullName": "Full Name",
+          "location": "Location",
+          "email": "Email",
+          "phone": "Phone",
+          "website": "Website",
+          "company": "Company",
+          "position": "Position",
+          "jobLocation": "Location",
+          "startDate": "Start Date",
+          "endDate": "End Date",
+          "highlights": "Highlights",
+          "skillCategory": "Skill Category",
+          "skillDetails": "Skills",
+          "institution": "Institution",
+          "degree": "Degree",
+          "area": "Area of Study"
+        },
+        "placeholders": {
+          "fullName": "John Doe",
+          "location": "City, Country",
+          "email": "john@example.com",
+          "phone": "+1 234 567 890",
+          "website": "https://yourwebsite.com",
+          "summary": "A brief overview of your professional background...",
+          "company": "Company Name",
+          "position": "Job Title",
+          "jobLocation": "Remote / City",
+          "date": "MM/YYYY",
+          "endDate": "MM/YYYY or Present",
+          "institution": "University Name",
+          "degree": "Master of Science",
+          "area": "Computer Science",
+          "skillCategory": "e.g. Languages",
+          "skillDetails": "JavaScript, React, Node.js"
+        },
+        "actions": {
+          "addBullet": "Add Bullet",
+          "addExperience": "Add Experience",
+          "addEducation": "Add Education",
+          "addSkill": "Add Skill Category"
+        },
+        "credits": {
+          "oneCredit": "1 Credit"
+        }
+      },
+      "design": {
+        "appearance": "Appearance",
+        "typography": "Typography",
+        "advancedControls": "Advanced Controls",
+        "proOnly": "Available in Pro",
+        "proDescription": "Margins, line height, and color customizer.",
+        "placeholder": "Placeholder",
+        "templates": {
+          "classic": {
+            "name": "Classic",
+            "description": "Clean and professional serif layout."
+          },
+          "modern": {
+            "name": "Modern",
+            "description": "Contemporary sans-serif with bold headers."
+          },
+          "engineering": {
+            "name": "Engineering",
+            "description": "Compact and technical layout for developers."
+          }
+        },
+        "fonts": {
+          "serif": "Serif (Classic Professional)",
+          "sans": "Sans (Modern Minimalist)",
+          "mono": "Mono (Technical/Developer)"
+        }
+      },
+      "preview": {
+        "placeholderName": "YOUR NAME",
+        "modePlaceholder": "{template} Mode (Placeholder)",
+        "sections": {
+          "summary": "Professional Summary",
+          "experience": "Experience",
+          "education": "Education",
+          "skills": "Skills"
+        }
+      }
     }
   },
   "resumeDetail": {
@@ -433,7 +544,6 @@
       "emailAddress": "Email Address",
       "emailPlaceholder": "Enter your email",
       "emailRequired": "Email is required",
-      "saveChanges": "Save Changes",
       "updateSuccess": "Profile updated successfully!",
       "updateFailed": "Failed to update profile"
     },
@@ -595,7 +705,6 @@
     },
     "edit": {
       "cancel": "Cancel",
-      "saveChanges": "Save changes",
       "saveNotes": "Save Notes",
       "saveCoverLetter": "Save Cover Letter",
       "notesPlaceholder": "Key interview points, names of recruiters, etc.",

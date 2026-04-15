@@ -23,10 +23,12 @@ import {
   PuzzlePieceIcon
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 import isEqual from 'lodash/isEqual'
 
 export function ResumeForm() {
+  const t = useTranslations()
   const { data: storeData, setData: setStoreData } = useResumeStore()
 
   const { register, control, handleSubmit, watch, reset, getValues } = useForm<ResumeData>({
@@ -67,13 +69,13 @@ export function ResumeForm() {
     const currentText = values.cv_body.cv.sections.experience[sectionIndex].highlights[highlightIndex]
 
     if (!currentText?.trim()) {
-      import('react-hot-toast').then(m => m.default.error("Please enter some text to enhance"))
+      import('react-hot-toast').then(m => m.default.error(t('resumes.builder.toasts.enterText')))
       return
     }
 
     setEnhancingIndex({ section: sectionIndex, highlight: highlightIndex })
     const toast = (await import('react-hot-toast')).default
-    const toastId = toast.loading("AI is polishing your bullet point...")
+    const toastId = toast.loading(t('resumes.builder.toasts.enhancing'))
 
     try {
       const axios = (await import('axios')).default
@@ -104,10 +106,10 @@ export function ResumeForm() {
         }
       })
 
-      toast.success("Enhanced!", { id: toastId })
+      toast.success(t('resumes.builder.toasts.enhanceSuccess'), { id: toastId })
     } catch (error: any) {
       console.error("AI Enhancement failed:", error)
-      toast.error(error.response?.data?.message || "Failed to enhance", { id: toastId })
+      toast.error(error.response?.data?.message || t('resumes.builder.toasts.enhanceFailed'), { id: toastId })
     } finally {
       setEnhancingIndex(null)
     }
@@ -124,23 +126,23 @@ export function ResumeForm() {
               <div className="p-2 bg-indigo-50 rounded-xl">
                 <UserIcon className="h-5 w-5 text-indigo-600" />
               </div>
-              <span className="text-lg">Personal Information</span>
+              <span className="text-lg">{t('resumes.builder.form.sections.personalInfo')}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <Input label="Full Name" {...register("cv_body.cv.name")} placeholder="John Doe" />
-              <Input label="Location" {...register("cv_body.cv.location")} placeholder="City, Country" />
+              <Input label={t('resumes.builder.form.fields.fullName')} {...register("cv_body.cv.name")} placeholder={t('resumes.builder.form.placeholders.fullName')} />
+              <Input label={t('resumes.builder.form.fields.location')} {...register("cv_body.cv.location")} placeholder={t('resumes.builder.form.placeholders.location')} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Input label="Email" type="email" {...register("cv_body.cv.email")} placeholder="john@example.com" />
-              <Input label="Phone" {...register("cv_body.cv.phone")} placeholder="+1 234 567 890" />
+              <Input label={t('resumes.builder.form.fields.email')} type="email" {...register("cv_body.cv.email")} placeholder={t('resumes.builder.form.placeholders.email')} />
+              <Input label={t('resumes.builder.form.fields.phone')} {...register("cv_body.cv.phone")} placeholder={t('resumes.builder.form.placeholders.phone')} />
             </div>
-            <Input label="Website" {...register("cv_body.cv.website")} placeholder="https://yourwebsite.com" />
+            <Input label={t('resumes.builder.form.fields.website')} {...register("cv_body.cv.website")} placeholder={t('resumes.builder.form.placeholders.website')} />
             <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700">Professional Summary</label>
+              <label className="text-sm font-bold text-slate-700">{t('resumes.builder.form.sections.summary')}</label>
               <Textarea
-                placeholder="A brief overview of your professional background..."
+                placeholder={t('resumes.builder.form.placeholders.summary')}
                 className="min-h-[100px]"
                 {...register("cv_body.cv.sections.summary.0")}
               />
@@ -155,7 +157,7 @@ export function ResumeForm() {
               <div className="p-2 bg-violet-50 rounded-xl">
                 <BriefcaseIcon className="h-5 w-5 text-violet-600" />
               </div>
-              <span className="text-lg">Experience</span>
+              <span className="text-lg">{t('resumes.builder.form.sections.experience')}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="space-y-6">
@@ -169,17 +171,17 @@ export function ResumeForm() {
                   <TrashIcon className="h-4 w-4" />
                 </button>
                 <div className="grid grid-cols-2 gap-4">
-                  <Input label="Company" {...register(`cv_body.cv.sections.experience.${index}.company`)} placeholder="Company Name" />
-                  <Input label="Position" {...register(`cv_body.cv.sections.experience.${index}.position`)} placeholder="Job Title" />
+                  <Input label={t('resumes.builder.form.fields.company')} {...register(`cv_body.cv.sections.experience.${index}.company`)} placeholder={t('resumes.builder.form.placeholders.company')} />
+                  <Input label={t('resumes.builder.form.fields.position')} {...register(`cv_body.cv.sections.experience.${index}.position`)} placeholder={t('resumes.builder.form.placeholders.position')} />
                 </div>
                 <div className="grid grid-cols-3 gap-4">
-                  <Input label="Location" {...register(`cv_body.cv.sections.experience.${index}.location`)} placeholder="Remote / City" />
-                  <Input label="Start Date" {...register(`cv_body.cv.sections.experience.${index}.start_date`)} placeholder="MM/YYYY" />
-                  <Input label="End Date" {...register(`cv_body.cv.sections.experience.${index}.end_date`)} placeholder="MM/YYYY or Present" />
+                  <Input label={t('resumes.builder.form.fields.jobLocation')} {...register(`cv_body.cv.sections.experience.${index}.location`)} placeholder={t('resumes.builder.form.placeholders.jobLocation')} />
+                  <Input label={t('resumes.builder.form.fields.startDate')} {...register(`cv_body.cv.sections.experience.${index}.start_date`)} placeholder={t('resumes.builder.form.placeholders.date')} />
+                  <Input label={t('resumes.builder.form.fields.endDate')} {...register(`cv_body.cv.sections.experience.${index}.end_date`)} placeholder={t('resumes.builder.form.placeholders.endDate')} />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-bold text-slate-700">Highlights</label>
+                    <label className="text-sm font-bold text-slate-700">{t('resumes.builder.form.fields.highlights')}</label>
                     <Button
                       type="button"
                       variant="ghost"
@@ -205,7 +207,7 @@ export function ResumeForm() {
                         });
                       }}
                     >
-                      <PlusIcon className="h-3 w-3 mr-1" /> Add Bullet
+                      <PlusIcon className="h-3 w-3 mr-1" /> {t('resumes.builder.form.actions.addBullet')}
                     </Button>
                   </div>
                   {(field.highlights || []).map((_, hIndex) => (
@@ -257,7 +259,7 @@ export function ResumeForm() {
                         >
                           <SparklesIcon className={cn("h-4 w-4", enhancingIndex?.section === index && enhancingIndex?.highlight === hIndex && "animate-spin")} />
                           <span className="absolute -top-3 -right-2 text-[8px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-full font-black shadow-sm group-hover/ai:scale-110 transition-transform">
-                            1 Credit
+                            {t('resumes.builder.form.credits.oneCredit')}
                           </span>
                         </button>
                       </div>
@@ -273,7 +275,7 @@ export function ResumeForm() {
                 company: "", position: "", location: "", start_date: "", end_date: "", highlights: [""]
               })}
             >
-              <PlusIcon className="h-4 w-4 mr-2" /> Add Experience
+              <PlusIcon className="h-4 w-4 mr-2" /> {t('resumes.builder.form.actions.addExperience')}
             </Button>
           </AccordionContent>
         </AccordionItem>
@@ -285,7 +287,7 @@ export function ResumeForm() {
               <div className="p-2 bg-emerald-50 rounded-xl">
                 <AcademicCapIcon className="h-5 w-5 text-emerald-600" />
               </div>
-              <span className="text-lg">Education</span>
+              <span className="text-lg">{t('resumes.builder.form.sections.education')}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="space-y-6">
@@ -297,14 +299,14 @@ export function ResumeForm() {
                 >
                   <TrashIcon className="h-4 w-4" />
                 </button>
-                <Input label="Institution" {...register(`cv_body.cv.sections.education.${index}.institution`)} placeholder="University Name" />
+                <Input label={t('resumes.builder.form.fields.institution')} {...register(`cv_body.cv.sections.education.${index}.institution`)} placeholder={t('resumes.builder.form.placeholders.institution')} />
                 <div className="grid grid-cols-2 gap-4">
-                  <Input label="Degree" {...register(`cv_body.cv.sections.education.${index}.degree`)} placeholder="Master of Science" />
-                  <Input label="Area of Study" {...register(`cv_body.cv.sections.education.${index}.area`)} placeholder="Computer Science" />
+                  <Input label={t('resumes.builder.form.fields.degree')} {...register(`cv_body.cv.sections.education.${index}.degree`)} placeholder={t('resumes.builder.form.placeholders.degree')} />
+                  <Input label={t('resumes.builder.form.fields.area')} {...register(`cv_body.cv.sections.education.${index}.area`)} placeholder={t('resumes.builder.form.placeholders.area')} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Input label="Start Date" {...register(`cv_body.cv.sections.education.${index}.start_date`)} placeholder="MM/YYYY" />
-                  <Input label="End Date" {...register(`cv_body.cv.sections.education.${index}.end_date`)} placeholder="MM/YYYY" />
+                  <Input label={t('resumes.builder.form.fields.startDate')} {...register(`cv_body.cv.sections.education.${index}.start_date`)} placeholder={t('resumes.builder.form.placeholders.date')} />
+                  <Input label={t('resumes.builder.form.fields.endDate')} {...register(`cv_body.cv.sections.education.${index}.end_date`)} placeholder={t('resumes.builder.form.placeholders.date')} />
                 </div>
               </div>
             ))}
@@ -315,7 +317,7 @@ export function ResumeForm() {
                 institution: "", degree: "", area: "", start_date: "", end_date: ""
               })}
             >
-              <PlusIcon className="h-4 w-4 mr-2" /> Add Education
+              <PlusIcon className="h-4 w-4 mr-2" /> {t('resumes.builder.form.actions.addEducation')}
             </Button>
           </AccordionContent>
         </AccordionItem>
@@ -327,16 +329,16 @@ export function ResumeForm() {
               <div className="p-2 bg-amber-50 rounded-xl">
                 <WrenchScrewdriverIcon className="h-5 w-5 text-amber-600" />
               </div>
-              <span className="text-lg">Skills</span>
+              <span className="text-lg">{t('resumes.builder.form.sections.skills')}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="space-y-6">
             {skillFields.map((field, index) => (
               <div key={field.id} className="grid grid-cols-3 gap-4 items-end bg-slate-50/50 p-4 rounded-xl border border-slate-100">
-                <Input label="Skill Category" {...register(`cv_body.cv.sections.skills.${index}.label`)} placeholder="e.g. Languages" />
+                <Input label={t('resumes.builder.form.fields.skillCategory')} {...register(`cv_body.cv.sections.skills.${index}.label`)} placeholder={t('resumes.builder.form.placeholders.skillCategory')} />
                 <div className="col-span-2 flex gap-2 items-end">
                   <div className="flex-1">
-                    <Input label="Skills" {...register(`cv_body.cv.sections.skills.${index}.details`)} placeholder="JavaScript, React, Node.js" />
+                    <Input label={t('resumes.builder.form.fields.skillDetails')} {...register(`cv_body.cv.sections.skills.${index}.details`)} placeholder={t('resumes.builder.form.placeholders.skillDetails')} />
                   </div>
                   <button
                     onClick={() => removeSkill(index)}
@@ -352,7 +354,7 @@ export function ResumeForm() {
               className="w-full border-dashed border-slate-300 text-slate-500 hover:text-amber-600 hover:border-amber-300 h-12"
               onClick={() => appendSkill({ label: "", details: "" })}
             >
-              <PlusIcon className="h-4 w-4 mr-2" /> Add Skill Category
+              <PlusIcon className="h-4 w-4 mr-2" /> {t('resumes.builder.form.actions.addSkill')}
             </Button>
           </AccordionContent>
         </AccordionItem>

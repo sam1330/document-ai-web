@@ -219,7 +219,7 @@ export default function ProfilePage() {
                                     />
                                     <div className="flex justify-end pt-4">
                                        <Button type="submit" loading={isUpdating} className="rounded-2xl px-10 bg-indigo-600 shadow-lg shadow-indigo-50">
-                                          {t('profile.account.saveChanges')}
+                                          {t('common.saveChanges')}
                                        </Button>
                                     </div>
                                  </form>

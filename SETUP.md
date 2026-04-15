@@ -84,17 +84,17 @@ The frontend integrates with the following backend endpoints:
 - `PUT /api/auth/profile` - Update user profile
 
 ### Resume Management
-- `POST /api/resume/upload` - Upload resume
-- `POST /api/resume/analyze` - Analyze resume with AI
-- `GET /api/resume` - Get user's resumes
-- `DELETE /api/resume/:id` - Delete resume
+- `POST /api/resumes/upload` - Upload resume
+- `POST /api/resumes/analyze` - Analyze resume with AI
+- `GET /api/resumes` - Get user's resumes
+- `DELETE /api/resumes/:id` - Delete resume
 
 ### Job Applications
-- `POST /api/job-application` - Create job application
-- `GET /api/job-application` - Get job applications
-- `PUT /api/job-application/:id` - Update application
-- `DELETE /api/job-application/:id` - Delete application
-- `POST /api/job-application/:id/cover-letter` - Generate cover letter
+- `POST /api/job-applications/upload` - Upload job application
+- `GET /api/job-applications` - Get job applications
+- `PUT /api/job-applications/:id` - Update application
+- `DELETE /api/job-applications/:id` - Delete application
+- `POST /api/job-applications/:id/cover-letter` - Generate cover letter
 
 ### Dashboard
 - `GET /api/dashboard/overview` - Dashboard statistics

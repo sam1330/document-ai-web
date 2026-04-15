@@ -10,20 +10,22 @@ import {
   NoSymbolIcon,
   PencilIcon
 } from '@heroicons/react/24/outline'
+import { useTranslations } from 'next-intl'
 
 const templates = [
-  { id: 'classic', name: 'Classic', description: 'Clean and professional serif layout.' },
-  { id: 'modern', name: 'Modern', description: 'Contemporary sans-serif with bold headers.' },
-  { id: 'engineering', name: 'Engineering', description: 'Compact and technical layout for developers.' },
+  { id: 'classic', nameKey: 'resumes.builder.design.templates.classic.name' as const, descriptionKey: 'resumes.builder.design.templates.classic.description' as const },
+  { id: 'modern', nameKey: 'resumes.builder.design.templates.modern.name' as const, descriptionKey: 'resumes.builder.design.templates.modern.description' as const },
+  { id: 'engineering', nameKey: 'resumes.builder.design.templates.engineering.name' as const, descriptionKey: 'resumes.builder.design.templates.engineering.description' as const },
 ]
 
 const fonts = [
-  { id: 'serif', name: 'Serif (Classic Professional)', class: 'font-serif' },
-  { id: 'sans', name: 'Sans (Modern Minimalist)', class: 'font-sans' },
-  { id: 'mono', name: 'Mono (Technical/Developer)', class: 'font-mono' },
+  { id: 'serif', nameKey: 'resumes.builder.design.fonts.serif' as const, class: 'font-serif' },
+  { id: 'sans', nameKey: 'resumes.builder.design.fonts.sans' as const, class: 'font-sans' },
+  { id: 'mono', nameKey: 'resumes.builder.design.fonts.mono' as const, class: 'font-mono' },
 ]
 
 export function DesignForm() {
+  const t = useTranslations()
   const { data, updateField } = useResumeStore()
 
   return (
@@ -33,7 +35,7 @@ export function DesignForm() {
       <section className="space-y-4">
         <div className="flex items-center space-x-2 pb-2 border-b border-slate-100">
           <SwatchIcon className="h-5 w-5 text-indigo-600" />
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">Appearance</h2>
+          <h2 className="text-lg font-bold text-slate-900 tracking-tight">{t('resumes.builder.design.appearance')}</h2>
         </div>
 
         <div className="grid gap-4">
@@ -57,15 +59,15 @@ export function DesignForm() {
                     "font-bold transition-colors",
                     data.template === template.id ? "text-indigo-900" : "text-slate-700 group-hover:text-slate-900"
                   )}>
-                    {template.name}
+                    {t(template.nameKey)}
                   </p>
                   {template.id !== 'classic' && (
                     <span className="text-[10px] font-black uppercase tracking-tighter bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded shadow-sm">
-                      Placeholder
+                      {t('resumes.builder.design.placeholder')}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{template.description}</p>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{t(template.descriptionKey)}</p>
               </div>
 
               {data.template === template.id && (
@@ -90,7 +92,7 @@ export function DesignForm() {
       <section className="space-y-4">
         <div className="flex items-center space-x-2 pb-2 border-b border-slate-100">
           <PencilIcon className="h-5 w-5 text-indigo-600" />
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">Typography</h2>
+          <h2 className="text-lg font-bold text-slate-900 tracking-tight">{t('resumes.builder.design.typography')}</h2>
         </div>
 
         <div className="grid grid-cols-1 gap-3">
@@ -105,7 +107,7 @@ export function DesignForm() {
                   : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white hover:text-slate-900"
               )}
             >
-              <span className={cn(font.class, "text-base")}>{font.name}</span>
+              <span className={cn(font.class, "text-base")}>{t(font.nameKey)}</span>
               {data.cv_body.design.font === font.id ? (
                 <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
               ) : (
@@ -120,11 +122,11 @@ export function DesignForm() {
       <section className="space-y-4 opacity-50 grayscale select-none cursor-not-allowed">
         <div className="flex items-center space-x-2 pb-2 border-b border-slate-100">
           <NoSymbolIcon className="h-5 w-5 text-slate-400" />
-          <h2 className="text-lg font-bold text-slate-400">Advanced Controls</h2>
+          <h2 className="text-lg font-bold text-slate-400">{t('resumes.builder.design.advancedControls')}</h2>
         </div>
         <div className="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-center">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Available in Pro</p>
-          <p className="text-[10px] text-slate-400 mt-1">Margins, line height, and color customizer.</p>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('resumes.builder.design.proOnly')}</p>
+          <p className="text-[10px] text-slate-400 mt-1">{t('resumes.builder.design.proDescription')}</p>
         </div>
       </section>
 

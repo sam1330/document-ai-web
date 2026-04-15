@@ -8,8 +8,8 @@ import api from '@/lib/api'
 vi.mock('@/lib/api', () => ({
   default: {
     get: vi.fn((url) => {
-      if (url === '/api/job-application') return Promise.resolve({ data: { job_applications: [], pagination: {} } });
-      if (url === '/api/resume') return Promise.resolve({ data: { resumes: [{ id: 'res-1', original_filename: 'Test Resume' }] } });
+      if (url === '/api/job-applications') return Promise.resolve({ data: { job_applications: [], pagination: {} } });
+      if (url === '/api/resumes') return Promise.resolve({ data: { resumes: [{ id: 'res-1', original_filename: 'Test Resume' }] } });
       return Promise.resolve({ data: [] });
     }),
     post: vi.fn(() => Promise.resolve({ data: {} })),

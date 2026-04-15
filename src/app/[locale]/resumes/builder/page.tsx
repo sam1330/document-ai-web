@@ -8,7 +8,7 @@ import { DesignForm } from '@/components/resume/DesignForm'
 import { ResumePreview } from '@/components/resume/ResumePreview'
 import { Button } from '@/components/ui'
 import { useResumeStore } from '@/lib/store/useResumeStore'
-import { ArrowDownTrayIcon, ShareIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { ArrowDownTrayIcon, PencilSquareIcon, ShareIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useTranslations } from 'next-intl'
@@ -22,7 +22,7 @@ export default function ResumeBuilderPage() {
 
   const handleDownloadPDF = async () => {
     setExporting(true)
-    const toastId = toast.loading('Generating your premium PDF...')
+    const toastId = toast.loading(t('resumes.builder.toasts.generatingPDF'))
 
     try {
       // microservice at http://localhost:8000/generate as per requirements
@@ -43,10 +43,10 @@ export default function ResumeBuilderPage() {
       link.remove()
       window.URL.revokeObjectURL(url)
 
-      toast.success('Resume downloaded successfully!', { id: toastId })
+      toast.success(t('resumes.builder.toasts.downloadSuccess'), { id: toastId })
     } catch (error) {
       console.error('PDF Generation failed:', error)
-      toast.error('Failed to generate PDF. Make sure the PDF microservice is running.', { id: toastId })
+      toast.error(t('resumes.builder.toasts.downloadFailed'), { id: toastId })
     } finally {
       setExporting(false)
     }
@@ -65,7 +65,7 @@ export default function ResumeBuilderPage() {
                 <SparklesIcon className="h-4 w-4 text-white" />
               </div>
               <h1 className="text-lg font-black tracking-tight text-slate-900 hidden lg:block">
-                Resume Builder
+                {t('resumes.builder.title')}
               </h1>
             </div>
 
@@ -77,7 +77,7 @@ export default function ResumeBuilderPage() {
                   activeTab === 'content' ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900"
                 )}
               >
-                Content
+                {t('resumes.builder.content')}
               </button>
               <button
                 onClick={() => setActiveTab('design')}
@@ -86,7 +86,7 @@ export default function ResumeBuilderPage() {
                   activeTab === 'design' ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900"
                 )}
               >
-                Design
+                {t('resumes.builder.designtext')}
               </button>
               <button
                 onClick={() => setActiveTab('preview')}
@@ -95,33 +95,29 @@ export default function ResumeBuilderPage() {
                   activeTab === 'preview' ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900"
                 )}
               >
-                Preview
+                {t('resumes.builder.previewText')}
               </button>
             </nav>
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-3">
-            <div className="hidden 2xl:flex items-center mr-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
-              <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-              Changes Saved Locally
-            </div>
             <Button
+              size="sm"
               variant="outline"
-              size="sm"
-              className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0"
-              leftIcon={<ShareIcon className="h-4 w-4" />}
-            >
-              <span className="hidden sm:inline">Share</span>
-            </Button>
-            <Button
-              size="sm"
               onClick={handleDownloadPDF}
               loading={exporting}
               leftIcon={<ArrowDownTrayIcon className="h-4 w-4" />}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-100 transition-all active:scale-95 px-3 md:px-4 shrink-0"
+              className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0"
             >
-              <span className="hidden sm:inline">Download PDF</span>
-              <span className="sm:hidden text-[10px]">PDF</span>
+              <span className="hidden sm:inline">{t('resume.builder.downloadPDF')}</span>
+              <span className="sm:hidden text-[10px]">{t('resumes.fileType.pdf')}</span>
+            </Button>
+            <Button
+              size="sm"
+              className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0"
+              leftIcon={<PencilSquareIcon className="h-4 w-4" />}
+            >
+              <span className="hidden sm:inline">{t('common.saveChanges')}</span>
             </Button>
           </div>
         </div>
@@ -153,13 +149,13 @@ export default function ResumeBuilderPage() {
             {/* Template Selector Badge */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur shadow-2xl border border-slate-200 px-6 py-3 rounded-full flex items-center space-x-6 z-30">
               <div className="flex items-center space-x-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Template</span>
-                <span className="text-sm font-bold text-slate-900">Classic</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t('resume.builder.template')}</span>
+                <span className="text-sm font-bold text-slate-900">{t('resumes.builder.design.templates.classic.name')}</span>
               </div>
               <div className="w-px h-4 bg-slate-200"></div>
               <div className="flex items-center space-x-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Scale</span>
-                <span className="text-sm font-bold text-slate-900">Fit to Width</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t('resume.builder.scale')}</span>
+                <span className="text-sm font-bold text-slate-900">{t('resume.builder.fitToWidth')}</span>
               </div>
             </div>
           </main>
