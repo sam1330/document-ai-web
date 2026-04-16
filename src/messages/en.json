@@ -279,6 +279,14 @@
       "analyzed": "analyzed",
       "pending": "pending"
     },
+    "source": {
+      "upload": "Uploaded",
+      "builder": "Builded"
+    },
+    "actions": {
+      "edit": "Update",
+      "delete": "Delete"
+    },
     "emptyState": {
       "title": "Build your Talent Library",
       "description": "Upload your CV in PDF or DOCX format. Our AI handles the extraction and deep analysis against any role.",
@@ -340,6 +348,12 @@
         "generatingPDF": "Generating your premium PDF...",
         "downloadSuccess": "Resume downloaded successfully!",
         "downloadFailed": "Failed to generate PDF. Make sure the PDF microservice is running.",
+        "loadingResume": "Loading your resume...",
+        "loadFailed": "Failed to load resume data.",
+        "invalidData": "This resume was not created with the builder.",
+        "saving": "Saving changes...",
+        "saveSuccess": "Changes saved successfully!",
+        "saveFailed": "Failed to save changes.",
         "enterText": "Please enter some text to enhance",
         "enhancing": "AI is polishing your bullet point...",
         "enhanceSuccess": "Enhanced!",
@@ -351,7 +365,8 @@
           "summary": "Professional Summary",
           "experience": "Experience",
           "education": "Education",
-          "skills": "Skills"
+          "skills": "Skills",
+          "socialNetworks": "Social Networks"
         },
         "fields": {
           "fullName": "Full Name",
@@ -364,6 +379,7 @@
           "jobLocation": "Location",
           "startDate": "Start Date",
           "endDate": "End Date",
+          "present": "Present",
           "highlights": "Highlights",
           "skillCategory": "Skill Category",
           "skillDetails": "Skills",
@@ -393,10 +409,17 @@
           "addBullet": "Add Bullet",
           "addExperience": "Add Experience",
           "addEducation": "Add Education",
-          "addSkill": "Add Skill Category"
+          "addSkill": "Add Skill Category",
+          "addSocial": "Add Social Profile"
         },
         "credits": {
           "oneCredit": "1 Credit"
+        },
+        "validation": {
+          "required": "{field} is required",
+          "invalidEmail": "Invalid email address",
+          "invalidPhone": "Phone must be in E.164 format (e.g. +1234567890)",
+          "invalidUrl": "Invalid URL"
         }
       },
       "design": {

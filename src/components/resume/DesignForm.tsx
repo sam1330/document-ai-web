@@ -43,12 +43,11 @@ export function DesignForm() {
             <button
               key={template.id}
               onClick={() => {
-                updateField('template', template.id)
-                updateField('cv_body.design.theme', template.id)
+                updateField('design.theme', template.id)
               }}
               className={cn(
                 "flex items-start text-left p-5 rounded-2xl border-2 transition-all relative group overflow-hidden",
-                data.template === template.id
+                data.design.theme === template.id
                   ? "border-indigo-600 bg-indigo-50/50 ring-4 ring-indigo-50"
                   : "border-slate-100 hover:border-slate-200 bg-white hover:bg-slate-50/50"
               )}
@@ -57,7 +56,7 @@ export function DesignForm() {
                 <div className="flex items-center space-x-2">
                   <p className={cn(
                     "font-bold transition-colors",
-                    data.template === template.id ? "text-indigo-900" : "text-slate-700 group-hover:text-slate-900"
+                    data.design.theme === template.id ? "text-indigo-900" : "text-slate-700 group-hover:text-slate-900"
                   )}>
                     {t(template.nameKey)}
                   </p>
@@ -70,7 +69,7 @@ export function DesignForm() {
                 <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{t(template.descriptionKey)}</p>
               </div>
 
-              {data.template === template.id && (
+              {data.design.theme === template.id && (
                 <div className="bg-indigo-600 rounded-full p-1 shadow-lg shadow-indigo-200 z-10">
                   <CheckIcon className="h-3.5 w-3.5 text-white stroke-[3px]" />
                 </div>
@@ -79,7 +78,7 @@ export function DesignForm() {
               {/* Subtle background decoration */}
               <div className={cn(
                 "absolute -right-4 -bottom-4 h-16 w-16 opacity-[0.03] transition-transform duration-500",
-                data.template === template.id ? "scale-150 rotate-12" : "group-hover:translate-x-1 group-hover:-translate-y-1"
+                data.design.theme === template.id ? "scale-150 rotate-12" : "group-hover:translate-x-1 group-hover:-translate-y-1"
               )}>
                 <RectangleGroupIcon className="h-full w-full" />
               </div>
@@ -99,16 +98,16 @@ export function DesignForm() {
           {fonts.map((font) => (
             <button
               key={font.id}
-              onClick={() => updateField('cv_body.design.font', font.id)}
+              onClick={() => updateField('design.typography.font_family.body', font.id)}
               className={cn(
                 "flex items-center justify-between p-4 rounded-xl border-2 transition-all text-sm group",
-                data.cv_body.design.font === font.id
+                data.design.typography.font_family.body === font.id
                   ? "border-indigo-600 bg-indigo-50/30 text-indigo-900 font-bold shadow-sm"
                   : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white hover:text-slate-900"
               )}
             >
               <span className={cn(font.class, "text-base")}>{t(font.nameKey)}</span>
-              {data.cv_body.design.font === font.id ? (
+              {data.design.typography.font_family.body === font.id ? (
                 <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
               ) : (
                 <div className="h-2 w-2 bg-slate-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>

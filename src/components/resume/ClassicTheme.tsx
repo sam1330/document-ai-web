@@ -11,8 +11,8 @@ interface ClassicThemeProps {
 
 export function ClassicTheme({ data }: ClassicThemeProps) {
   const t = useTranslations()
-  const { cv } = data.cv_body
-  const { font, theme } = data.cv_body.design
+  const { cv, design } = data
+  const { font, theme } = design
   
   const fontClass = font === 'mono' ? 'font-mono' : 
                     font === 'sans' ? 'font-sans' : 
@@ -31,9 +31,9 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       }}
     >
       {/* Template Placeholder Indicator */}
-      {data.template !== 'classic' && (
+      {design.theme !== 'classic' && (
         <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest z-50 animate-bounce">
-          {t('resumes.builder.preview.modePlaceholder', { template: data.template })}
+          {t('resumes.builder.preview.modePlaceholder', { template: design.theme })}
         </div>
       )}
 
@@ -51,9 +51,15 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
           {cv.website && (
             <>
               <span>•</span>
-              <span className="text-indigo-600">{cv.website.replace(/^https?:\/\//, '')}</span>
+              <span className="text-indigo-600 font-medium">{cv.website.replace(/^https?:\/\//, '')}</span>
             </>
           )}
+          {cv.social_networks && cv.social_networks.map((sn, index) => (
+            <React.Fragment key={index}>
+              <span>•</span>
+              <span className="text-slate-600">{sn.network}: <span className="text-slate-900 font-medium">{sn.username}</span></span>
+            </React.Fragment>
+          ))}
         </div>
       </header>
 
@@ -111,9 +117,16 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
           {cv.sections.education.map((edu, i) => (
             <div key={i} className="flex justify-between items-baseline">
               <div>
-                <span className="font-bold">{edu.institution}</span>
-                <span className="mx-2 text-slate-400">|</span>
-                <span className="italic text-slate-700">{edu.degree} in {edu.area}</span>
+                <div className="flex items-center">
+                  <span className="font-bold">{edu.institution}</span>
+                  <span className="mx-2 text-slate-400">|</span>
+                  <span className="italic text-slate-700">{edu.degree} in {edu.area}</span>
+                </div>
+                {edu.location && (
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-tight">
+                    {edu.location}
+                  </p>
+                )}
               </div>
               <div className="text-sm font-bold text-slate-600">
                 {edu.start_date} – {edu.end_date}

@@ -279,6 +279,14 @@
       "analyzed": "analizados",
       "pending": "pendientes"
     },
+    "source": {
+      "upload": "Subido",
+      "builder": "Creado"
+    },
+    "actions": {
+      "edit": "Actualizar",
+      "delete": "Eliminar"
+    },
     "emptyState": {
       "title": "Construye tu Biblioteca de Talentos",
       "description": "Sube tu CV en formato PDF o DOCX. Nuestra IA se encarga de la extracción y el análisis profundo para cualquier rol.",
@@ -331,7 +339,7 @@
       "title": "Currículum Builder",
       "content": "Contenido",
       "designText": "Diseño",
-      "previewtext": "Previsualización",
+      "previewText": "Previsualización",
       "downloadPDF": "Descargar PDF",
       "template": "Plantilla",
       "scale": "Escala",
@@ -339,8 +347,14 @@
       "toasts": {
         "generatingPDF": "Generando tu PDF premium...",
         "downloadSuccess": "¡Currículum descargado exitosamente!",
-        "downloadFailed": "Error al generar el PDF. Asegúrate de que el microservicio de PDF esté funcionando.",
-        "enterText": "Por favor ingresa un texto para mejorar",
+        "downloadFailed": "Error al generar el PDF. Asegúrese de que el microservicio de PDF esté funcionando.",
+        "loadingResume": "Cargando su currículum...",
+        "loadFailed": "Error al cargar los datos del currículum.",
+        "invalidData": "Este currículum no fue creado con el builder.",
+        "saving": "Guardando cambios...",
+        "saveSuccess": "¡Cambios guardados con éxito!",
+        "saveFailed": "Error al guardar los cambios.",
+        "enterText": "Por favor, ingrese algún texto para mejorar",
         "enhancing": "La IA está puliendo tu punto clave...",
         "enhanceSuccess": "¡Mejorado!",
         "enhanceFailed": "Error al mejorar"
@@ -351,7 +365,8 @@
           "summary": "Resumen Profesional",
           "experience": "Experiencia",
           "education": "Educación",
-          "skills": "Habilidades"
+          "skills": "Habilidades",
+          "socialNetworks": "Redes Sociales"
         },
         "fields": {
           "fullName": "Nombre Completo",
@@ -364,6 +379,7 @@
           "jobLocation": "Ubicación",
           "startDate": "Fecha de Inicio",
           "endDate": "Fecha de Fin",
+          "present": "Presente",
           "highlights": "Puntos Clave",
           "skillCategory": "Categoría de Habilidad",
           "skillDetails": "Habilidades",
@@ -393,10 +409,17 @@
           "addBullet": "Agregar Punto",
           "addExperience": "Agregar Experiencia",
           "addEducation": "Agregar Educación",
-          "addSkill": "Agregar Categoría de Habilidad"
+          "addSkill": "Agregar Categoría de Habilidad",
+          "addSocial": "Agregar Perfil Social"
         },
         "credits": {
           "oneCredit": "1 Crédito"
+        },
+        "validation": {
+          "required": "El campo {field} es requerido",
+          "invalidEmail": "Correo electrónico inválido",
+          "invalidPhone": "El teléfono debe estar en formato E.164 (ej. +1234567890)",
+          "invalidUrl": "URL inválida"
         }
       },
       "design": {
