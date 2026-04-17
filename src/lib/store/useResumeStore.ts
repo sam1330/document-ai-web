@@ -43,7 +43,7 @@ export const initialDefaultData: ResumeData = {
           details: "Next.js, React, Node.js, PostgreSQL, Docker, AWS"
         }
       ],
-      // custom: []
+      custom: []
     }
   },
   design: {

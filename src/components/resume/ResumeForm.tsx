@@ -30,7 +30,7 @@ export function ResumeForm() {
   const { data: storeData, setData: setStoreData } = useResumeStore()
 
   const { register, control, handleSubmit, watch, reset, getValues, setValue, formState: { errors } } = useForm<ResumeData>({
-    resolver: zodResolver(getResumeSchema(t)),
+    resolver: zodResolver(getResumeSchema(t)) as any,
     defaultValues: storeData
   })
 

@@ -23,11 +23,9 @@ const geistMono = Geist_Mono({
 });
 
 export default async function RootLayout({
-  children,
-  params
+  children
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
 }>) {
   const messages = await getMessages();
   const locale = await getLocale();

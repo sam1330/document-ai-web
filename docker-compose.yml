@@ -8,28 +8,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
       # If running in browser, localhost refers to host machine.
       # If SSR, it might need to talk to backend container name.
       # Ideally usage of public env vars handles client side
-      - NEXT_PUBLIC_API_URL=http://host.docker.internal:3001
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    restart: unless-stopped
-    networks:
-      - app-network
-
-  backend:
-    container_name: haku-api
-    build:
-      # IMPORTANT: UPDATE THIS PATH TO POINT TO YOUR API REPOSITORY
-      context: ../haku-api 
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    environment:
-      - NODE_ENV=development
-      # Add other backend env vars here
     restart: unless-stopped
     networks:
       - app-network

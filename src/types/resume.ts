@@ -19,7 +19,7 @@ export const getResumeSchema = (t: any) => z.object({
       experience: z.array(z.object({
         company: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.company') })),
         position: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.position') })),
-        location: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.jobLocation') })).optional(),
+        location: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.jobLocation') })),
         start_date: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.startDate') })),
         end_date: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.endDate') })),
         highlights: z.array(z.string())
@@ -28,7 +28,7 @@ export const getResumeSchema = (t: any) => z.object({
         institution: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.institution') })),
         area: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.area') })),
         degree: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.degree') })),
-        location: z.string().optional().or(z.literal("")).default(""),
+        location: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.jobLocation') })),
         start_date: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.startDate') })),
         end_date: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.endDate') }))
       })),
@@ -36,10 +36,10 @@ export const getResumeSchema = (t: any) => z.object({
         label: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.skillCategory') })),
         details: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.skillDetails') }))
       })),
-      // custom: z.array(z.object({
-      //   title: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.customTitle') })),
-      //   content: z.array(z.string())
-      // }))
+      custom: z.array(z.object({
+        title: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.customTitle') })),
+        content: z.array(z.string())
+      }))
     })
   }),
   design: z.object({

@@ -25,3 +25,20 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media print {
+  @page {
+    size: letter;
+    /* or A4 */
+    margin: 0;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide standard web-only elements */
+  .no-print {
+    display: none !important;
+  }
+}

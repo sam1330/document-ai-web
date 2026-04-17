@@ -12,16 +12,16 @@ interface ClassicThemeProps {
 export function ClassicTheme({ data }: ClassicThemeProps) {
   const t = useTranslations()
   const { cv, design } = data
-  const { font, theme } = design
-  
-  const fontClass = font === 'mono' ? 'font-mono' : 
-                    font === 'sans' ? 'font-sans' : 
-                    'font-serif'
+  const { typography, theme } = design
+
+  const fontClass = typography.font_family.body === 'mono' ? 'font-mono' :
+    typography.font_family.body === 'sans' ? 'font-sans' :
+      'font-serif'
 
   return (
     <div
       className={cn(
-        "bg-white text-slate-900 p-[20mm] shadow-2xl mx-auto relative overflow-hidden transition-all duration-500",
+        "bg-white text-slate-900 p-[20mm] shadow-2xl print:shadow-none mx-auto relative overflow-hidden transition-all duration-500",
         fontClass
       )}
       style={{
@@ -32,7 +32,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
     >
       {/* Template Placeholder Indicator */}
       {design.theme !== 'classic' && (
-        <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest z-50 animate-bounce">
+        <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest z-50 animate-bounce print:hidden">
           {t('resumes.builder.preview.modePlaceholder', { template: design.theme })}
         </div>
       )}
@@ -158,7 +158,8 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
             {title}
           </h2>
           <ul className="list-disc list-outside ml-4 space-y-1">
-            {items.map((item, index) => (
+            <span className="font-bold">{items.title}</span>
+            {items.content.map((item, index) => (
               <li key={index} className="text-[13px] leading-relaxed text-slate-800 pl-1">
                 {item}
               </li>

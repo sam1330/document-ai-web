@@ -69,18 +69,16 @@ export default function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`group flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                      isActive
+                    className={`group flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
                         ? "bg-indigo-50 text-indigo-700"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                    }`}
+                      }`}
                   >
                     <item.icon
-                      className={`mr-2 h-4 w-4 transition-colors ${
-                        isActive
+                      className={`mr-2 h-4 w-4 transition-colors ${isActive
                           ? "text-indigo-600"
                           : "text-slate-400 group-hover:text-slate-600"
-                      }`}
+                        }`}
                     />
                     {item.name}
                   </Link>
@@ -134,11 +132,10 @@ export default function Navigation() {
                     {({ focus }) => (
                       <Link
                         href="/profile"
-                        className={`${
-                          focus
+                        className={`${focus
                             ? "bg-indigo-50 text-indigo-700"
                             : "text-slate-600"
-                        } flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors`}
+                          } flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors`}
                       >
                         <Cog6ToothIcon className="mr-3 h-5 w-5 opacity-70" />
                         {t("navigation.settings")}
@@ -149,9 +146,8 @@ export default function Navigation() {
                     {({ focus }) => (
                       <button
                         onClick={handleLogout}
-                        className={`${
-                          focus ? "bg-rose-50 text-rose-700" : "text-slate-600"
-                        } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
+                        className={`${focus ? "bg-rose-50 text-rose-700" : "text-slate-600"
+                          } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
                       >
                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 opacity-70" />
                         {t("navigation.signOut")}
@@ -199,11 +195,10 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center px-4 py-3 text-base font-bold rounded-2xl transition-all ${
-                    isActive
+                  className={`flex items-center px-4 py-3 text-base font-bold rounded-2xl transition-all ${isActive
                       ? "bg-indigo-50 text-indigo-700"
                       : "text-slate-600 hover:bg-slate-50"
-                  }`}
+                    }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <item.icon
