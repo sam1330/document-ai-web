@@ -385,7 +385,8 @@
           "skillDetails": "Habilidades",
           "institution": "Institución",
           "degree": "Título",
-          "area": "Área de Estudio"
+          "area": "Área de Estudio",
+          "customTitle": "Custom"
         },
         "placeholders": {
           "fullName": "Juan Pérez",

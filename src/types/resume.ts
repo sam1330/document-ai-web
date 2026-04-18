@@ -37,7 +37,7 @@ export const getResumeSchema = (t: any) => z.object({
         details: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.skillDetails') }))
       })),
       custom: z.array(z.object({
-        title: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.customTitle') })),
+        title: z.string().min(1, t('resumes.builder.form.validation.required', { field: "Custom" })),
         content: z.array(z.string())
       }))
     })

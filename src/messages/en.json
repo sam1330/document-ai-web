@@ -385,7 +385,8 @@
           "skillDetails": "Skills",
           "institution": "Institution",
           "degree": "Degree",
-          "area": "Area of Study"
+          "area": "Area of Study",
+          "customTitle": "Custom"
         },
         "placeholders": {
           "fullName": "John Doe",
