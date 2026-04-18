@@ -81,7 +81,10 @@ export interface JobApplication {
   application_deadline?: string
   status: 'draft' | 'applied' | 'interview' | 'rejected' | 'accepted'
   notes?: string
-  cover_letter_data?: any
+  cover_letter_data?: {
+    content: string,
+    generated_at: string
+  }
   created_at: string
   updated_at: string
 }

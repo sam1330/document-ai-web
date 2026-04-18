@@ -670,7 +670,13 @@
       "deadline": "Deadline",
       "selectedResume": "Selected Resume",
       "cancel": "Cancel",
-      "addApplication": "Add Application"
+      "addApplication": "Add Application",
+      "selectTone": "Please select a tone",
+      "selectLength": "Please select a length",
+      "createCoverLetterTitle": "Create Cover Letter",
+      "createCoverLetter": "Create Cover Letter",
+      "coverLetterSuccess": "Cover letter generated successfully!",
+      "coverLetterFailed": "Failed to generate cover letter"
     },
     "status": {
       "draft": "Draft",
@@ -704,7 +710,9 @@
       "jobDescriptionMin": "Job description must be at least 50 characters for better AI analysis",
       "invalidUrl": "Must be a valid URL",
       "notesMax": "Notes must be under 1000 characters",
-      "selectResume": "Please select a valid resume"
+      "selectResume": "Please select a valid resume",
+      "selectTone": "Please select a tone",
+      "selectLength": "Please select a length"
     }
   },
   "applicationDetail": {

@@ -670,7 +670,13 @@
       "deadline": "Fecha Límite",
       "selectedResume": "Currículum Seleccionado",
       "cancel": "Cancelar",
-      "addApplication": "Agregar Solicitud"
+      "addApplication": "Agregar Solicitud",
+      "selectTone": "Por favor, selecciona un tono",
+      "selectLength": "Por favor, selecciona una longitud",
+      "createCoverLetterTitle": "Crear Carta de Presentación (Cover letter)",
+      "createCoverLetter": "Crear Carta de Presentación (Cover letter)",
+      "coverLetterSuccess": "Carta de presentación generada exitosamente",
+      "coverLetterFailed": "Error al generar la carta de presentación"
     },
     "status": {
       "draft": "Borrador",
@@ -704,7 +710,9 @@
       "jobDescriptionMin": "La descripción del trabajo debe tener al menos 50 caracteres para un mejor análisis de IA",
       "invalidUrl": "Debe ser una URL válida",
       "notesMax": "Las notas deben tener menos de 1000 caracteres",
-      "selectResume": "Por favor selecciona un currículum válido"
+      "selectResume": "Por favor selecciona un currículum válido",
+      "selectTone": "Por favor, selecciona un tono",
+      "selectLength": "Por favor, selecciona una longitud"
     }
   },
   "applicationDetail": {
