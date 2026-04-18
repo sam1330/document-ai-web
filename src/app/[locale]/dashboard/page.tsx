@@ -111,7 +111,6 @@ export default function DashboardPage() {
       name: t('dashboard.stats.totalResumes'),
       value: overview?.overview.total_resumes || 0,
       icon: DocumentTextIcon,
-      change: '+12%',
       changeType: 'positive' as const,
       gradient: 'from-blue-500 to-indigo-600',
     },
@@ -119,7 +118,6 @@ export default function DashboardPage() {
       name: t('dashboard.stats.applications'),
       value: overview?.overview.total_applications || 0,
       icon: BriefcaseIcon,
-      change: '+8%',
       changeType: 'positive' as const,
       gradient: 'from-purple-500 to-pink-600',
     },
@@ -127,7 +125,6 @@ export default function DashboardPage() {
       name: t('dashboard.stats.avgMatchScore'),
       value: `${overview?.overview.avg_score || 0}`,
       icon: ArrowTrendingUpIcon,
-      change: '+5%',
       changeType: 'positive' as const,
       gradient: 'from-emerald-500 to-teal-600',
     },
@@ -135,7 +132,6 @@ export default function DashboardPage() {
       name: t('dashboard.stats.aiImpact'),
       value: overview?.overview.ai_requests_this_month || 0,
       icon: SparklesIcon,
-      change: '+15%',
       changeType: 'positive' as const,
       gradient: 'from-amber-500 to-orange-600',
     },
@@ -178,10 +174,6 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div className={`p-3 bg-gradient-to-br ${stat.gradient} rounded-2xl shadow-lg shadow-indigo-100`}>
                     <stat.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div className={`flex items-center px-2 py-1 rounded-lg text-xs font-bold ${stat.changeType === 'positive' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
-                    }`}>
-                    {stat.changeType === 'positive' ? '↑' : '↓'} {stat.change}
                   </div>
                 </div>
                 <div>

@@ -7,7 +7,17 @@ export interface User {
   subscription_expires_at?: string
   is_active: boolean
   created_at: string
-  updated_at: string
+  updated_at: string,
+  recent_transactions: Transaction[]
+  total_spent: number,
+  credits_used_last_month: number
+}
+
+export interface Transaction {
+  id: string
+  amount: number
+  description: string
+  created_at: string
 }
 
 export interface ResumeResponse {

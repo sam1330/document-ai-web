@@ -19,6 +19,7 @@ import toast from 'react-hot-toast'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Input, Button, Checkbox, Select } from '@/components/ui'
 import { useTranslations } from 'next-intl'
+import { useCredits } from '@/contexts/CreditContext'
 
 interface ProfileForm {
    first_name: string
@@ -37,16 +38,11 @@ export default function ProfilePage() {
    const { user, updateProfile, loading } = useAuth()
    const [activeTab, setActiveTab] = useState('account')
    const [isUpdating, setIsUpdating] = useState(false)
+   const { balance } = useCredits()
 
    // Dummy data for token usage
    const [tokenBalance] = useState(12500)
    const [monthlyUsage] = useState([450, 1200, 800, 2100, 1500, 2800, 1900]) // Last 7 days
-   const [recentTransactions] = useState([
-      { id: 1, type: 'Resume Analysis', tokens: 850, date: '2 hours ago' },
-      { id: 2, type: 'Cover Letter', tokens: 450, date: 'Yesterday' },
-      { id: 3, type: 'Professional Audit', tokens: 1200, date: '3 days ago' },
-      { id: 4, type: 'Credits Purchased', tokens: +5000, date: '5 days ago', isCredit: true },
-   ])
 
    const { register: registerProfile, handleSubmit: handleProfileSubmit, reset: resetProfile, formState: { errors: profileErrors } } = useForm<ProfileForm>()
    const { register: registerPassword, handleSubmit: handlePasswordSubmit, reset: resetPassword, watch, formState: { errors: passwordErrors } } = useForm<PasswordForm>()
@@ -85,6 +81,12 @@ export default function ProfilePage() {
       } finally {
          setIsUpdating(false)
       }
+   }
+
+   const formatUsedCredits = (usage: number) => {
+      if (usage < 1000) return usage
+      if (usage < 1000000) return (usage / 1000).toFixed(1) + 'k'
+      return (usage / 1000000).toFixed(1) + 'M'
    }
 
    if (loading) {
@@ -148,13 +150,13 @@ export default function ProfilePage() {
                      </div>
                      <div className="md:ml-auto flex items-center bg-slate-50 p-4 rounded-3xl border border-slate-100 space-x-6">
                         <div className="text-center">
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('profile.header.totalCredits')}</p>
-                           <p className="text-xl font-black text-slate-900">{tokenBalance.toLocaleString()}</p>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('profile.header.creditsBought')}</p>
+                           <p className="text-xl font-black text-slate-900">{user?.total_spent?.toLocaleString()}</p>
                         </div>
                         <div className="h-10 border-l border-slate-200"></div>
                         <div className="text-center">
                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('profile.header.usagePerMonth')}</p>
-                           <p className="text-xl font-black text-slate-900">8.4k</p>
+                           <p className="text-xl font-black text-slate-900">{formatUsedCredits(Math.abs(user.credits_used_last_month))}</p>
                         </div>
                      </div>
                   </div>
@@ -243,7 +245,7 @@ export default function ProfilePage() {
                                  {/* Token Chart & Usage */}
                                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                     <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 flex flex-col items-center justify-center">
-                                       <div className="relative h-40 w-40 flex items-center justify-center mb-6">
+                                       {/* <div className="relative h-40 w-40 flex items-center justify-center mb-6">
                                           <svg className="h-full w-full transform -rotate-90">
                                              <circle cx="80" cy="80" r="74" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-200" />
                                              <circle
@@ -257,37 +259,9 @@ export default function ProfilePage() {
                                              <span className="text-2xl font-black text-slate-900">75%</span>
                                              <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{t('profile.credits.monthlyQuota')}</span>
                                           </div>
-                                       </div>
-                                       <h3 className="text-4xl font-black text-slate-900 mb-2">{tokenBalance.toLocaleString()}</h3>
+                                       </div> */}
+                                       <h3 className="text-4xl font-black text-slate-900 mb-2">{balance.toLocaleString()}</h3>
                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('profile.credits.availableCredits')}</p>
-                                    </div>
-
-                                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-inner">
-                                       <div className="flex items-center justify-between mb-8">
-                                          <h3 className="font-black text-slate-800 uppercase text-[10px] tracking-widest">{t('profile.credits.weeklyUsage')}</h3>
-                                          <ChartBarIcon className="h-4 w-4 text-slate-400" />
-                                       </div>
-                                       <div className="flex items-end justify-between h-32 space-x-2">
-                                          {monthlyUsage.map((val, idx) => {
-                                             const height = (val / 3000) * 100
-                                             return (
-                                                <div key={idx} className="flex-1 group relative">
-                                                   <motion.div
-                                                      initial={{ height: 0 }}
-                                                      animate={{ height: `${height}%` }}
-                                                      className="bg-indigo-600 rounded-t-lg group-hover:bg-indigo-400 transition-colors w-full"
-                                                   />
-                                                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                                      {val}
-                                                   </div>
-                                                </div>
-                                             )
-                                          })}
-                                       </div>
-                                       <div className="flex justify-between mt-4">
-                                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Mon</span>
-                                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Sun</span>
-                                       </div>
                                     </div>
                                  </div>
 
@@ -296,9 +270,9 @@ export default function ProfilePage() {
                                     <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">{t('profile.credits.addCredits')}</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                        {[
-                                          { name: t('profile.credits.packages.starter'), price: '$5', tokens: '5,000', color: 'indigo' },
-                                          { name: t('profile.credits.packages.grow'), price: '$15', tokens: '20,000', color: 'violet', recommended: true },
-                                          { name: t('profile.credits.packages.power'), price: '$40', tokens: '60,000', color: 'slate' },
+                                          { name: t('profile.credits.packages.starter'), price: '$10', tokens: '100', color: 'indigo' },
+                                          { name: t('profile.credits.packages.grow'), price: '$20', tokens: '200', color: 'violet', recommended: true },
+                                          { name: t('profile.credits.packages.power'), price: '$50', tokens: '500', color: 'slate' },
                                        ].map((pkg) => (
                                           <div key={pkg.name} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
                                              {pkg.recommended && (
@@ -321,19 +295,19 @@ export default function ProfilePage() {
                                  <div className="pt-6">
                                     <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">{t('profile.credits.recentActivity')}</h3>
                                     <div className="space-y-4">
-                                       {recentTransactions.map((tx) => (
+                                       {user.recent_transactions.map((tx) => (
                                           <div key={tx.id} className="flex items-center justify-between p-4 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors bg-slate-50/50">
                                              <div className="flex items-center space-x-4">
-                                                <div className={`p-2.5 rounded-2xl ${tx.isCredit ? 'bg-emerald-50 text-emerald-600' : 'bg-white text-slate-400 shadow-sm'}`}>
-                                                   {tx.isCredit ? <CreditCardIcon className="h-5 w-5" /> : <ChartBarIcon className="h-5 w-5" />}
+                                                <div className={`p-2.5 rounded-2xl ${tx.amount > 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-white text-slate-400 shadow-sm'}`}>
+                                                   {tx ? <CreditCardIcon className="h-5 w-5" /> : <ChartBarIcon className="h-5 w-5" />}
                                                 </div>
                                                 <div>
-                                                   <p className="text-sm font-bold text-slate-900">{tx.type}</p>
-                                                   <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{tx.date}</p>
+                                                   <p className="text-sm font-bold text-slate-900">{tx.description}</p>
+                                                   <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{new Date(tx.created_at).toLocaleString()}</p>
                                                 </div>
                                              </div>
-                                             <span className={`text-sm font-black ${tx.isCredit ? 'text-emerald-500' : 'text-slate-800'}`}>
-                                                {tx.isCredit ? '+' : '-'}{tx.tokens.toLocaleString()}
+                                             <span className={`text-sm font-black ${tx.amount > 0 ? 'text-emerald-500' : 'text-slate-800'}`}>
+                                                {tx.amount.toLocaleString()}
                                              </span>
                                           </div>
                                        ))}
