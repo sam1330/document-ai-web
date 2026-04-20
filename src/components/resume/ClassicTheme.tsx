@@ -26,17 +26,10 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       )}
       style={{
         width: "210mm",
-        minHeight: "297mm",
+        minHeight: "296mm",
         boxSizing: "border-box"
       }}
     >
-      {/* Template Placeholder Indicator */}
-      {design.theme !== 'classic' && (
-        <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest z-50 animate-bounce print:hidden">
-          {t('resumes.builder.preview.modePlaceholder', { template: design.theme })}
-        </div>
-      )}
-
       {/* Header */}
       <header className="text-center mb-6">
         <h1 className="text-3xl font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-2">

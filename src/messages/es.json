@@ -442,6 +442,14 @@
           "engineering": {
             "name": "Ingeniería",
             "description": "Diseño compacto y técnico para desarrolladores."
+          },
+          "minimal": {
+            "name": "Minimalista",
+            "description": "Elegante y espaciosa, sin distracciones."
+          },
+          "creative": {
+            "name": "Creativo",
+            "description": "Diseño de dos columnas con un acento de color distintivo."
           }
         },
         "fonts": {

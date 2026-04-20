@@ -442,6 +442,14 @@
           "engineering": {
             "name": "Engineering",
             "description": "Compact and technical layout for developers."
+          },
+          "minimal": {
+            "name": "Minimal",
+            "description": "Elegant and spacious, distraction-free."
+          },
+          "creative": {
+            "name": "Creative",
+            "description": "Two-column design with a distinct color accent."
           }
         },
         "fonts": {

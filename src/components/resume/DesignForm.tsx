@@ -16,6 +16,8 @@ const templates = [
   { id: 'classic', nameKey: 'resumes.builder.design.templates.classic.name' as const, descriptionKey: 'resumes.builder.design.templates.classic.description' as const },
   { id: 'modern', nameKey: 'resumes.builder.design.templates.modern.name' as const, descriptionKey: 'resumes.builder.design.templates.modern.description' as const },
   { id: 'engineering', nameKey: 'resumes.builder.design.templates.engineering.name' as const, descriptionKey: 'resumes.builder.design.templates.engineering.description' as const },
+  { id: 'minimal', nameKey: 'resumes.builder.design.templates.minimal.name' as const, descriptionKey: 'resumes.builder.design.templates.minimal.description' as const },
+  { id: 'creative', nameKey: 'resumes.builder.design.templates.creative.name' as const, descriptionKey: 'resumes.builder.design.templates.creative.description' as const },
 ]
 
 const fonts = [
@@ -60,11 +62,6 @@ export function DesignForm() {
                   )}>
                     {t(template.nameKey)}
                   </p>
-                  {template.id !== 'classic' && (
-                    <span className="text-[10px] font-black uppercase tracking-tighter bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded shadow-sm">
-                      {t('resumes.builder.design.placeholder')}
-                    </span>
-                  )}
                 </div>
                 <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{t(template.descriptionKey)}</p>
               </div>

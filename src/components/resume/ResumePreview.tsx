@@ -3,6 +3,10 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { useResumeStore } from '@/lib/store/useResumeStore'
 import { ClassicTheme } from './ClassicTheme'
+import { ModernTheme } from './ModernTheme'
+import { EngineeringTheme } from './EngineeringTheme'
+import { MinimalTheme } from './MinimalTheme'
+import { CreativeTheme } from './CreativeTheme'
 
 export function ResumePreview() {
   const data = useResumeStore((state) => state.data)
@@ -50,7 +54,11 @@ export function ResumePreview() {
           minWidth: "210mm" // Ensure it doesn't shrink the component itself, just the scale
         }}
       >
-        <ClassicTheme data={data} />
+        {data.design.theme === 'modern' ? <ModernTheme data={data} /> :
+         data.design.theme === 'engineering' ? <EngineeringTheme data={data} /> :
+         data.design.theme === 'minimal' ? <MinimalTheme data={data} /> :
+         data.design.theme === 'creative' ? <CreativeTheme data={data} /> :
+         <ClassicTheme data={data} />}
       </div>
     </div>
   )
