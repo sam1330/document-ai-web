@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://haku-ai.com/api'
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://haku-ai.com'
 
 export const formatDate = (date: string | Date) => {
   return new Date(date).toLocaleDateString('en-US', {
