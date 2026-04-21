@@ -755,7 +755,8 @@
         "short": "Short",
         "medium": "Medium",
         "long": "Long"
-      }
+      },
+      "minCharacters": "min"
     },
     "status": {
       "draft": "Draft",
@@ -818,6 +819,7 @@
       "cancel": "Cancel",
       "saveNotes": "Save Notes",
       "saveCoverLetter": "Save Cover Letter",
+      "saveChanges": "Save changes",
       "notesPlaceholder": "Key interview points, names of recruiters, etc.",
       "noDescription": "No description provided.",
       "noNotes": "No notes added yet. Use this space for recruiter names, interview dates, or prep work.",
@@ -833,6 +835,7 @@
       "creationDate": "Creation Date",
       "deadline": "Deadline",
       "jobUrl": "Job URL",
+      "linkLabel": "Link",
       "notSpecified": "Not specified",
       "linkedAssets": "Linked Assets",
       "activeResume": "Active Resume"

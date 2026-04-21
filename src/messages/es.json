@@ -755,7 +755,8 @@
         "short": "Corto",
         "medium": "Medio",
         "long": "Largo"
-      }
+      },
+      "minCharacters": "mín"
     },
     "status": {
       "draft": "Borrador",
@@ -818,6 +819,7 @@
       "cancel": "Cancelar",
       "saveNotes": "Guardar Notas",
       "saveCoverLetter": "Guardar Carta de Presentación",
+      "saveChanges": "Guardar cambios",
       "notesPlaceholder": "Puntos clave de la entrevista, nombres de reclutadores, etc.",
       "noDescription": "No se proporcionó descripción.",
       "noNotes": "Aún no se agregaron notas. Usa este espacio para nombres de reclutadores, fechas de entrevista o trabajo de preparación.",
@@ -833,6 +835,7 @@
       "creationDate": "Fecha de Creación",
       "deadline": "Fecha Límite",
       "jobUrl": "URL del Trabajo",
+      "linkLabel": "Enlace",
       "notSpecified": "No especificado",
       "linkedAssets": "Activos Vinculados",
       "activeResume": "Currículum Activo"

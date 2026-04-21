@@ -35,30 +35,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const tones = [
   {
     value: "professional",
-    label: "Professional",
+    label: "applications.modal.tones.professional",
   },
   {
     value: "casual",
-    label: "Casual",
+    label: "applications.modal.tones.casual",
   },
   {
     value: "enthusiastic",
-    label: "Enthusiastic",
+    label: "applications.modal.tones.enthusiastic",
   }
 ];
 
 const lengths = [
   {
     value: "short",
-    label: "Short",
+    label: "applications.modal.lengths.short",
   },
   {
     value: "medium",
-    label: "Medium",
+    label: "applications.modal.lengths.medium",
   },
   {
     value: "long",
-    label: "Long",
+    label: "applications.modal.lengths.long",
   }
 ]
 
@@ -237,13 +237,13 @@ export default function ApplicationDetailPage({
           <div className="max-w-7xl mx-auto py-20 px-4 text-center">
             <BriefcaseIcon className="h-16 w-16 text-slate-200 mx-auto mb-4" />
             <h2 className="text-2xl font-black text-slate-800">
-              Application not found
+              {t("applicationDetail.notFound.title")}
             </h2>
             <Link
               href="/applications"
               className="text-indigo-600 font-bold mt-4 inline-block hover:underline"
             >
-              Back to Applications
+              {t("applicationDetail.notFound.backLink")}
             </Link>
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function ApplicationDetailPage({
               href="/applications"
               className="hover:text-indigo-600 transition-colors"
             >
-              Applications
+              {t("applicationDetail.breadcrumbs.applications")}
             </Link>
             <span className="text-slate-200">/</span>
             <span className="text-slate-900">{application.company_name}</span>
@@ -328,7 +328,7 @@ export default function ApplicationDetailPage({
                     >
                       <currentStatus.icon className="h-4 w-4" />
                       <span className="text-xs font-black uppercase tracking-widest">
-                        {application.status}
+                        {t(`applications.status.${application.status}`)}
                       </span>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export default function ApplicationDetailPage({
                   loading={deleteLoading}
                 >
                   <TrashIcon className="h-5 w-5 mr-2" />
-                  Delete
+                  {t("applicationDetail.actions.delete")}
                 </Button>
                 <Button
                   onClick={() => setShowCreateCoverLetterModal(true)}
@@ -350,7 +350,7 @@ export default function ApplicationDetailPage({
                   loading={coverLetterLoading}
                 >
                   <SparklesIcon className="h-5 w-5 mr-2 transition-transform group-hover:scale-110" />
-                  Generate AI Cover Letter
+                  {t("applicationDetail.actions.generateCoverLetter")}
                 </Button>
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function ApplicationDetailPage({
                   <div className="flex items-center space-x-3">
                     <DocumentTextIcon className="h-5 w-5 text-indigo-600" />
                     <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest">
-                      Job Description
+                      {t("applicationDetail.sections.jobDescription")}
                     </h2>
                   </div>
                   {!isEditingDescription && (
@@ -400,7 +400,7 @@ export default function ApplicationDetailPage({
                           size="sm"
                           onClick={() => setIsEditingDescription(false)}
                         >
-                          Cancel
+                          {t("applicationDetail.edit.cancel")}
                         </Button>
                         <Button
                           size="sm"
@@ -412,7 +412,7 @@ export default function ApplicationDetailPage({
                             )
                           }
                         >
-                          Save changes
+                          {t("applicationDetail.edit.saveChanges")}
                         </Button>
                       </div>
                     </div>
@@ -420,7 +420,7 @@ export default function ApplicationDetailPage({
                     <article className="prose prose-slate prose-sm max-w-none prose-headings:font-black prose-a:text-indigo-600">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {application.job_description ||
-                          "*No description provided.*"}
+                          `*${t("applicationDetail.edit.noDescription")}*`}
                       </ReactMarkdown>
                     </article>
                   )}
@@ -438,7 +438,7 @@ export default function ApplicationDetailPage({
                   <div className="flex items-center space-x-3">
                     <PencilIcon className="h-5 w-5 text-amber-500" />
                     <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest">
-                      Personal Notes
+                      {t("applicationDetail.sections.personalNotes")}
                     </h2>
                   </div>
                   {!isEditingNotes && (
@@ -460,7 +460,7 @@ export default function ApplicationDetailPage({
                         value={editNotes}
                         onChange={(e) => setEditNotes(e.target.value)}
                         rows={6}
-                        placeholder="Key interview points, names of recruiters, etc."
+                        placeholder={t("applicationDetail.edit.notesPlaceholder")}
                         className="text-sm rounded-2xl"
                       />
                       <div className="flex justify-end space-x-3">
@@ -469,21 +469,21 @@ export default function ApplicationDetailPage({
                           size="sm"
                           onClick={() => setIsEditingNotes(false)}
                         >
-                          Cancel
+                          {t("applicationDetail.edit.cancel")}
                         </Button>
                         <Button
                           size="sm"
                           loading={isSaving}
                           onClick={() => handleSaveEdit("notes", editNotes)}
                         >
-                          Save Notes
+                          {t("applicationDetail.edit.saveNotes")}
                         </Button>
                       </div>
                     </div>
                   ) : (
                     <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
                       {application.notes ||
-                        "No notes added yet. Use this space for recruiter names, interview dates, or prep work."}
+                        t("applicationDetail.edit.noNotes")}
                     </div>
                   )}
                 </div>
@@ -500,7 +500,7 @@ export default function ApplicationDetailPage({
                   <div className="flex items-center space-x-3">
                     <PencilIcon className="h-5 w-5 text-amber-500" />
                     <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest">
-                      Cover letter
+                      {t("applicationDetail.sections.coverLetter")}
                     </h2>
                   </div>
                   {!isEditingNotes && (
@@ -522,7 +522,7 @@ export default function ApplicationDetailPage({
                         value={editCoverLetter}
                         onChange={(e) => setEditCoverLetter(e.target.value)}
                         rows={6}
-                        placeholder="Key interview points, names of recruiters, etc."
+                        placeholder={t("applicationDetail.edit.notesPlaceholder")}
                         className="text-sm rounded-2xl"
                       />
                       <div className="flex justify-end space-x-3">
@@ -531,7 +531,7 @@ export default function ApplicationDetailPage({
                           size="sm"
                           onClick={() => setIsEditingNotes(false)}
                         >
-                          Cancel
+                          {t("applicationDetail.edit.cancel")}
                         </Button>
                         <Button
                           size="sm"
@@ -540,13 +540,13 @@ export default function ApplicationDetailPage({
                             handleSaveEdit("cover_letter_data", editCoverLetter)
                           }
                         >
-                          Save Cover letter
+                          {t("applicationDetail.edit.saveCoverLetter")}
                         </Button>
                       </div>
                     </div>
                   ) : (
                     <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                      {application?.cover_letter_data?.content || "No cover letter added yet."}
+                      {application?.cover_letter_data?.content || t("applicationDetail.edit.noCoverLetter")}
                     </div>
                   )}
                 </div>
@@ -562,7 +562,7 @@ export default function ApplicationDetailPage({
                 className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm"
               >
                 <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">
-                  AI Match Analysis
+                  {t("applicationDetail.sections.aiMatchAnalysis")}
                 </h2>
                 <div className="flex flex-col items-center">
                   <div className="relative h-32 w-32 flex items-center justify-center mb-4">
@@ -594,22 +594,22 @@ export default function ApplicationDetailPage({
                       />
                     </svg>
                     <span className="absolute text-3xl font-black text-slate-900 leading-none">
-                      {latestAnalysis?.analysis_results?.atsScore || "N/A"}
+                      {latestAnalysis?.analysis_results?.atsScore || t("applicationDetail.matchScore.scoreNotAvailable")}
                     </span>
                   </div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-                    ATS Compatibility Score
+                    {t("applicationDetail.matchScore.atsCompatibility")}
                   </p>
                   {latestAnalysis ? (
                     <Link
                       href={`/resumes/${application.resume_id}`}
                       className="text-indigo-600 text-xs font-bold hover:underline"
                     >
-                      View full analysis report &rarr;
+                      {t("applicationDetail.matchScore.viewReport")}
                     </Link>
                   ) : (
                     <p className="text-[10px] text-slate-400 text-center italic">
-                      Register more data for high-fidelity scoring.
+                      {t("applicationDetail.matchScore.lowDataHint")}
                     </p>
                   )}
                 </div>
@@ -623,7 +623,7 @@ export default function ApplicationDetailPage({
                 className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm"
               >
                 <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">
-                  Pipeline Stage
+                  {t("applicationDetail.sections.pipelineStage")}
                 </h2>
                 <div className="space-y-3">
                   {Object.keys(statusMap).map((s) => {
@@ -642,7 +642,7 @@ export default function ApplicationDetailPage({
                           <span
                             className={`text-xs font-black uppercase tracking-widest ${isSelected ? "text-indigo-900" : "text-slate-600"}`}
                           >
-                            {s}
+                            {t(`applications.status.${s}`)}
                           </span>
                         </div>
                         {isSelected && (
@@ -662,41 +662,41 @@ export default function ApplicationDetailPage({
                 className="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm"
               >
                 <h2 className="font-black text-slate-800 uppercase text-xs tracking-widest mb-6">
-                  Quick Info
+                  {t("applicationDetail.sections.quickInfo")}
                 </h2>
                 <div className="space-y-6">
                   <InfoItem
                     icon={CalendarIcon}
-                    label="Creation Date"
+                    label={t("applicationDetail.quickInfo.creationDate")}
                     value={formatDate(application.created_at)}
                   />
                   {application.application_deadline && (
                     <InfoItem
                       icon={ClockIcon}
-                      label="Deadline"
+                      label={t("applicationDetail.quickInfo.deadline")}
                       value={formatDate(application.application_deadline)}
                     />
                   )}
-                  <InfoItem
-                    icon={LinkIcon}
-                    label="Job URL"
-                    value={
-                      application.application_url ? (
-                        <a
-                          href={application.application_url}
-                          target="_blank"
-                          className="text-indigo-600 hover:underline"
-                        >
-                          Link &rarr;
-                        </a>
-                      ) : (
-                        "Not specified"
-                      )
-                    }
-                  />
+                    <InfoItem
+                      icon={LinkIcon}
+                      label={t("applicationDetail.quickInfo.jobUrl")}
+                      value={
+                        application.application_url ? (
+                          <a
+                            href={application.application_url}
+                            target="_blank"
+                            className="text-indigo-600 hover:underline"
+                          >
+                            {t("applicationDetail.quickInfo.linkLabel")} &rarr;
+                          </a>
+                        ) : (
+                          t("applicationDetail.quickInfo.notSpecified")
+                        )
+                      }
+                    />
                   <div className="pt-4 border-t border-slate-50">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">
-                      Linked Assets
+                      {t("applicationDetail.quickInfo.linkedAssets")}
                     </p>
                     <Link
                       href={`/resumes/${application.resume_id}`}
@@ -707,7 +707,7 @@ export default function ApplicationDetailPage({
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-slate-600 truncate">
-                          {resume?.original_filename || "Active Resume"}
+                          {resume?.original_filename || t("applicationDetail.quickInfo.activeResume")}
                         </p>
                       </div>
                     </Link>
@@ -733,7 +733,7 @@ export default function ApplicationDetailPage({
                 label={t("applications.modal.selectTone")}
                 options={tones.map((r) => ({
                   value: r.value,
-                  label: r.label,
+                  label: t(r.label),
                 }))}
                 error={errors.tone?.message}
               />
@@ -742,7 +742,7 @@ export default function ApplicationDetailPage({
                 label={t("applications.modal.selectLength")}
                 options={lengths.map((r) => ({
                   value: r.value,
-                  label: r.label,
+                  label: t(r.label),
                 }))}
                 error={errors.length?.message}
               />
