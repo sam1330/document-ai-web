@@ -31,8 +31,7 @@ export default function HomeClient() {
     name: 'Haku',
     url: 'https://haku-ai.com',
     logo: 'https://haku-ai.com/images/logo.png',
-    description:
-      'AI-powered resume analysis, ATS optimization, and job application assistant.',
+    description: t('seo.home.description'),
     sameAs: [],
   }
 
@@ -58,10 +57,9 @@ export default function HomeClient() {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
-      description: 'Start free with 30 tokens. Pay-as-you-go model.',
+      description: t('landing.pricing.sectionSubtitle'),
     },
-    description:
-      'AI-powered resume analysis, ATS optimization, and cover letter generation for job seekers.',
+    description: t('seo.home.description'),
   }
 
   return (
@@ -151,11 +149,11 @@ export default function HomeClient() {
       {/* Trust Section */}
       <section className="py-12 border-y border-slate-100 bg-slate-50/30" aria-label="Trusted by professionals at top companies">
         <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-8 lg:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-          <span className="text-xl font-black tracking-tighter text-slate-900">MICROSOFT</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">GOOGLE</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">AMAZON</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">META</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">NETFLIX</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.microsoft')}</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.google')}</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.amazon')}</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.meta')}</span>
+          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.netflix')}</span>
         </div>
       </section>
 

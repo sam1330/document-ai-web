@@ -14,7 +14,9 @@
       "pricing": "Pricing",
       "resources": {
         "title": "Resources",
-        "faq": "Support FAQ"
+        "faq": "Support FAQ",
+        "roadmap": "Project Roadmap",
+        "community": "Community"
       }
     },
     "common": {
@@ -151,6 +153,15 @@
       "pricing": "Pricing",
       "faq": "FAQ"
     },
+    "footer": {
+      "description": "Empowering job seekers with the world's most sophisticated AI resume analysis and application tools.",
+      "product": "Product",
+      "support": "Support",
+      "rights": "© 2026 Haku AI. All rights reserved.",
+      "cookieSettings": "Cookie Settings",
+      "readyToOptimize": "Ready to optimize?",
+      "exploreTool": "Explore Tool"
+    },
     "language": {
       "english": "English",
       "spanish": "Español",
@@ -247,6 +258,42 @@
       "requestNewVerification": "Request new verification email",
       "goToDashboard": "Go to dashboard"
     },
+    "forgotPasswordPage": {
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email and we'll send you a link to reset your password.",
+      "checkEmail": "Check your email",
+      "weSentLink": "We sent a password reset link to <email>{email}</email>.",
+      "clickLink": "Click the link in the email to reset your password. The link will expire in 1 hour.",
+      "checkSpam": "Check your spam folder",
+      "didntReceive": "Didn't receive it? Try again below",
+      "resendButton": "Resend reset email",
+      "backToSignIn": "Back to sign in",
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email address",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "sending": "Sending...",
+      "sendLinkButton": "Send reset link",
+      "successToast": "Password reset email sent! Check your inbox.",
+      "errorToast": "Failed to send password reset email"
+    },
+    "resetPasswordPage": {
+      "title": "Reset your password",
+      "subtitle": "Enter a new password for your account.",
+      "invalidLink": "Invalid reset link",
+      "invalidOrExpired": "This password reset link is invalid or has expired.",
+      "requestNewLink": "Request a new reset link",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter your new password",
+      "confirmNewPassword": "Confirm new password",
+      "confirmNewPasswordPlaceholder": "Confirm your new password",
+      "resetting": "Resetting...",
+      "resetButton": "Reset password",
+      "backToSignIn": "Back to sign in",
+      "successToast": "Password reset successfully!",
+      "errorToast": "Failed to reset password",
+      "missingToken": "Missing reset token"
+    },
     "toast": {
       "signInSuccess": "Successfully logged in!",
       "signUpSuccess": "Signed up successfully",
@@ -304,7 +351,8 @@
       "newAnalysis": "New Analysis",
       "goDetailedAnalysis": "Go Detailed Analysis",
       "viewLastReport": "View Last Report",
-      "atCompany": "at"
+      "atCompany": "at",
+      "success": "Resume analysis completed!"
     },
     "modal": {
       "title": "Analyze Resume",
@@ -386,7 +434,9 @@
           "institution": "Institution",
           "degree": "Degree",
           "area": "Area of Study",
-          "customTitle": "Custom"
+          "customTitle": "Custom",
+          "network": "Network",
+          "username": "Username"
         },
         "placeholders": {
           "fullName": "John Doe",
@@ -466,6 +516,16 @@
           "experience": "Experience",
           "education": "Education",
           "skills": "Skills"
+        },
+        "themeLabels": {
+          "location": "Location",
+          "phone": "Phone",
+          "email": "Email",
+          "website": "Website",
+          "social": "Social",
+          "contact": "Contact",
+          "at": "at",
+          "in": "in"
         }
       }
     }
@@ -620,7 +680,7 @@
     },
     "preferences": {
       "title": "User Preferences",
-      "subtitle": "Customize your notification and language settings.",
+      "subtitle": "Customize your dashboard experience and notifications.",
       "emailNotifications": "Email Notifications",
       "notifications": {
         "analysisComplete": "New AI analysis complete",
@@ -684,8 +744,18 @@
       "selectLength": "Please select a length",
       "createCoverLetterTitle": "Create Cover Letter",
       "createCoverLetter": "Create Cover Letter",
-      "coverLetterSuccess": "Cover letter generated successfully!",
-      "coverLetterFailed": "Failed to generate cover letter"
+      "coverLetterSuccess": "Cover letter generated successfully",
+      "coverLetterFailed": "Failed to generate cover letter",
+      "tones": {
+        "professional": "Professional",
+        "casual": "Casual",
+        "enthusiastic": "Enthusiastic"
+      },
+      "lengths": {
+        "short": "Short",
+        "medium": "Medium",
+        "long": "Long"
+      }
     },
     "status": {
       "draft": "Draft",
@@ -796,13 +866,168 @@
       "title": "Create Free Account | Haku – AI Resume Analyzer",
       "description": "Join Haku for free and get 30 complimentary tokens. Optimize your resume with AI, beat ATS filters, and land more interviews."
     },
+    "resumes": {
+      "title": "My Resumes",
+      "description": "Manage and analyze your resumes for better ATS compatibility."
+    },
+    "applications": {
+      "title": "Job Applications",
+      "description": "Track your job applications and generate AI-tailored cover letters."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Overview of your career progress and AI insights."
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your account settings and credit balance."
+    },
+    "resumeDetail": {
+      "title": "Resume Analysis",
+      "description": "Detailed AI analysis and ATS optimization for your resume."
+    },
+    "applicationDetail": {
+      "title": "Application Details",
+      "description": "Manage your job application and generate tailored cover letters."
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Request a password reset link for your Haku account."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Create a new password for your Haku account."
+    },
+    "emailVerification": {
+      "title": "Verify Email",
+      "description": "Verify your email address to activate your Haku account."
+    },
+    "emailVerified": {
+      "title": "Email Verified",
+      "description": "Your email has been successfully verified. Welcome to Haku!"
+    },
     "privacy": {
-      "title": "Privacy Policy | Haku",
-      "description": "Learn how Haku collects, uses, and protects your personal data on our AI-powered resume analysis platform."
+      "title": "Privacy Policy",
+      "description": "Learn how Haku protects your personal data."
     },
     "terms": {
-      "title": "Terms of Service | Haku",
-      "description": "Read the legal terms and conditions for using Haku — the AI-powered resume analysis and job application platform."
+      "title": "Terms of Service",
+      "description": "Read the legal terms for using Haku."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated",
+      "intro": "At Haku, we respect your privacy and are committed to protecting the personal data you share with us. This policy outlines how we collect, use, and protect your information when you use our AI resume analysis platform.",
+      "sections": [
+        {
+          "title": "1. Information We Collect",
+          "content": [
+            "Account Information: Your email address and name (provided via registration or OAuth).",
+            "Resume Data: The text and files (PDF, Docx) you upload for analysis.",
+            "Job Descriptions: Any text you provide regarding specific job roles you are targeting.",
+            "Payment Information: Handled exclusively by Stripe. We do not store or see your credit card numbers.",
+            "Usage Data: Technical metadata such as IP addresses, browser types, and token consumption for credit management."
+          ]
+        },
+        {
+          "title": "2. How We Use Your Data",
+          "content": [
+            "AI Analysis: To generate compatibility scores and technical feedback using Large Language Models (LLMs).",
+            "Monetization: To manage your credit balance and process one-time payments.",
+            "Personalization: To maintain your analysis history and track improvement over time.",
+            "Security: To prevent 'sybil attacks' or abuse of our Welcome Credit system."
+          ]
+        },
+        {
+          "title": "3. Data Processing & Third Parties",
+          "content": "We use industry-leading sub-processors to power Haku:",
+          "subContent": [
+            "AI Processing (Google Gemini): Resumes are sent to the Google Gemini API for real-time analysis. We use the Paid Tier of these services, which ensures that your prompts and resumes are not used to train Google’s global AI models.",
+            "Payment Processing (Stripe): Transactional data is managed by Stripe. They act as an independent data controller for your payment security.",
+            "Infrastructure: Our servers and databases (hosted via AWS) store your encrypted data."
+          ]
+        },
+        {
+          "title": "4. Right to Erasure (Right to be Forgotten)",
+          "content": "You have the right to request the permanent deletion of your personal data.",
+          "subContent": [
+            "Manual Deletion: You may delete individual resumes at any time through your dashboard. Once deleted, they are immediately removed from our active production databases.",
+            "Account Closure: Upon closing your account, Haku will initiate a 'Hard Delete' of your profile, file history, and analysis records.",
+            "Legal Exceptions: We must retain certain transaction records (via Stripe) for a legally mandated period to comply with tax and financial reporting laws.",
+            "Backups: Deleted data may persist in encrypted system backups for up to 30 days before being permanently overwritten."
+          ]
+        },
+        {
+          "title": "5. Data Retention",
+          "content": [
+            "Resumes: Stored as long as your account is active or until you manually delete them.",
+            "Welcome Credits: Any unused 'Welcome Credits' are automatically removed from our system seven (7) days after account creation.",
+            "Logs: System logs are purged every 180 days."
+          ]
+        },
+        {
+          "title": "6. AI Disclosure & Profiling",
+          "content": "By using Haku, you understand that your data is processed by automated AI systems to generate 'Compatibility Scores.' These scores are estimates based on pattern matching and do not represent a final judgment on your employability or professional worth."
+        },
+        {
+          "title": "7. Contact Us",
+          "content": "For any data privacy requests or questions regarding your Right to Erasure, please contact: support@haku.ai."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated",
+      "intro": "By accessing or using Haku (the 'Service'), you agree to be bound by these Terms of Service. If you do not agree, you must immediately cease use of the Service.",
+      "sections": [
+        {
+          "title": "1. Description of Service",
+          "content": "Haku is an AI-powered resume analysis platform. The Service uses Large Language Models (LLMs), specifically Google Gemini, to provide feedback, scoring, and optimization suggestions for resumes based on job descriptions."
+        },
+        {
+          "title": "2. The Credit System",
+          "content": "Haku operates on a credit-based monetization model.",
+          "subContent": [
+            "Credit Usage: Each analysis or premium feature consumes a specific number of credits as indicated within the app.",
+            "Purchased Credits: Credits purchased via Stripe are non-refundable and do not expire as long as your account remains active.",
+            "Welcome Credits: Haku may provide 'Welcome Credits' to new users. These credits are a gift, have no cash value, and expire seven (7) days after account creation.",
+            "Abuse Policy: Creating multiple accounts to harvest Welcome Credits is strictly prohibited. Haku reserves the right to terminate accounts and forfeit credits if abuse is detected via IP tracking or device fingerprinting."
+          ]
+        },
+        {
+          "title": "3. AI Disclaimer & 'As-Is' Results",
+          "content": [
+            "No Guarantee: You acknowledge that AI can produce 'hallucinations' or inaccuracies. Haku does not guarantee that following AI suggestions will result in an interview, job offer, or specific ATS (Applicant Tracking System) performance.",
+            "Not Professional Advice: The feedback provided is for informational purposes only and does not constitute professional career coaching or legal advice.",
+            "Service Availability: While we aim for 100% uptime, we are not responsible for delays caused by LLM provider outages (e.g., Google Gemini) or Stripe processing delays."
+          ]
+        },
+        {
+          "title": "4. User Content & Data",
+          "content": [
+            "Ownership: You retain 100% ownership of any resumes, job descriptions, or text you upload to Haku.",
+            "License to Process: By uploading content, you grant Haku a limited license to process that data through third-party AI processors (Google Gemini) solely to provide the Service to you.",
+            "Data Security: We implement industry-standard security measures, but you acknowledge that no transmission over the internet is 100% secure."
+          ]
+        },
+        {
+          "title": "5. Payments & Refunds",
+          "content": [
+            "Processing: All payments are handled securely via Stripe. Haku does not store your credit card information.",
+            "Refund Policy: Due to the immediate costs associated with AI token consumption, all sales are final. Refunds are only considered in the event of a verified technical error where credits were deducted but no analysis was generated."
+          ]
+        },
+        {
+          "title": "6. Limitation of Liability",
+          "content": "To the maximum extent permitted by law, Haku and its operators shall not be liable for any indirect, incidental, or consequential damages—including loss of income or employment opportunities—resulting from your use of the Service."
+        },
+        {
+          "title": "7. Contact",
+          "content": "If you have questions about these terms, please contact us at support@haku.ai."
+        }
+      ]
     }
   }
 }

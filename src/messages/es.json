@@ -14,7 +14,9 @@
       "pricing": "Precios",
       "resources": {
         "title": "Recursos",
-        "faq": "Preguntas FAQ"
+        "faq": "Preguntas FAQ",
+        "roadmap": "Hoja de Ruta",
+        "community": "Comunidad"
       }
     },
     "common": {
@@ -151,6 +153,15 @@
       "pricing": "Precios",
       "faq": "Preguntas Frecuentes"
     },
+    "footer": {
+      "description": "Empoderando a los buscadores de empleo con las herramientas de análisis de currículums y aplicaciones de IA más sofisticadas del mundo.",
+      "product": "Producto",
+      "support": "Soporte",
+      "rights": "© 2026 Haku AI. Todos los derechos reservados.",
+      "cookieSettings": "Ajustes de Cookies",
+      "readyToOptimize": "¿Listo para optimizar?",
+      "exploreTool": "Explorar Herramienta"
+    },
     "language": {
       "english": "English",
       "spanish": "Español",
@@ -247,6 +258,42 @@
       "requestNewVerification": "Solicitar nuevo correo de verificación",
       "goToDashboard": "Ir al panel"
     },
+    "forgotPasswordPage": {
+      "title": "¿Olvidaste tu contraseña?",
+      "subtitle": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+      "checkEmail": "Revisa tu correo",
+      "weSentLink": "Enviamos un enlace de restablecimiento de contraseña a <email>{email}</email>.",
+      "clickLink": "Haz clic en el enlace del correo para restablecer tu contraseña. El enlace caducará en 1 hora.",
+      "checkSpam": "Revisa tu carpeta de spam",
+      "didntReceive": "¿No lo recibiste? Inténtalo de nuevo a continuación",
+      "resendButton": "Reenviar correo de restablecimiento",
+      "backToSignIn": "Volver a iniciar sesión",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "invalidEmail": "Dirección de correo electrónico no válida",
+      "emailLabel": "Dirección de correo electrónico",
+      "emailPlaceholder": "Ingresa tu correo electrónico",
+      "sending": "Enviando...",
+      "sendLinkButton": "Enviar enlace de restablecimiento",
+      "successToast": "¡Correo de restablecimiento enviado! Revisa tu bandeja de entrada.",
+      "errorToast": "No se pudo enviar el correo de restablecimiento"
+    },
+    "resetPasswordPage": {
+      "title": "Restablecer tu contraseña",
+      "subtitle": "Ingresa una nueva contraseña para tu cuenta.",
+      "invalidLink": "Enlace de restablecimiento no válido",
+      "invalidOrExpired": "Este enlace de restablecimiento de contraseña no es válido o ha caducado.",
+      "requestNewLink": "Solicitar un nuevo enlace de restablecimiento",
+      "newPassword": "Nueva contraseña",
+      "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+      "confirmNewPassword": "Confirmar nueva contraseña",
+      "confirmNewPasswordPlaceholder": "Confirma tu nueva contraseña",
+      "resetting": "Restableciendo...",
+      "resetButton": "Restablecer contraseña",
+      "backToSignIn": "Volver a iniciar sesión",
+      "successToast": "¡Contraseña restablecida con éxito!",
+      "errorToast": "No se pudo restablecer la contraseña",
+      "missingToken": "Falta el token de restablecimiento"
+    },
     "toast": {
       "signInSuccess": "¡Sesión iniciada exitosamente!",
       "signUpSuccess": "Registrado exitosamente",
@@ -304,7 +351,8 @@
       "newAnalysis": "Nuevo Análisis",
       "goDetailedAnalysis": "Análisis Detallado",
       "viewLastReport": "Ver Último Informe",
-      "atCompany": "en"
+      "atCompany": "en",
+      "success": "¡Análisis de currículum completado!"
     },
     "modal": {
       "title": "Analizar Currículum",
@@ -386,7 +434,9 @@
           "institution": "Institución",
           "degree": "Título",
           "area": "Área de Estudio",
-          "customTitle": "Custom"
+          "customTitle": "Custom",
+          "network": "Red",
+          "username": "Usuario"
         },
         "placeholders": {
           "fullName": "Juan Pérez",
@@ -466,6 +516,16 @@
           "experience": "Experiencia",
           "education": "Educación",
           "skills": "Habilidades"
+        },
+        "themeLabels": {
+          "location": "Ubicación",
+          "phone": "Teléfono",
+          "email": "Correo",
+          "website": "Sitio Web",
+          "social": "Social",
+          "contact": "Contacto",
+          "at": "en",
+          "in": "en"
         }
       }
     }
@@ -620,7 +680,7 @@
     },
     "preferences": {
       "title": "Preferencias de Usuario",
-      "subtitle": "Personaliza tu configuración de notificaciones e idioma.",
+      "subtitle": "Personaliza tu experiencia en el panel y las notificaciones.",
       "emailNotifications": "Notificaciones por Correo Electrónico",
       "notifications": {
         "analysisComplete": "Nuevo análisis de IA completado",
@@ -685,7 +745,17 @@
       "createCoverLetterTitle": "Crear Carta de Presentación (Cover letter)",
       "createCoverLetter": "Crear Carta de Presentación (Cover letter)",
       "coverLetterSuccess": "Carta de presentación generada exitosamente",
-      "coverLetterFailed": "Error al generar la carta de presentación"
+      "coverLetterFailed": "Error al generar la carta de presentación",
+      "tones": {
+        "professional": "Profesional",
+        "casual": "Informal",
+        "enthusiastic": "Entusiasta"
+      },
+      "lengths": {
+        "short": "Corto",
+        "medium": "Medio",
+        "long": "Largo"
+      }
     },
     "status": {
       "draft": "Borrador",
@@ -796,13 +866,164 @@
       "title": "Crear Cuenta Gratis | Haku – Análisis de CV con IA",
       "description": "Únete a Haku gratis y obtén 30 tokens de cortesía. Optimiza tu currículum con IA, supera los filtros ATS y consigue más entrevistas."
     },
+    "resumes": {
+      "title": "Mis Currículums",
+      "description": "Gestiona y analiza tus currículums para una mejor compatibilidad con ATS."
+    },
+    "applications": {
+      "title": "Solicitudes de Empleo",
+      "description": "Realiza un seguimiento de tus solicitudes de empleo y genera cartas de presentación adaptadas por IA."
+    },
+    "applicationDetail": {
+      "title": "Detalles de la Solicitud",
+      "description": "Gestiona tu solicitud de empleo y genera cartas de presentación adaptadas."
+    },
+    "forgotPassword": {
+      "title": "Olvidé mi contraseña",
+      "description": "Solicita un enlace de restablecimiento de contraseña para tu cuenta Haku."
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "description": "Crea una nueva contraseña para tu cuenta Haku."
+    },
+    "emailVerification": {
+      "title": "Verificar correo",
+      "description": "Verifica tu dirección de correo electrónico para activar tu cuenta Haku."
+    },
+    "emailVerified": {
+      "title": "Correo verificado",
+      "description": "Tu correo electrónico ha sido verificado con éxito. ¡Bienvenido a Haku!"
+    },
+    "dashboard": {
+      "title": "Panel de Control",
+      "description": "Resumen de tu progreso profesional e información de IA."
+    },
+    "profile": {
+      "title": "Perfil",
+      "description": "Gestiona la configuración de tu cuenta y el saldo de créditos."
+    },
     "privacy": {
-      "title": "Política de Privacidad | Haku",
-      "description": "Conoce cómo Haku recopila, usa y protege tus datos personales en nuestra plataforma de análisis de currículum con inteligencia artificial."
+      "title": "Política de Privacidad",
+      "description": "Aprende cómo Haku protege tus datos personales."
     },
     "terms": {
-      "title": "Términos de Servicio | Haku",
-      "description": "Lee los términos y condiciones legales para usar Haku — la plataforma de análisis de currículum y seguimiento de empleo basada en IA."
+      "title": "Términos de Servicio",
+      "description": "Lee los términos legales para usar Haku."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Política de Privacidad",
+      "lastUpdated": "Última actualización",
+      "intro": "En Haku, respetamos su privacidad y estamos comprometidos a proteger los datos personales que comparte con nosotros. Esta política describe cómo recopilamos, utilizamos y protegemos su información cuando utiliza nuestra plataforma de análisis de currículums por IA.",
+      "sections": [
+        {
+          "title": "1. Información que recopilamos",
+          "content": [
+            "Información de la cuenta: Su dirección de correo electrónico y nombre (proporcionados mediante registro o OAuth).",
+            "Datos del currículum: El texto y los archivos (PDF, Docx) que carga para el análisis.",
+            "Descripciones de trabajo: Cualquier texto que proporcione sobre roles de trabajo específicos a los que se dirige.",
+            "Información de pago: Gestionada exclusivamente por Stripe. No almacenamos ni vemos sus números de tarjeta de crédito.",
+            "Datos de uso: Metadatos técnicos como direcciones IP, tipos de navegador y consumo de tokens para la gestión de créditos."
+          ]
+        },
+        {
+          "title": "2. Cómo utilizamos sus datos",
+          "content": [
+            "Análisis por IA: Para generar puntuaciones de compatibilidad y comentarios técnicos utilizando Modelos de Lenguaje Extensos (LLM).",
+            "Monetización: Para gestionar su saldo de créditos y procesar pagos únicos.",
+            "Personalización: Para mantener su historial de análisis y realizar un seguimiento de la mejora a lo largo del tiempo.",
+            "Seguridad: Para prevenir 'ataques Sybil' o el abuso de nuestro sistema de Créditos de Bienvenida."
+          ]
+        },
+        {
+          "title": "3. Procesamiento de datos y terceros",
+          "content": "Utilizamos subprocesadores líderes en la industria para potenciar Haku:",
+          "subContent": [
+            "Procesamiento por IA (Google Gemini): Los currículums se envían a la API de Google Gemini para un análisis en tiempo real. Utilizamos el Nivel de Pago de estos servicios, lo que garantiza que sus instrucciones y currículums no se utilicen para entrenar los modelos de IA globales de Google.",
+            "Procesamiento de pagos (Stripe): Los datos transaccionales son gestionados por Stripe. Actúan como un controlador de datos independiente para su seguridad de pago.",
+            "Infraestructura: Nuestros servidores y bases de datos (alojados a través de AWS) almacenan sus datos cifrados."
+          ]
+        },
+        {
+          "title": "4. Derecho de supresión (Derecho al olvido)",
+          "content": "Usted tiene derecho a solicitar la eliminación permanente de sus datos personales.",
+          "subContent": [
+            "Eliminación manual: Puede eliminar currículums individuales en cualquier momento a través de su panel. Una vez eliminados, se retiran inmediatamente de nuestras bases de datos de producción activas.",
+            "Cierre de cuenta: Al cerrar su cuenta, Haku iniciará una 'Eliminación Directa' de su perfil, historial de archivos y registros de análisis.",
+            "Excepciones legales: Debemos retener ciertos registros de transacciones (a través de Stripe) durante un período legalmente obligatorio para cumplir con las leyes fiscales y de informes financieros.",
+            "Copias de seguridad: Los datos eliminados pueden persistir en copias de seguridad del sistema cifradas hasta por 30 días antes de ser sobrescritos permanentemente."
+          ]
+        },
+        {
+          "title": "5. Retención de datos",
+          "content": [
+            "Currículums: Almacenados mientras su cuenta esté activa o hasta que los elimine manualmente.",
+            "Créditos de Bienvenida: Cualquier 'Crédito de Bienvenida' no utilizado se elimina automáticamente de nuestro sistema siete (7) días después de la creación de la cuenta.",
+            "Registros: Los registros del sistema se purgan cada 180 días."
+          ]
+        },
+        {
+          "title": "6. Divulgación de IA y elaboración de perfiles",
+          "content": "Al usar Haku, comprende que sus datos son procesados por sistemas de IA automatizados para generar 'Puntuaciones de Compatibilidad'. Estas puntuaciones son estimaciones basadas en la coincidencia de patrones y no representan un juicio final sobre su empleabilidad o valor profesional."
+        },
+        {
+          "title": "7. Contáctenos",
+          "content": "Para cualquier solicitud de privacidad de datos o preguntas sobre su Derecho de Supresión, póngase en contacto con: support@haku.ai."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Términos de Servicio",
+      "lastUpdated": "Última actualización",
+      "intro": "Al acceder o utilizar Haku (el 'Servicio'), usted acepta estar sujeto a estos Términos de Servicio. Si no está de acuerdo, debe dejar de utilizar el Servicio inmediatamente.",
+      "sections": [
+        {
+          "title": "1. Descripción del Servicio",
+          "content": "Haku es una plataforma de análisis de currículums impulsada por IA. El Servicio utiliza Modelos de Lenguaje Extensos (LLM), específicamente Google Gemini, para proporcionar comentarios, puntuaciones y sugerencias de optimización para currículums basados en descripciones de trabajo."
+        },
+        {
+          "title": "2. El Sistema de Créditos",
+          "content": "Haku funciona con un modelo de monetización basado en créditos.",
+          "subContent": [
+            "Uso de créditos: Cada análisis o función premium consume una cantidad específica de créditos, según se indica en la aplicación.",
+            "Créditos comprados: Los créditos comprados a través de Stripe no son reembolsables y no caducan mientras su cuenta permanezca activa.",
+            "Créditos de Bienvenida: Haku puede proporcionar 'Créditos de Bienvenida' a los nuevos usuarios. Estos créditos son un regalo, no tienen valor en efectivo y caducan siete (7) días después de la creación de la cuenta.",
+            "Política de abuso: Está estrictamente prohibido crear varias cuentas para obtener Créditos de Bienvenida. Haku se reserva el derecho de cancelar cuentas y confiscar créditos si se detecta abuso mediante el seguimiento de IP o la huella digital del dispositivo."
+          ]
+        },
+        {
+          "title": "3. Descargo de responsabilidad de IA y resultados 'tal cual'",
+          "content": [
+            "Sin garantía: Usted reconoce que la IA puede producir 'alucinaciones' o inexactitudes. Haku no garantiza que seguir las sugerencias de la IA resulte en una entrevista, una oferta de trabajo o un rendimiento específico en el ATS (Sistema de Seguimiento de Candidatos).",
+            "No es asesoramiento profesional: Los comentarios proporcionados son solo para fines informativos y no constituyen asesoramiento profesional de carrera ni asesoramiento legal.",
+            "Disponibilidad del servicio: Si bien aspiramos a un tiempo de actividad del 100%, no somos responsables de los retrasos causados por interrupciones del proveedor de LLM (por ejemplo, Google Gemini) o retrasos en el procesamiento de Stripe."
+          ]
+        },
+        {
+          "title": "4. Contenido del usuario y datos",
+          "content": [
+            "Propiedad: Usted conserva el 100% de la propiedad de cualquier currículum, descripción de trabajo o texto que cargue en Haku.",
+            "Licencia para procesar: Al cargar contenido, le otorga a Haku una licencia limitada para procesar esos datos a través de procesadores de IA externos (Google Gemini) únicamente para brindarle el Servicio.",
+            "Seguridad de los datos: Implementamos medidas de seguridad estándar de la industria, pero usted reconoce que ninguna transmisión a través de Internet es 100% segura."
+          ]
+        },
+        {
+          "title": "5. Pagos y reembolsos",
+          "content": [
+            "Procesamiento: Todos los pagos se gestionan de forma segura a través de Stripe. Haku no almacena la información de su tarjeta de crédito.",
+            "Política de reembolsos: Debido a los costes inmediatos asociados con el consumo de tokens de IA, todas las ventas son finales. Los reembolsos solo se consideran en caso de un error técnico verificado donde se dedujeron créditos pero no se generó ningún análisis."
+          ]
+        },
+        {
+          "title": "6. Limitación de responsabilidad",
+          "content": "En la medida máxima permitida por la ley, Haku y sus operadores no serán responsables de ningún daño indirecto, incidental o consecuente, incluida la pérdida de ingresos o de oportunidades de empleo, que resulte de su uso del Servicio."
+        },
+        {
+          "title": "7. Contacto",
+          "content": "Si tiene preguntas sobre estos términos, contáctenos en support@haku.ai."
+        }
+      ]
     }
   }
 }

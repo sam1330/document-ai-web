@@ -34,13 +34,13 @@ export default function Faq() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-indigo-600 font-black uppercase tracking-widest text-sm mb-4">
-            Support
+            {t('landing.faq.sectionTitle')}
           </h2>
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
-            Common Questions
+            {t('landing.faq.sectionSubtitle')}
           </h3>
           <p className="text-slate-500">
-            Everything you need to know about the Haku platform.
+            {t('landing.faq.sectionDescription')}
           </p>
         </div>
 

@@ -112,7 +112,7 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
               <div>
                 <span className="font-bold text-sm">{edu.institution}</span>
                 <span className="mx-2">—</span>
-                <span className="text-[13px]">{edu.degree} in {edu.area}</span>
+                <span className="text-[13px]">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area}</span>
               </div>
               <div className="text-sm">
                 {edu.start_date} – {edu.end_date}

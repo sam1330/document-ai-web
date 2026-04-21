@@ -33,33 +33,33 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const tones = [
-   {
-      value: "professional",
-      label: "Professional",
-   },
-   {
-      value: "casual",
-      label: "Casual",
-   },
-   {
-      value: "enthusiastic",
-      label: "Enthusiastic",
-   }
+  {
+    value: "professional",
+    label: "Professional",
+  },
+  {
+    value: "casual",
+    label: "Casual",
+  },
+  {
+    value: "enthusiastic",
+    label: "Enthusiastic",
+  }
 ];
 
 const lengths = [
-   {
-      value: "short",
-      label: "Short",
-   },
-   {
-      value: "medium",
-      label: "Medium",
-   },
-   {
-      value: "long",
-      label: "Long",
-   }
+  {
+    value: "short",
+    label: "Short",
+  },
+  {
+    value: "medium",
+    label: "Medium",
+  },
+  {
+    value: "long",
+    label: "Long",
+  }
 ]
 
 export default function ApplicationDetailPage({
@@ -588,7 +588,7 @@ export default function ApplicationDetailPage({
                           364 -
                           (364 *
                             (latestAnalysis?.analysis_results?.atsScore || 0)) /
-                            100
+                          100
                         }
                         className={`text-indigo-600 transition-all duration-1000 ease-out`}
                       />
