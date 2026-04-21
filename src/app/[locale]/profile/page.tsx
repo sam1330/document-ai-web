@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Input, Button, Checkbox, Select } from '@/components/ui'
 import { useTranslations } from 'next-intl'
 import { useCredits } from '@/contexts/CreditContext'
+import api from '@/lib/api'
 
 interface ProfileForm {
   first_name: string
@@ -40,14 +41,21 @@ export default function ProfilePage() {
   const [isUpdating, setIsUpdating] = useState(false)
   const { balance } = useCredits()
 
-  // Dummy data for token usage
-  const [tokenBalance] = useState(12500)
-  const [monthlyUsage] = useState([450, 1200, 800, 2100, 1500, 2800, 1900]) // Last 7 days
-
   const { register: registerProfile, handleSubmit: handleProfileSubmit, reset: resetProfile, formState: { errors: profileErrors } } = useForm<ProfileForm>()
   const { register: registerPassword, handleSubmit: handlePasswordSubmit, reset: resetPassword, watch, formState: { errors: passwordErrors } } = useForm<PasswordForm>()
 
   const newPassword = watch('new_password')
+
+  const handleAddCreditsClick = async (planName: string) => {
+    try {
+      const response = await api.post('/api/credits/create-checkout-session', { plan_name: planName })
+
+      const { url } = response.data
+      window.location.href = url;
+    } catch (error) {
+      console.error('Failed to add credits:', error)
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -270,11 +278,11 @@ export default function ProfilePage() {
                         <h3 className="font-black text-slate-800 uppercase text-xs tracking-widest">{t('profile.credits.addCredits')}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           {[
-                            { name: t('profile.credits.packages.starter'), price: '$10', tokens: '100', color: 'indigo' },
-                            { name: t('profile.credits.packages.grow'), price: '$20', tokens: '200', color: 'violet', recommended: true },
-                            { name: t('profile.credits.packages.power'), price: '$50', tokens: '500', color: 'slate' },
+                            { name: t('profile.credits.packages.starter'), price: '$10', tokens: '100', color: 'indigo', planName: 'starter' },
+                            { name: t('profile.credits.packages.grow'), price: '$20', tokens: '200', color: 'violet', planName: 'grow', recommended: true },
+                            { name: t('profile.credits.packages.power'), price: '$50', tokens: '500', color: 'slate', planName: 'power' },
                           ].map((pkg) => (
-                            <div key={pkg.name} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
+                            <div key={pkg.name} onClick={() => handleAddCreditsClick(pkg.planName)} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
                               {pkg.recommended && (
                                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full">{t('profile.credits.packages.recommended')}</span>
                               )}
