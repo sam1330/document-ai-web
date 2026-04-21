@@ -3,8 +3,12 @@ import Header from "@/components/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Haku',
-  description: 'The legal terms and conditions for using Haku AI Resume Analyzer.',
+  title: 'Terms of Service',
+  description: 'Read the legal terms and conditions for using Haku — the AI-powered resume analysis and job application platform.',
+  alternates: {
+    canonical: 'https://haku-ai.com/en/terms',
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function Terms() {

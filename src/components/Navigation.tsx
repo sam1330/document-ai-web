@@ -34,13 +34,17 @@ export default function Navigation() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { balance } = useCredits();
+  const { balance, getBalance } = useCredits();
 
   const navigation = [
     { name: t("navigation.dashboard"), href: "/dashboard", icon: ChartBarIcon },
     { name: t('navigation.resumes'), href: "/resumes", icon: DocumentTextIcon },
     { name: t('navigation.applications'), href: "/applications", icon: BriefcaseIcon },
   ];
+
+  useEffect(() => {
+    getBalance();
+  }, []);
 
   const handleLogout = () => {
     logout();

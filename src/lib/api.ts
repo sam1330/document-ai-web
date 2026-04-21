@@ -14,6 +14,14 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+
+  const pathname = window.location.pathname;
+  const locale = pathname.split('/')[1] || 'en';
+
+  if (locale) {
+    config.headers['X-Locale'] = locale;
+  }
+  
   return config
 })
 
@@ -23,7 +31,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
-      window.location.href = '/login'
+      window.location.href = '/'
     }
     return Promise.reject(error)
   }

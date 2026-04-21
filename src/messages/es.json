@@ -782,5 +782,27 @@
       "coverLetterSuccess": "¡Generación de carta de presentación iniciada!",
       "coverLetterFailed": "Error al iniciar la generación"
     }
+  },
+  "seo": {
+    "home": {
+      "title": "Haku – Asistente de CV y Empleo con Inteligencia Artificial",
+      "description": "Consigue tu trabajo soñado con análisis de CV por IA, optimización ATS y generación de cartas de presentación personalizadas. Comienza gratis con 30 tokens — sin suscripción."
+    },
+    "login": {
+      "title": "Iniciar Sesión | Haku",
+      "description": "Inicia sesión en tu cuenta Haku para acceder al análisis de CV por IA, puntuación ATS y seguimiento de solicitudes de empleo."
+    },
+    "register": {
+      "title": "Crear Cuenta Gratis | Haku – Análisis de CV con IA",
+      "description": "Únete a Haku gratis y obtén 30 tokens de cortesía. Optimiza tu currículum con IA, supera los filtros ATS y consigue más entrevistas."
+    },
+    "privacy": {
+      "title": "Política de Privacidad | Haku",
+      "description": "Conoce cómo Haku recopila, usa y protege tus datos personales en nuestra plataforma de análisis de currículum con inteligencia artificial."
+    },
+    "terms": {
+      "title": "Términos de Servicio | Haku",
+      "description": "Lee los términos y condiciones legales para usar Haku — la plataforma de análisis de currículum y seguimiento de empleo basada en IA."
+    }
   }
 }

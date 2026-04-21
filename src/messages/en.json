@@ -782,5 +782,27 @@
       "coverLetterSuccess": "Cover letter generation started!",
       "coverLetterFailed": "Failed to start generation"
     }
+  },
+  "seo": {
+    "home": {
+      "title": "Haku – AI-Powered Resume & Job Application Assistant",
+      "description": "Land your dream job with AI-powered resume analysis, ATS optimization, and personalized cover letter generation. Start free with 30 tokens — no subscription required."
+    },
+    "login": {
+      "title": "Sign In | Haku",
+      "description": "Sign in to your Haku account to access AI-powered resume analysis, ATS scoring, and job application tracking."
+    },
+    "register": {
+      "title": "Create Free Account | Haku – AI Resume Analyzer",
+      "description": "Join Haku for free and get 30 complimentary tokens. Optimize your resume with AI, beat ATS filters, and land more interviews."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Haku",
+      "description": "Learn how Haku collects, uses, and protects your personal data on our AI-powered resume analysis platform."
+    },
+    "terms": {
+      "title": "Terms of Service | Haku",
+      "description": "Read the legal terms and conditions for using Haku — the AI-powered resume analysis and job application platform."
+    }
   }
 }

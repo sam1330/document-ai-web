@@ -5,12 +5,73 @@ import { Toaster } from "react-hot-toast";
 import { CreditProvider } from "@/contexts/CreditContext";
 import LocaleLayout from "@/i18n/Provider";
 import { Metadata } from "next";
-import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+
+const BASE_URL = "https://haku-ai.com";
 
 export const metadata: Metadata = {
-  title: "Haku - AI-Powered Resume & Job Application Assistant",
-  description: "Transform your job search with AI-powered resume analysis, optimization, and personalized cover letter generation.",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "Haku – AI-Powered Resume & Job Application Assistant",
+    template: "%s | Haku",
+  },
+  description:
+    "Land your dream job with AI-powered resume analysis, ATS optimization, and personalized cover letter generation. Start free with 30 tokens.",
+  applicationName: "Haku",
+  authors: [{ name: "Haku", url: BASE_URL }],
+  keywords: [
+    "AI resume analyzer",
+    "ATS optimization",
+    "resume builder",
+    "cover letter generator",
+    "job application tracker",
+    "career assistant",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Haku",
+    title: "Haku – AI-Powered Resume & Job Application Assistant",
+    description:
+      "Land your dream job with AI-powered resume analysis, ATS optimization, and personalized cover letter generation. Start free with 30 tokens.",
+    url: BASE_URL,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Haku – AI Resume & Job Application Assistant",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@haku_ai",
+    title: "Haku – AI-Powered Resume & Job Application Assistant",
+    description:
+      "Land your dream job with AI-powered resume analysis, ATS optimization, and personalized cover letter generation.",
+    images: ["/opengraph-image"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
+
+// Pre-generate all supported locale routes at build time
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +84,7 @@ const geistMono = Geist_Mono({
 });
 
 export default async function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
