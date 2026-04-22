@@ -30,9 +30,9 @@
     },
     "hero": {
       "badge": "v1.0 Ahora Disponible",
-      "title": "Consigue tu trabajo soñado con <aiIntelligence></aiIntelligence>.",
-      "aiIntelligence": "Inteligencia IA",
-      "subtitle": "La suite de búsqueda de empleo más avanzada impulsada por IA. Optimiza currículums, genera cartas de presentación y rastrea solicitudes con inteligencia en tiempo real basada en tokens."
+      "title": "Consigue el trabajo de tus sueños con <aiIntelligence></aiIntelligence> y herramientas gratuitas.",
+      "aiIntelligence": "Inteligencia Artificial",
+      "subtitle": "Editor de CV online gratuito con descargas PDF ilimitadas. Rastreador de solicitudes de empleo gratuito con cartas de presentación por IA. La suite más avanzada para impulsar tu carrera."
     },
     "trust": {
       "joinedBy": "Únete a {count} profesionales",
@@ -49,16 +49,16 @@
       "sectionSubtitle": "Inteligencia en cada paso de tu camino.",
       "sectionDescription": "Nuestro motor de IA procesa miles de puntos de datos para asegurar que tu solicitud destaque entre la competencia.",
       "advancedAnalysis": {
-        "title": "Análisis Avanzado",
-        "description": "Escaneo con aprendizaje profundo que identifica brechas semánticas en tu experiencia para roles específicos."
+        "title": "Escaneo de CV con IA",
+        "description": "Escaneo de aprendizaje profundo que identifica brechas semánticas en tu experiencia para roles específicos."
       },
-      "atsShield": {
-        "title": "Escudo ATS",
-        "description": "Puntuación integrada que simula los Sistemas de Seguimiento de Candidatos modernos usados por las principales empresas Fortune 500."
+      "cvEditor": {
+        "title": "Editor de CV Gratis",
+        "description": "Crea currículums profesionales con nuestro constructor intuitivo. Descargas y creación de PDF ilimitadas, sin costo."
       },
-      "tokenPrecision": {
-        "title": "Precisión Basada en Tokens",
-        "description": "Paga solo por la inteligencia que uses. Modelo de consumo flexible que se adapta a tus necesidades."
+      "appTracker": {
+        "title": "Rastreador de Empleo",
+        "description": "Registra solicitudes ilimitadas, rastrea el estado y genera cartas de presentación por IA adaptadas a cada rol."
       }
     },
     "howItWorks": {
@@ -86,10 +86,10 @@
       "sectionTitle": "Precios de Pago por Uso",
       "sectionSubtitle": "Sin suscripciones mensuales. Sin cargos ocultos. Creemos en un acceso justo y basado en el uso a los modelos de IA más potentes del mundo.",
       "features": {
-        "unlimitedStorage": "Almacenamiento Ilimitado de Currículums",
-        "realTimeTracking": "Rastreo de Solicitudes en Tiempo Real",
-        "historicalAnalysis": "Análisis Histórico Detallado",
-        "atsScoring": "Puntuación de Compatibilidad ATS"
+        "unlimitedStorage": "CVs y Solicitudes Ilimitadas",
+        "realTimeTracking": "Rastreo de Estado en Tiempo Real",
+        "historicalAnalysis": "Descargas PDF Ilimitadas",
+        "atsScoring": "Cartas de Presentación con IA"
       },
       "viewRates": "Crea una cuenta gratis para ver las tarifas detalladas",
       "tokenSystem": {
@@ -858,8 +858,8 @@
   },
   "seo": {
     "home": {
-      "title": "Haku – Asistente de CV y Empleo con Inteligencia Artificial",
-      "description": "Consigue tu trabajo soñado con análisis de CV por IA, optimización ATS y generación de cartas de presentación personalizadas. Comienza gratis con 30 tokens — sin suscripción."
+      "title": "Editor de CV Online Gratis y Rastreador de Empleo | Haku AI",
+      "description": "Crea currículums ilimitados gratis, rastrea solicitudes y genera cartas de presentación con IA. Editor de CV profesional con descargas PDF ilimitadas y optimización ATS inteligente."
     },
     "login": {
       "title": "Iniciar Sesión | Haku",
