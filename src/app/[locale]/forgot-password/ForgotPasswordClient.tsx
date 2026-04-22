@@ -8,6 +8,7 @@ import { Input, Button } from '@/components/ui'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 interface ForgotPasswordForm {
   email: string
@@ -18,12 +19,18 @@ export default function ForgotPasswordClient() {
   const { requestPasswordReset } = useAuth()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ForgotPasswordForm>()
 
   const onSubmit = async (data: ForgotPasswordForm) => {
     try {
-      await requestPasswordReset(data.email)
+      let recaptchaToken = ''
+      if (executeRecaptcha) {
+        recaptchaToken = await executeRecaptcha('forgot_password')
+      }
+
+      await requestPasswordReset(data.email, recaptchaToken)
       setSubmittedEmail(data.email)
       setIsSubmitted(true)
       toast.success(t('successToast'))

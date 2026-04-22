@@ -7,14 +7,14 @@ import api from '@/lib/api'
 interface AuthContextType {
   user: User | null
   loading: boolean
-  login: (email: string, password: string) => Promise<void>
+  login: (email: string, password: string, recaptcha_token?: string) => Promise<void>
   register: (data: RegisterData) => Promise<void>
   logout: () => void
   updateProfile: (data: Partial<User>) => Promise<void>
   verifyEmail: (token: string) => Promise<AuthResponse>
   resendVerification: (email: string) => Promise<void>
   checkVerificationStatus: (email: string) => Promise<VerificationStatusResponse>
-  requestPasswordReset: (email: string) => Promise<void>
+  requestPasswordReset: (email: string, recaptcha_token?: string) => Promise<void>
   resetPassword: (token: string, newPassword: string) => Promise<void>
 }
 
@@ -23,6 +23,7 @@ interface RegisterData {
   password: string
   first_name: string
   last_name: string
+  recaptcha_token?: string
 }
 
 interface VerificationStatusResponse {
@@ -58,10 +59,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, recaptcha_token?: string) => {
     const response = await api.post<AuthResponse>('/api/auth/login', {
       email,
       password,
+      recaptcha_token,
     })
 
     const { token, user } = response.data
@@ -108,8 +110,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return response.data
   }
 
-  const requestPasswordReset = async (email: string) => {
-    await api.post('/api/auth/forgot-password', { email })
+  const requestPasswordReset = async (email: string, recaptcha_token?: string) => {
+    await api.post('/api/auth/forgot-password', { email, recaptcha_token })
   }
 
   const resetPassword = async (token: string, newPassword: string) => {
