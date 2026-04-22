@@ -9,6 +9,7 @@ import { EyeIcon, EyeSlashIcon, EnvelopeIcon, UserIcon } from '@heroicons/react/
 import { Input, Button, Checkbox } from '@/components/ui'
 import toast from 'react-hot-toast'
 import { useTranslations } from 'next-intl'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 interface RegisterForm {
   first_name: string
@@ -24,17 +25,24 @@ export default function RegisterClient() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const { register: registerUser } = useAuth()
   const router = useRouter()
+  const { executeRecaptcha } = useGoogleReCaptcha()
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<RegisterForm>()
 
   const password = watch('password')
 
   const onSubmit = async (data: RegisterForm) => {
     try {
+      let recaptchaToken = ''
+      if (executeRecaptcha) {
+        recaptchaToken = await executeRecaptcha('register')
+      }
+
       await registerUser({
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.email,
         password: data.password,
+        recaptcha_token: recaptchaToken,
       })
       toast.success(t('auth.accountCreatedSuccess'))
       router.push(`/email-verification?email=${encodeURIComponent(data.email)}`)

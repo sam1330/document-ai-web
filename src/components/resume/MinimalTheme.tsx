@@ -98,7 +98,7 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
               <div key={i} className="flex justify-between items-baseline">
                 <div>
                   <div className="font-semibold text-gray-900 text-[15px]">{edu.institution}</div>
-                  <div className="text-sm text-gray-600">{edu.degree} in {edu.area} {edu.location ? ` • ${edu.location}` : ''}</div>
+                  <div className="text-sm text-gray-600">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area} {edu.location ? ` • ${edu.location}` : ''}</div>
                 </div>
                 <div className="text-xs text-gray-400 font-medium">
                   {edu.start_date} — {edu.end_date}

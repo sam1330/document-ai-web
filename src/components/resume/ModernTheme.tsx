@@ -39,25 +39,25 @@ export function ModernTheme({ data }: ModernThemeProps) {
         <div className="text-xs space-y-3 mt-8 mb-8 text-slate-600">
           {cv.location && (
             <div>
-              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">Location</p>
+              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">{t('resumes.builder.preview.themeLabels.location')}</p>
               <p>{cv.location}</p>
             </div>
           )}
           {cv.phone && (
             <div>
-              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">Phone</p>
+              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">{t('resumes.builder.preview.themeLabels.phone')}</p>
               <p>{cv.phone}</p>
             </div>
           )}
           {cv.email && (
             <div>
-              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">Email</p>
+              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">{t('resumes.builder.preview.themeLabels.email')}</p>
               <p className="break-all">{cv.email}</p>
             </div>
           )}
           {cv.website && (
             <div>
-              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">Website</p>
+              <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-0.5">{t('resumes.builder.preview.themeLabels.website')}</p>
               <p className="text-indigo-600 break-all">{cv.website.replace(/^https?:\/\//, '')}</p>
             </div>
           )}
@@ -65,7 +65,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
 
         {cv.social_networks && cv.social_networks.length > 0 && (
           <div className="text-xs space-y-3 text-slate-600">
-            <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-1">Social</p>
+            <p className="font-bold text-slate-400 uppercase text-[9px] tracking-wider mb-1">{t('resumes.builder.preview.themeLabels.social')}</p>
             {cv.social_networks.map((sn, index) => (
               <div key={index}>
                 <span className="font-medium text-slate-700">{sn.network}:</span> <span className="break-all">{sn.username}</span>
@@ -119,7 +119,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
                   <div className="flex justify-between items-baseline mb-1">
                     <div>
                       <span className="font-bold text-slate-900">{exp.position}</span>
-                      <span className="mx-2 text-slate-300">at</span>
+                      <span className="mx-2 text-slate-300">{t('resumes.builder.preview.themeLabels.at')}</span>
                       <span className="font-medium text-indigo-700">{exp.company}</span>
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
               {cv.sections.education.map((edu, i) => (
                 <div key={i} className="relative pl-4 border-l-2 border-slate-200">
                   <div className="absolute w-2.5 h-2.5 bg-indigo-400 rounded-full -left-[6px] top-1.5 border-2 border-white"></div>
-                  <div className="font-bold text-slate-900">{edu.degree} in {edu.area}</div>
+                  <div className="font-bold text-slate-900">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area}</div>
                   <div className="text-sm text-indigo-700 font-medium mb-1">{edu.institution}</div>
                   <div className="flex items-center space-x-2 text-xs text-slate-500">
                     <span className="font-medium">{edu.start_date} – {edu.end_date}</span>

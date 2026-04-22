@@ -22,29 +22,29 @@ function EmailVerifiedContent() {
   const [errorMessage, setErrorMessage] = useState('')
 
   const verify = async (token: string) => {
-      try {
-        await verifyEmail(token)
-        setState('success')
-        toast.success(t('auth.emailVerified.emailVerifiedToast'))
-      } catch (error: any) {
-        const code = error.response?.data?.code
-        const message = error.response?.data?.message || error.response?.data?.error
+    try {
+      await verifyEmail(token)
+      setState('success')
+      toast.success(t('auth.emailVerified.emailVerifiedToast'))
+    } catch (error: any) {
+      const code = error.response?.data?.code
+      const message = error.response?.data?.message || error.response?.data?.error
 
-        if (code === 'ALREADY_VERIFIED') {
-          setState('already-verified')
-        } else if (code === 'TOKEN_EXPIRED') {
-          setState('error')
-          setErrorMessage(message || t('auth.emailVerified.tokenExpired'))
-        } else if (code === 'INVALID_TOKEN') {
-          setState('error')
-          setErrorMessage(message || t('auth.emailVerified.invalidToken'))
-        } else {
-          setState('error')
-          setErrorMessage(message || t('auth.emailVerified.failedToVerify'))
-        }
-        toast.error(message || t('auth.emailVerified.emailVerificationFailed'))
+      if (code === 'ALREADY_VERIFIED') {
+        setState('already-verified')
+      } else if (code === 'TOKEN_EXPIRED') {
+        setState('error')
+        setErrorMessage(message || t('auth.emailVerified.tokenExpired'))
+      } else if (code === 'INVALID_TOKEN') {
+        setState('error')
+        setErrorMessage(message || t('auth.emailVerified.invalidToken'))
+      } else {
+        setState('error')
+        setErrorMessage(message || t('auth.emailVerified.failedToVerify'))
       }
+      toast.error(message || t('auth.emailVerified.emailVerificationFailed'))
     }
+  }
 
   useEffect(() => {
     if (!token) {

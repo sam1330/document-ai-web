@@ -284,35 +284,35 @@ export default function DashboardPage() {
                   ) : (
                     overview?.recent_activity?.map((activity, i) => (
                       <Link key={i} href={buildActivityLink(activity.type, activity.id)}>
-                      <div key={i} className="group p-4 rounded-2xl hover:bg-slate-50 transition-colors flex items-start space-x-4 border border-transparent hover:border-slate-100">
-                        <div className={`p-2 rounded-xl mt-1 ${activity.type === 'resume_upload' ? 'bg-blue-100 text-blue-600' :
-                          activity.type === 'job_application' ? 'bg-purple-100 text-purple-600' :
-                            'bg-indigo-100 text-indigo-600'
-                          }`}>
-                          {activity.type === 'resume_upload' ? <DocumentTextIcon className="h-5 w-5" /> :
-                            activity.type === 'job_application' ? <BriefcaseIcon className="h-5 w-5" /> :
-                              <SparklesIcon className="h-5 w-5" />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold text-slate-900 truncate group-hover:text-indigo-600 transition-colors">
-                            {activity.title}
-                          </p>
-                          <p className="text-xs text-slate-500 mt-0.5">{activity.description}</p>
-                          <div className="flex items-center mt-2 text-[10px] font-bold uppercase tracking-tight text-slate-400">
-                            <span>{formatDate(activity.timestamp)}</span>
-                            {activity.status && (
-                              <>
-                                <span className="mx-1.5">•</span>
-                                <span className={activity.status === 'Processed' || activity.status === 'Accepted' ? 'text-emerald-500' : 'text-indigo-500'}>
-                                  {activity.status}
-                                </span>
-                              </>
-                            )}
+                        <div key={i} className="group p-4 rounded-2xl hover:bg-slate-50 transition-colors flex items-start space-x-4 border border-transparent hover:border-slate-100">
+                          <div className={`p-2 rounded-xl mt-1 ${activity.type === 'resume_upload' ? 'bg-blue-100 text-blue-600' :
+                            activity.type === 'job_application' ? 'bg-purple-100 text-purple-600' :
+                              'bg-indigo-100 text-indigo-600'
+                            }`}>
+                            {activity.type === 'resume_upload' ? <DocumentTextIcon className="h-5 w-5" /> :
+                              activity.type === 'job_application' ? <BriefcaseIcon className="h-5 w-5" /> :
+                                <SparklesIcon className="h-5 w-5" />}
                           </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-bold text-slate-900 truncate group-hover:text-indigo-600 transition-colors">
+                              {activity.title}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-0.5">{activity.description}</p>
+                            <div className="flex items-center mt-2 text-[10px] font-bold uppercase tracking-tight text-slate-400">
+                              <span>{formatDate(activity.timestamp)}</span>
+                              {activity.status && (
+                                <>
+                                  <span className="mx-1.5">•</span>
+                                  <span className={activity.status === 'Processed' || activity.status === 'Accepted' ? 'text-emerald-500' : 'text-indigo-500'}>
+                                    {activity.status}
+                                  </span>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          <ArrowRightIcon className="h-4 w-4 text-slate-300 group-hover:text-indigo-400 mt-1 transition-colors" />
                         </div>
-                        <ArrowRightIcon className="h-4 w-4 text-slate-300 group-hover:text-indigo-400 mt-1 transition-colors" />
-                      </div>
-                   </Link>
+                      </Link>
                     ))
                   )}
                 </div>

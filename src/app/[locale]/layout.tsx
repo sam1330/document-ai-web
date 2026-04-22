@@ -7,6 +7,8 @@ import LocaleLayout from "@/i18n/Provider";
 import { Metadata } from "next";
 import { getLocale, getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { CaptchaProvider } from "@/providers/CaptchaProvider";
+
 
 const BASE_URL = "https://haku-ai.com";
 
@@ -98,13 +100,16 @@ export default async function RootLayout({
       >
         <LocaleLayout messages={messages} locale={locale}>
           <AuthProvider>
-            <CreditProvider>
-              {children}
-              <Toaster position="top-right" />
-            </CreditProvider>
+            <CaptchaProvider>
+              <CreditProvider>
+                {children}
+                <Toaster position="top-right" />
+              </CreditProvider>
+            </CaptchaProvider>
           </AuthProvider>
         </LocaleLayout>
       </body>
     </html>
   );
 }
+

@@ -57,9 +57,9 @@ export default function Header() {
 ]
 
 const resourceLinks = [
-  { name: 'Project Roadmap', href: '#roadmap', icon: MapIcon },
-  { name: 'Support FAQ', href: '#faq', icon: QuestionMarkCircleIcon },
-  { name: 'Community', href: '#', icon: UserGroupIcon },
+  { name: t('landing.header.resources.roadmap'), href: '#roadmap', icon: MapIcon },
+  { name: t('landing.header.resources.faq'), href: '#faq', icon: QuestionMarkCircleIcon },
+  { name: t('landing.header.resources.community'), href: '#', icon: UserGroupIcon },
 ]
 
   const handleLogout = () => {
@@ -126,9 +126,9 @@ const resourceLinks = [
                           <div className="bg-slate-50 p-6 flex items-center justify-between">
                              <div className="flex items-center space-x-3">
                                 <DocumentTextIcon className="h-5 w-5 text-slate-400" />
-                                <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Ready to optimize?</span>
+                                <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t('landing.footer.readyToOptimize')}</span>
                              </div>
-                             <Link href="/resumes" className="text-xs font-black text-indigo-600 uppercase tracking-widest hover:text-indigo-700">Explore Tool &rarr;</Link>
+                             <Link href="/resumes" className="text-xs font-black text-indigo-600 uppercase tracking-widest hover:text-indigo-700">{t('landing.footer.exploreTool')} &rarr;</Link>
                           </div>
                         </div>
                       </PopoverPanel>
@@ -208,7 +208,7 @@ const resourceLinks = [
                           className={`flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${focus ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600'}`}
                         >
                           <BriefcaseIcon className="h-5 w-5 opacity-70" />
-                          <span>Dashboard</span>
+                          <span>{t('navigation.dashboard')}</span>
                         </Link>
                       )}
                     </MenuItem>
@@ -220,7 +220,7 @@ const resourceLinks = [
                           className={`flex w-full items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${focus ? 'bg-rose-50 text-rose-700' : 'text-slate-600'}`}
                         >
                           <ArrowRightOnRectangleIcon className="h-5 w-5 opacity-70" />
-                          <span>Sign out</span>
+                          <span>{t('auth.signOut')}</span>
                         </button>
                       )}
                     </MenuItem>
@@ -233,13 +233,13 @@ const resourceLinks = [
                   href="/login"
                   className="text-[17px] font-bold text-slate-500 hover:text-slate-900 transition-colors"
                 >
-                  Sign in
+                  {t('auth.signIn')}
                 </Link>
                 <Link
                   href="/register"
                   className="bg-indigo-600 text-white px-7 py-3.5 rounded-2xl text-[16px] font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-100 hover:shadow-indigo-200 transition-all active:scale-95"
                 >
-                  Create free account
+                  {t('landing.common.createFreeAccount')}
                 </Link>
               </div>
             )}
@@ -271,12 +271,12 @@ const resourceLinks = [
                className="lg:hidden border-t border-slate-50 pb-8 pt-4 overflow-hidden"
             >
               <div className="space-y-1">
-                <p className="px-4 py-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">Navigation</p>
-                <MobileNavItem href="#features" text="Features" icon={SparklesIcon} />
-                <MobileNavItem href="#how-it-works" text="How it works" icon={CpuChipIcon} />
-                <MobileNavItem href="#pricing" text="Pricing" icon={DocumentTextIcon} />
-                <MobileNavItem href="#roadmap" text="Roadmap" icon={MapIcon} />
-                <MobileNavItem href="#faq" text="FAQ" icon={QuestionMarkCircleIcon} />
+                <p className="px-4 py-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('landing.faq.sectionTitle')}</p>
+                <MobileNavItem href="#features" text={t('landing.navigation.features')} icon={SparklesIcon} />
+                <MobileNavItem href="#how-it-works" text={t('landing.navigation.howItWorks')} icon={CpuChipIcon} />
+                <MobileNavItem href="#pricing" text={t('landing.navigation.pricing')} icon={DocumentTextIcon} />
+                <MobileNavItem href="#roadmap" text={t('landing.header.resources.roadmap')} icon={MapIcon} />
+                <MobileNavItem href="#faq" text={t('landing.navigation.faq')} icon={QuestionMarkCircleIcon} />
                 {!user && (
                   <div className="mt-6 pt-6 px-4 border-t border-slate-50 space-y-3">
                     <Link
@@ -284,14 +284,14 @@ const resourceLinks = [
                       className="w-full flex items-center justify-center py-4 bg-slate-100 text-slate-900 font-bold rounded-2xl"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      Sign In
+                      {t('auth.signIn')}
                     </Link>
                     <Link
                       href="/register"
                       className="w-full flex items-center justify-center py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-100"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      Get Started Free
+                      {t('landing.common.getStartedFree')}
                     </Link>
                   </div>
                 )}

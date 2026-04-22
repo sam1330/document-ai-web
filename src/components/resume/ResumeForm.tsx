@@ -159,7 +159,7 @@ export function ResumeForm() {
             {/* Social Networks */}
             <div className="space-y-4 border-t border-slate-100 pt-4">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-slate-700">{t('resumes.builder.form.sections.socialNetworks') || "Social Networks"}</label>
+                <label className="text-sm font-bold text-slate-700">{t('resumes.builder.form.sections.socialNetworks')}</label>
                 <Button
                   type="button"
                   size="sm"
@@ -167,7 +167,7 @@ export function ResumeForm() {
                   className="text-indigo-600 text-xs h-8"
                   onClick={() => appendSocial({ network: "LinkedIn", username: "" })}
                 >
-                  <PlusIcon className="h-3 w-3 mr-1" /> {t('resumes.builder.form.actions.addSocial') || "Add Social"}
+                  <PlusIcon className="h-3 w-3 mr-1" /> {t('resumes.builder.form.actions.addSocial')}
                 </Button>
               </div>
 
@@ -175,7 +175,7 @@ export function ResumeForm() {
                 {socialFields.map((field, index) => (
                   <div key={field.id} className="flex gap-2 items-end bg-slate-50/50 p-3 rounded-xl border border-slate-100 transition-all hover:bg-slate-50">
                     <div className="w-1/3">
-                      <label className="text-[10px] font-black uppercase text-slate-400 mb-1 block">Network</label>
+                      <label className="text-[10px] font-black uppercase text-slate-400 mb-1 block">{t('resumes.builder.form.fields.network')}</label>
                       <select
                         {...register(`cv.social_networks.${index}.network`)}
                         className="w-full h-10 px-3 bg-white border border-slate-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
@@ -185,7 +185,7 @@ export function ResumeForm() {
                     </div>
                     <div className="flex-1">
                       <Input
-                        label="Username"
+                        label={t('resumes.builder.form.fields.username')}
                         {...register(`cv.social_networks.${index}.username`)}
                         placeholder="@johndoe"
                         className="bg-white"
@@ -290,7 +290,7 @@ export function ResumeForm() {
                           className="h-3.5 w-3.5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
                         />
                         <label htmlFor={`present-${index}`} className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter cursor-pointer hover:text-indigo-600 transition-colors">
-                          {t('resumes.builder.form.fields.present') || "Present"}
+                          {t('resumes.builder.form.fields.present')}
                         </label>
                       </div>
                     </div>
@@ -440,7 +440,7 @@ export function ResumeForm() {
                           className="h-3.5 w-3.5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
                         />
                         <label htmlFor={`edu-present-${index}`} className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter cursor-pointer hover:text-indigo-600 transition-colors">
-                          {t('resumes.builder.form.fields.present') || "Present"}
+                          {t('resumes.builder.form.fields.present')}
                         </label>
                       </div>
                     </div>

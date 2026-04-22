@@ -49,7 +49,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
           <div className="space-y-6">
             {/* Contact */}
             <div>
-              <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">Contact</h2>
+              <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">{t('resumes.builder.preview.themeLabels.contact')}</h2>
               <div className="space-y-2 text-xs font-light text-teal-50">
                 {cv.location && <div className="break-words">{cv.location}</div>}
                 {cv.phone && <div className="break-words">{cv.phone}</div>}
@@ -61,7 +61,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
             {/* Social */}
             {cv.social_networks && cv.social_networks.length > 0 && (
               <div>
-                <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">Social</h2>
+                <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">{t('resumes.builder.preview.themeLabels.social')}</h2>
                 <div className="space-y-2 text-xs font-light text-teal-50">
                   {cv.social_networks.map((sn, index) => (
                     <div key={index} className="break-words">
@@ -134,7 +134,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
                 {cv.sections.education.map((edu, i) => (
                   <div key={i}>
                     <div className="flex justify-between items-baseline mb-1">
-                      <span className="font-bold text-[14px] text-slate-900">{edu.degree} in {edu.area}</span>
+                      <span className="font-bold text-[14px] text-slate-900">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area}</span>
                       <span className="text-xs font-bold text-teal-600">{edu.start_date} – {edu.end_date}</span>
                     </div>
                     <div className="text-sm text-slate-500">

@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
 import LoginClient from './LoginClient'
+import { getLocale, getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: 'Sign In',
-  description: 'Sign in to your Haku account to access AI-powered resume analysis, ATS scoring, and job application tracking.',
-  robots: { index: false, follow: true },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: 'seo.login' });
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    robots: { index: false, follow: true },
+  };
 }
 
 export default function LoginPage() {

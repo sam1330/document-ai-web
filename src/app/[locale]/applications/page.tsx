@@ -416,7 +416,7 @@ export default function ApplicationsPage() {
                 />
                 <div className="absolute top-0 right-0 pt-1.5 flex items-center space-x-2">
                   <span className={`text-[10px] font-black uppercase tracking-widest ${jobDescriptionValue.length < 50 ? 'text-rose-400' : 'text-emerald-500'}`}>
-                    {jobDescriptionValue.length} / 50 min
+                    {jobDescriptionValue.length} / 50 {t('applications.modal.minCharacters')}
                   </span>
                 </div>
               </div>
