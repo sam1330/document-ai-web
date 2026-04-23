@@ -13,6 +13,8 @@ import {
   AcademicCapIcon,
   UserGroupIcon,
   CommandLineIcon,
+  DocumentTextIcon,
+  BriefcaseIcon,
 } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -178,15 +180,15 @@ export default function HomeClient() {
               color="indigo"
             />
             <FeatureCard
-              icon={<ShieldCheckIcon className="h-7 w-7" />}
-              title={t('landing.features.atsShield.title')}
-              description={t('landing.features.atsShield.description')}
+              icon={<DocumentTextIcon className="h-7 w-7" />}
+              title={t('landing.features.cvEditor.title')}
+              description={t('landing.features.cvEditor.description')}
               color="emerald"
             />
             <FeatureCard
-              icon={<CommandLineIcon className="h-7 w-7" />}
-              title={t('landing.features.tokenPrecision.title')}
-              description={t('landing.features.tokenPrecision.description')}
+              icon={<BriefcaseIcon className="h-7 w-7" />}
+              title={t('landing.features.appTracker.title')}
+              description={t('landing.features.appTracker.description')}
               color="amber"
             />
           </div>

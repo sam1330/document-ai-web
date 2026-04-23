@@ -30,9 +30,9 @@
     },
     "hero": {
       "badge": "v1.0 Now Live",
-      "title": "Land your dream job with <aiIntelligence></aiIntelligence>.",
+      "title": "Land your dream job with <aiIntelligence></aiIntelligence> and free tools.",
       "aiIntelligence": "AI Intelligence",
-      "subtitle": "The most advanced AI-powered job search suite. Optimize resumes, generate cover letters, and track applications with real-time token-based intelligence."
+      "subtitle": "Free Online CV Editor with unlimited PDF downloads. Free Job Application Tracker with AI Cover Letters. The most advanced suite to skyrocket your career."
     },
     "trust": {
       "joinedBy": "Joined by {count} professionals",
@@ -49,16 +49,16 @@
       "sectionSubtitle": "Intelligence in every step of your journey.",
       "sectionDescription": "Our AI engine processes thousands of data points to ensure your application stands out from the competition.",
       "advancedAnalysis": {
-        "title": "Advanced Analysis",
+        "title": "AI Resume Scan",
         "description": "Deep-learning scanning that identifies semantic gaps in your experience for targeted roles."
       },
-      "atsShield": {
-        "title": "ATS Shield",
-        "description": "Built-in scoring that mimics modern Applicant Tracking Systems used by top Fortune 500 companies."
+      "cvEditor": {
+        "title": "Free CV Editor",
+        "description": "Create professional resumes with our intuitive builder. Unlimited PDF downloads and creation, zero cost."
       },
-      "tokenPrecision": {
-        "title": "Token-Based Precision",
-        "description": "Pay only for the intelligence you use. Flexible consumption model that scales with your needs."
+      "appTracker": {
+        "title": "Application Tracker",
+        "description": "Register unlimited job applications, track status, and generate AI cover letters tailored for each role."
       }
     },
     "howItWorks": {
@@ -86,10 +86,10 @@
       "sectionTitle": "Pay-as-you-go Pricing",
       "sectionSubtitle": "No monthly subscriptions. No hidden fees. We believe in fair, usage-based access to the world's most powerful AI models.",
       "features": {
-        "unlimitedStorage": "Unlimited Resume Storage",
-        "realTimeTracking": "Real-time Application Tracking",
-        "historicalAnalysis": "Detailed Historical Analysis",
-        "atsScoring": "ATS Compatibility Scoring"
+        "unlimitedStorage": "Unlimited Resumes & Applications",
+        "realTimeTracking": "Real-time Status Tracking",
+        "historicalAnalysis": "Unlimited PDF Downloads",
+        "atsScoring": "AI-Powered Cover Letters"
       },
       "viewRates": "Create free account to view detailed rates",
       "tokenSystem": {
@@ -858,8 +858,8 @@
   },
   "seo": {
     "home": {
-      "title": "Haku – AI-Powered Resume & Job Application Assistant",
-      "description": "Land your dream job with AI-powered resume analysis, ATS optimization, and personalized cover letter generation. Start free with 30 tokens — no subscription required."
+      "title": "Free Online CV Editor & Job Tracker | Haku AI",
+      "description": "Create unlimited resumes for free, track applications, and generate AI cover letters. Professional CV editor with unlimited PDF downloads and smart ATS optimization."
     },
     "login": {
       "title": "Sign In | Haku",
