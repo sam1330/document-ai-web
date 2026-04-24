@@ -29,6 +29,7 @@ import { Resume, Analysis, ResumeDetailResponse } from "@/types";
 import { formatDate, formatFileSize } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { Modal, Textarea, Button } from "@/components/ui";
+import { RecruiterFeedbackCard, AIMetricHighlight } from "@/components/ui";
 import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -267,7 +268,7 @@ export default function ResumeDetailPage() {
                   </div>
                   <div className="p-8">
                     <p className="text-slate-700 leading-relaxed text-lg">
-                      {analysisData?.overview || t('resumeDetail.analysisOverview.noOverview')}
+                      <AIMetricHighlight text={analysisData?.overview || t('resumeDetail.analysisOverview.noOverview')} />
                     </p>
                   </div>
                 </div>
@@ -286,7 +287,7 @@ export default function ResumeDetailPage() {
                       {analysisData?.strongPoints?.map((point, index) => (
                         <li key={index} className="flex items-start">
                           <CheckCircleIcon className="h-5 w-5 text-emerald-500 mr-3 mt-1 flex-shrink-0" />
-                          <span className="text-slate-700 leading-snug">{point}</span>
+                          <span className="text-slate-700 leading-snug"><AIMetricHighlight text={point} /></span>
                         </li>
                       ))}
                       {(!analysisData?.strongPoints || analysisData.strongPoints.length === 0) && (
@@ -318,6 +319,10 @@ export default function ResumeDetailPage() {
                     </ul>
                   </div>
                 </div>
+
+                {/* Recruiter Feedback – Hiring Manager Lens */}
+                <RecruiterFeedbackCard feedback={analysisData?.recruiterPerspective} />
+
               </div>
 
               {/* Sidebar: Score and Job Description */}

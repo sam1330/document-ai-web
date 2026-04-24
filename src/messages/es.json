@@ -36,6 +36,7 @@
     },
     "trust": {
       "joinedBy": "Únete a {count} profesionales",
+      "socialProof": "Los usuarios de Haku han conseguido trabajo exitosamente en estas empresas globales.",
       "companies": {
         "microsoft": "MICROSOFT",
         "google": "GOOGLE",
@@ -101,7 +102,14 @@
         "description": "Cada usuario nuevo recibe 30 tokens de cortesía."
       },
       "transparencyFirst": "Transparencia Primero",
-      "intelligenceOnDemand": "Inteligencia Bajo Demanda"
+      "intelligenceOnDemand": "Inteligencia Bajo Demanda",
+      "creditGuide": {
+        "trigger": "¿Qué puedo hacer con los créditos?",
+        "title": "Tasa de Cambio de Créditos",
+        "deepScan": "Análisis Profundo + Carta de Presentación",
+        "coverLetter": "Solo Carta de Presentación",
+        "bulletEnhance": "Mejora de Punto IA"
+      }
     },
     "roadmap": {
       "sectionTitle": "El Futuro",
@@ -118,6 +126,37 @@
           "description": "Un portal para headhunters para encontrar candidatos basados en alineación de habilidades verificada por IA.",
           "status": "Q4 2026"
         }
+      }
+    },
+    "grader": {
+      "sectionTitle": "Calificador Instantáneo de Curriculum",
+      "sectionSubtitle": "Sin cuenta necesaria. Sube tu PDF y obtén una puntuación en segundos.",
+      "dropzone": "Arrastra tu CV aquí o haz clic para buscar",
+      "dropzoneHint": "Solo PDF · Máx 5MB · Sin login requerido",
+      "analyzing": "Extrayendo texto y analizando con IA...",
+      "yourScore": "Tu Puntuación de Curriculum",
+      "tip": "Consejo Principal de Mejora",
+      "cta": "Desbloquea el Análisis Profundo Completo",
+      "ctaSubtext": "Ve brechas de palabras clave, puntuación ATS, carta de presentación y más.",
+      "comingSoon": "¡El Calificador Instantáneo lanza pronto!",
+      "comingSoonSubtext": "Regístrate ahora y sé el primero en saber cuando esté disponible.",
+      "uploadAnother": "Calificar otro curriculum"
+    },
+    "playwrightGuarantee": {
+      "badge": "Garantía Técnica",
+      "headline": "Perfecto al Píxel. 100% Legible por ATS.",
+      "body": "Sin exportaciones HTML genéricas. Haku AI utiliza un motor de navegador headless personalizado (Playwright) para garantizar que tu PDF sea perfecto al píxel y 100% legible por ATS. Lo que ves es exactamente lo que el reclutador recibe.",
+      "proof1": {
+        "title": "Sin Artefactos HTML",
+        "description": "Nuestro motor Playwright renderiza tu curriculum de forma idéntica en cada navegador y sistema ATS — cero deriva de formato."
+      },
+      "proof2": {
+        "title": "Tipografía Segura para ATS",
+        "description": "Las fuentes integradas y la codificación precisa de caracteres garantizan que cada palabra clave sea legible por cualquier ATS moderno."
+      },
+      "proof3": {
+        "title": "Diseño Listo para Reclutadores",
+        "description": "Lo que previsualiza en pantalla es exactamente el PDF perfecto al píxel que el reclutador descarga y abre."
       }
     },
     "faq": {
@@ -579,6 +618,12 @@
     },
     "errors": {
       "failedToLoad": "Error al cargar los detalles del currículum"
+    },
+    "recruiterFeedback": {
+      "title": "Perspectiva del Reclutador",
+      "badge": "Lente del Hiring Manager",
+      "emptyState": "Ejecuta un nuevo análisis para desbloquear el Feedback del Reclutador.",
+      "disclaimer": "Persona reclutadora generada por IA. Úsalo como retroalimentación de entrenamiento, no como un juicio definitivo."
     }
   },
   "dashboard": {
@@ -858,8 +903,8 @@
   },
   "seo": {
     "home": {
-      "title": "Editor de CV Online Gratis y Rastreador de Empleo | Haku AI",
-      "description": "Crea currículums ilimitados gratis, rastrea solicitudes y genera cartas de presentación con IA. Editor de CV profesional con descargas PDF ilimitadas y optimización ATS inteligente."
+      "title": "Calificador de Curriculum Gratis, Editor de CV y Rastreador de Empleo | Haku AI",
+      "description": "Obtén una puntuación de curriculum por IA instantánea en segundos — sin cuenta necesaria. Luego construye currículums ilimitados gratis, rastrea solicitudes de empleo y genera PDFs legibles por ATS con nuestro motor impulsado por Playwright."
     },
     "login": {
       "title": "Iniciar Sesión | Haku",

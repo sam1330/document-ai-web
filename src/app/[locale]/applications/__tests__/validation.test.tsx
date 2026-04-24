@@ -37,7 +37,10 @@ const mockUser: User = {
   subscription_type: 'free',
   is_active: true,
   created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString()
+  updated_at: new Date().toISOString(),
+  recent_transactions: [],
+  total_spent: 0,
+  credits_used_last_month: 0,
 }
 
 vi.mock('@/contexts/AuthContext', () => ({

@@ -9,7 +9,6 @@ import {
   CheckCircleIcon,
   ArrowRightIcon,
   CpuChipIcon,
-  ShieldCheckIcon,
   AcademicCapIcon,
   UserGroupIcon,
   CommandLineIcon,
@@ -22,6 +21,9 @@ import RoadmapItem from '@/components/ui/RoadmapItem'
 import Footer from '@/components/Footer'
 import Faq from '@/components/Faq'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { CreditUtilityGuide } from '@/components/ui'
+import InstantGrader from '@/components/InstantGrader'
+import PlaywrightGuarantee from '@/components/PlaywrightGuarantee'
 
 export default function HomeClient() {
   const t = useTranslations()
@@ -131,14 +133,14 @@ export default function HomeClient() {
               className="relative"
             >
               <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200 border border-slate-200 bg-white">
-                 <Image
-                    src="/images/hero-mockup.png"
-                    alt="Haku AI resume analysis dashboard"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto"
-                    priority
-                 />
+                <Image
+                  src="/images/hero-mockup.png"
+                  alt="Haku AI resume analysis dashboard"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto"
+                  priority
+                />
               </div>
               {/* Floating Decorative Elements */}
               <div className="absolute -top-6 -right-6 h-24 w-24 bg-indigo-100 rounded-3xl -z-10 animate-blob"></div>
@@ -150,12 +152,17 @@ export default function HomeClient() {
 
       {/* Trust Section */}
       <section className="py-12 border-y border-slate-100 bg-slate-50/30" aria-label="Trusted by professionals at top companies">
-        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-8 lg:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.microsoft')}</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.google')}</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.amazon')}</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.meta')}</span>
-          <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.netflix')}</span>
+        <div className="max-w-7xl mx-auto px-4">
+          <p className="text-center text-sm font-semibold text-slate-400 mb-6 tracking-wide">
+            {t('landing.trust.socialProof')}
+          </p>
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+            <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.microsoft')}</span>
+            <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.google')}</span>
+            <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.amazon')}</span>
+            <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.meta')}</span>
+            <span className="text-xl font-black tracking-tighter text-slate-900">{t('landing.trust.companies.netflix')}</span>
+          </div>
         </div>
       </section>
 
@@ -226,6 +233,12 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* Instant Resume Grader – Lead Magnet */}
+      <InstantGrader />
+
+      {/* Playwright Technical Guarantee */}
+      <PlaywrightGuarantee />
+
       {/* Pricing Section (Pay-as-you-go) */}
       <section id="pricing" className="py-24 lg:py-32" aria-labelledby="pricing-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -261,10 +274,13 @@ export default function HomeClient() {
                     <p className="text-slate-700 text-sm leading-relaxed">
                       {t('landing.pricing.tokenSystem.description')}
                     </p>
+                    <div className="mt-4">
+                      <CreditUtilityGuide />
+                    </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <div className="h-14 w-14 bg-emerald-50 rounded-2xl flex items-center justify-center">
-                       <SparklesIcon className="h-8 w-8 text-emerald-500" />
+                      <SparklesIcon className="h-8 w-8 text-emerald-500" />
                     </div>
                     <div className="text-left">
                       <p className="font-bold text-slate-900">{t('landing.pricing.startFree.title')}</p>
@@ -285,9 +301,9 @@ export default function HomeClient() {
       </section>
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="py-24 bg-slate-900 text-white rounded-[4rem] mx-4 mb-24 overflow-hidden relative" aria-labelledby="roadmap-heading">
+      <section id="roadmap" className="py-24 bg-slate-900 text-white rounded-[4rem] mx-4 overflow-hidden relative" aria-labelledby="roadmap-heading">
         <div className="absolute top-0 right-0 p-20 opacity-10 pointer-events-none">
-           <CommandLineIcon className="h-96 w-96 transform rotate-12" />
+          <CommandLineIcon className="h-96 w-96 transform rotate-12" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -298,30 +314,30 @@ export default function HomeClient() {
                 {t('landing.roadmap.sectionDescription')}
               </p>
               <div className="space-y-6">
-                 <RoadmapItem
-                   title={t('landing.roadmap.items.aiResumeEngine.title')}
-                   description={t('landing.roadmap.items.aiResumeEngine.description')}
-                   status={t('landing.roadmap.items.aiResumeEngine.status')}
-                 />
-                 <RoadmapItem
-                   title={t('landing.roadmap.items.recruiterAts.title')}
-                   description={t('landing.roadmap.items.recruiterAts.description')}
-                   status={t('landing.roadmap.items.recruiterAts.status')}
-                 />
+                <RoadmapItem
+                  title={t('landing.roadmap.items.aiResumeEngine.title')}
+                  description={t('landing.roadmap.items.aiResumeEngine.description')}
+                  status={t('landing.roadmap.items.aiResumeEngine.status')}
+                />
+                <RoadmapItem
+                  title={t('landing.roadmap.items.recruiterAts.title')}
+                  description={t('landing.roadmap.items.recruiterAts.description')}
+                  status={t('landing.roadmap.items.recruiterAts.status')}
+                />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4" aria-hidden="true">
               <div className="space-y-4 pt-12">
-                 <div className="bg-slate-800 p-6 rounded-3xl h-48 flex items-end">
-                    <UserGroupIcon className="h-10 w-10 text-indigo-400" />
-                 </div>
-                 <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-3xl h-64"></div>
+                <div className="bg-slate-800 p-6 rounded-3xl h-48 flex items-end">
+                  <UserGroupIcon className="h-10 w-10 text-indigo-400" />
+                </div>
+                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-3xl h-64"></div>
               </div>
               <div className="space-y-4">
-                 <div className="bg-slate-800 p-6 rounded-3xl h-64 flex items-start">
-                    <AcademicCapIcon className="h-10 w-10 text-purple-400" />
-                 </div>
-                 <div className="bg-slate-700 p-6 rounded-3xl h-48"></div>
+                <div className="bg-slate-800 p-6 rounded-3xl h-64 flex items-start">
+                  <AcademicCapIcon className="h-10 w-10 text-purple-400" />
+                </div>
+                <div className="bg-slate-700 p-6 rounded-3xl h-48"></div>
               </div>
             </div>
           </div>

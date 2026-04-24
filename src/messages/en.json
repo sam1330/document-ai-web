@@ -36,6 +36,7 @@
     },
     "trust": {
       "joinedBy": "Joined by {count} professionals",
+      "socialProof": "Haku users have successfully landed roles at these global companies.",
       "companies": {
         "microsoft": "MICROSOFT",
         "google": "GOOGLE",
@@ -101,7 +102,14 @@
         "description": "Every new user gets 30 complimentary tokens."
       },
       "transparencyFirst": "Transparency First",
-      "intelligenceOnDemand": "Intelligence on Demand"
+      "intelligenceOnDemand": "Intelligence on Demand",
+      "creditGuide": {
+        "trigger": "What can I do with credits?",
+        "title": "Credit Exchange Rate",
+        "deepScan": "Deep Scan + Cover Letter",
+        "coverLetter": "Cover Letter only",
+        "bulletEnhance": "AI Bullet Enhancement"
+      }
     },
     "roadmap": {
       "sectionTitle": "The Future",
@@ -118,6 +126,37 @@
           "description": "A portal for headhunters to find candidates based on AI-verified skill alignment.",
           "status": "Q4 2026"
         }
+      }
+    },
+    "grader": {
+      "sectionTitle": "Instant Resume Grader",
+      "sectionSubtitle": "No account needed. Drop your PDF and get a score in seconds.",
+      "dropzone": "Drop your resume PDF here, or click to browse",
+      "dropzoneHint": "PDF only · Max 5MB · No login required",
+      "analyzing": "Extracting text & analyzing with AI...",
+      "yourScore": "Your Resume Score",
+      "tip": "Top Improvement Tip",
+      "cta": "Unlock the Full Deep Scan",
+      "ctaSubtext": "See keyword gaps, ATS score, cover letter, and more.",
+      "comingSoon": "Instant Grader is launching soon!",
+      "comingSoonSubtext": "Sign up now and be the first to know when it goes live.",
+      "uploadAnother": "Grade another resume"
+    },
+    "playwrightGuarantee": {
+      "badge": "Technical Guarantee",
+      "headline": "Pixel-Perfect. 100% ATS-Readable.",
+      "body": "No generic HTML exports. Haku AI uses a custom-built headless browser engine (Playwright) to ensure your PDF is pixel-perfect and 100% ATS-readable. What you see is exactly what the recruiter gets.",
+      "proof1": {
+        "title": "No HTML Artifacts",
+        "description": "Our Playwright engine renders your resume identically in every browser and ATS system — zero formatting drift."
+      },
+      "proof2": {
+        "title": "ATS-Safe Typography",
+        "description": "Embedded fonts and precise character encoding ensure every keyword is machine-readable by any modern ATS."
+      },
+      "proof3": {
+        "title": "Recruiter-Ready Layout",
+        "description": "What you preview on screen is exactly the pixel-perfect PDF the recruiter downloads and opens."
       }
     },
     "faq": {
@@ -579,6 +618,12 @@
     },
     "errors": {
       "failedToLoad": "Failed to load resume details"
+    },
+    "recruiterFeedback": {
+      "title": "Recruiter's Perspective",
+      "badge": "Hiring Manager Lens",
+      "emptyState": "Run a new analysis to unlock Recruiter Feedback.",
+      "disclaimer": "AI-generated recruiter persona. Use as coaching feedback, not as a definitive judgment."
     }
   },
   "dashboard": {
@@ -858,8 +903,8 @@
   },
   "seo": {
     "home": {
-      "title": "Free Online CV Editor & Job Tracker | Haku AI",
-      "description": "Create unlimited resumes for free, track applications, and generate AI cover letters. Professional CV editor with unlimited PDF downloads and smart ATS optimization."
+      "title": "Free Resume Grader, CV Editor & Job Tracker | Haku AI",
+      "description": "Get an instant AI resume score in seconds — no account needed. Then build unlimited resumes for free, track job applications, and generate ATS-readable PDFs with our Playwright-powered engine."
     },
     "login": {
       "title": "Sign In | Haku",

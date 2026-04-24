@@ -42,4 +42,8 @@ body {
   .no-print {
     display: none !important;
   }
+
+  .grecaptcha-badge {
+    display: none !important;
+  }
 }
