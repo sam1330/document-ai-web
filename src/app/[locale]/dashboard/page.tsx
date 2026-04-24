@@ -24,6 +24,7 @@ import { DashboardOverview, Resume, JobApplication, ResumeResponse, JobApplicati
 import { formatDate } from '@/lib/utils'
 import { AxiosResponse } from 'axios'
 import { Button } from '@/components/ui'
+import { CreditUtilityGuide } from '@/components/ui'
 import { useTranslations } from 'next-intl'
 
 export default function DashboardPage() {
@@ -179,6 +180,11 @@ export default function DashboardPage() {
                 <div>
                   <dt className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{stat.name}</dt>
                   <dd className="text-3xl font-bold text-slate-900 mt-1">{stat.value}</dd>
+                  {stat.name === t('dashboard.stats.aiImpact') && (
+                    <div className="mt-3">
+                      <CreditUtilityGuide />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
