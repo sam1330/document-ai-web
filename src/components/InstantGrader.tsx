@@ -12,6 +12,8 @@ import {
   LightBulbIcon,
   RocketLaunchIcon,
 } from '@heroicons/react/24/outline'
+import api from '@/lib/api'
+import toast from 'react-hot-toast'
 
 type GraderState = 'idle' | 'loading' | 'result' | 'error'
 interface GraderResult { score: number; tip: string }
@@ -20,11 +22,19 @@ interface GraderResult { score: number; tip: string }
 const ENDPOINT_AVAILABLE = false
 
 async function callGradeEndpoint(file: File): Promise<GraderResult> {
-  const form = new FormData()
-  form.append('file', file)
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/public/grade`, { method: 'POST', body: form })
-  if (!res.ok) throw new Error('grade_failed')
-  return res.json()
+  // TODO implement real endpoint
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+  return {
+    score: Math.floor(Math.random() * 10) + 1,
+    tip: "This is a good resume, but it could be improved with more..." // TODO make it better
+  }
+  // const form = new FormData()
+  // form.append('file', file)
+  // const res = await api.post('/api/public/grade', form);
+
+  // if (res.status !== 200) toast.error('Error uploading file', { id: 'file-upload-error' });
+
+  // return res.data;
 }
 
 export default function InstantGrader() {
