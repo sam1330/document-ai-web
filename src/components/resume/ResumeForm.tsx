@@ -313,7 +313,7 @@ export function ResumeForm() {
                       <PlusIcon className="h-3 w-3 mr-1" /> {t('resumes.builder.form.actions.addBullet')}
                     </Button>
                   </div>
-                  {(field.highlights || []).map((_, hIndex) => (
+                  {(watchedExperience?.[index]?.highlights || field.highlights || []).map((_, hIndex) => (
                     <div key={hIndex} className="group/bullet relative">
                       <Textarea
                         className="min-h-[80px] text-[13px] leading-relaxed pr-12 pb-10 bg-white border-slate-200 focus:border-indigo-300 focus:ring-indigo-100 transition-all rounded-xl"
