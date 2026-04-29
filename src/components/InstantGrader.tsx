@@ -16,25 +16,31 @@ import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
 type GraderState = 'idle' | 'loading' | 'result' | 'error'
-interface GraderResult { score: number; tip: string }
+interface GraderResult { atsScore: number; tip: string }
 
 // Flip to true when POST /api/public/grade is live on the backend
-const ENDPOINT_AVAILABLE = false
+const ENDPOINT_AVAILABLE = true
+
 
 async function callGradeEndpoint(file: File): Promise<GraderResult> {
   // TODO implement real endpoint
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  return {
-    score: Math.floor(Math.random() * 10) + 1,
-    tip: "This is a good resume, but it could be improved with more..." // TODO make it better
-  }
-  // const form = new FormData()
-  // form.append('file', file)
-  // const res = await api.post('/api/public/grade', form);
+  // await new Promise((resolve) => setTimeout(resolve, 1500));
+  // return {
+  //   atsScore: Math.floor(Math.random() * 10) + 1,
+  //   tip: "This is a good resume, but it could be improved with more..." // TODO make it better
+  // }
+  console.log(file);
+  const form = new FormData()
+  form.append('resume', file)
+  const res = await api.post('/api/resumes/public/grade', form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
-  // if (res.status !== 200) toast.error('Error uploading file', { id: 'file-upload-error' });
+  if (res.status !== 200) toast.error('Error uploading file', { id: 'file-upload-error' });
 
-  // return res.data;
+  return res.data.analysis;
 }
 
 export default function InstantGrader() {
@@ -45,7 +51,9 @@ export default function InstantGrader() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleFile = async (file?: File) => {
-    if (!file || file.type !== 'application/pdf' || file.size > 5 * 1024 * 1024) return
+    if (!file || file.type !== 'application/pdf' || file.size > 10 * 1024 * 1024) {
+      toast.error(t('toasts.invalidFile')); return
+    }
     if (!ENDPOINT_AVAILABLE) { setState('result'); setResult(null); return }
     setState('loading')
     try {
@@ -60,7 +68,7 @@ export default function InstantGrader() {
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => handleFile(e.target.files?.[0])
   const reset = () => { setState('idle'); setResult(null); if (inputRef.current) inputRef.current.value = '' }
 
-  const scoreColor = !result ? '' : result.score >= 8 ? 'text-emerald-400' : result.score >= 5 ? 'text-amber-400' : 'text-rose-400'
+  const scoreColor = !result ? '' : result.atsScore >= 8 ? 'text-emerald-400' : result.atsScore >= 5 ? 'text-amber-400' : 'text-rose-400'
 
   return (
     <section id="instant-grader" className="py-24 lg:py-32" aria-labelledby="grader-heading">
@@ -117,9 +125,9 @@ export default function InstantGrader() {
                       <div className="relative inline-flex">
                         <svg className="w-40 h-40 transform -rotate-90">
                           <circle strokeWidth="8" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className="text-slate-100" />
-                          <circle strokeWidth="8" strokeDasharray={389.6} strokeDashoffset={389.6 - (389.6 * result.score) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className={scoreColor + ' transition-all duration-1000'} />
+                          <circle strokeWidth="8" strokeDasharray={389.6} strokeDashoffset={389.6 - (389.6 * result.atsScore) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className={scoreColor + ' transition-all duration-1000'} />
                         </svg>
-                        <span className={`absolute inset-0 flex items-center justify-center text-5xl font-black ${scoreColor}`}>{result.score}</span>
+                        <span className={`absolute inset-0 flex items-center justify-center text-5xl font-black ${scoreColor}`}>{result.atsScore}</span>
                       </div>
                       <p className="text-sm text-slate-500 mt-3 font-medium">out of 10</p>
                     </div>

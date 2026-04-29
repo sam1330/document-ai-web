@@ -140,7 +140,10 @@
       "ctaSubtext": "Ve brechas de palabras clave, puntuación ATS, carta de presentación y más.",
       "comingSoon": "¡El Calificador Instantáneo lanza pronto!",
       "comingSoonSubtext": "Regístrate ahora y sé el primero en saber cuando esté disponible.",
-      "uploadAnother": "Calificar otro curriculum"
+      "uploadAnother": "Calificar otro curriculum",
+      "toasts": {
+        "invalidFile": "Archivo inválido. Por favor, sube un archivo PDF válido."
+      }
     },
     "playwrightGuarantee": {
       "badge": "Garantía Técnica",

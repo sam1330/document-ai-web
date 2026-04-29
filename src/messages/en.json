@@ -140,7 +140,10 @@
       "ctaSubtext": "See keyword gaps, ATS score, cover letter, and more.",
       "comingSoon": "Instant Grader is launching soon!",
       "comingSoonSubtext": "Sign up now and be the first to know when it goes live.",
-      "uploadAnother": "Grade another resume"
+      "uploadAnother": "Grade another resume",
+      "toasts": {
+        "invalidFile": "Invalid file. Please upload a valid PDF file."
+      }
     },
     "playwrightGuarantee": {
       "badge": "Technical Guarantee",
