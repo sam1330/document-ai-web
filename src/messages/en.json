@@ -444,6 +444,9 @@
         "saving": "Saving changes...",
         "saveSuccess": "Changes saved successfully!",
         "saveFailed": "Failed to save changes.",
+        "optimizing": "Optimizing your resume...",
+        "optimizeSuccess": "Resume optimized successfully!",
+        "optimizeFailed": "Failed to optimize resume.",
         "enterText": "Please enter some text to enhance",
         "enhancing": "AI is polishing your bullet point...",
         "enhanceSuccess": "Enhanced!",
@@ -456,7 +459,8 @@
           "experience": "Experience",
           "education": "Education",
           "skills": "Skills",
-          "socialNetworks": "Social Networks"
+          "socialNetworks": "Social Networks",
+          "custom": "Custom Sections"
         },
         "fields": {
           "fullName": "Full Name",
@@ -477,6 +481,7 @@
           "degree": "Degree",
           "area": "Area of Study",
           "customTitle": "Custom",
+          "customSectionTitle": "Section Title",
           "network": "Network",
           "username": "Username"
         },
@@ -495,6 +500,7 @@
           "institution": "University Name",
           "degree": "Master of Science",
           "area": "Computer Science",
+          "customSectionTitle": "e.g. Projects / Awards",
           "skillCategory": "e.g. Languages",
           "skillDetails": "JavaScript, React, Node.js"
         },
@@ -503,7 +509,8 @@
           "addExperience": "Add Experience",
           "addEducation": "Add Education",
           "addSkill": "Add Skill Category",
-          "addSocial": "Add Social Profile"
+          "addSocial": "Add Social Profile",
+          "addCustomSection": "Add Custom Section"
         },
         "credits": {
           "oneCredit": "1 Credit"
@@ -513,6 +520,21 @@
           "invalidEmail": "Invalid email address",
           "invalidPhone": "Phone must be in E.164 format (e.g. +1234567890)",
           "invalidUrl": "Invalid URL"
+        },
+        "optimize": {
+          "button": "Optimize Resume",
+          "modal": {
+            "title": "Optimize Resume",
+            "subtitle": "Tailor your resume to a specific job description.",
+            "button": "Optimize",
+            "role": "Target Role",
+            "rolePlaceholder": "e.g. Senior Software Engineer",
+            "company": "Target Company",
+            "companyPlaceholder": "e.g. Google",
+            "jobDescription": "Job Description",
+            "jobDescriptionPlaceholder": "Paste the job description here...",
+            "jobDescriptionHint": "Paste the job description below to tailor the AI analysis to this specific role."
+          }
         }
       },
       "design": {

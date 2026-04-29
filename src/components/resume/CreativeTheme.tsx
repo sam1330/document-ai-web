@@ -42,13 +42,13 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
         )}
       </div>
 
-      <div className="flex h-full">
+      <div className="flex h-full" style={{ background: "linear-gradient(to right, #134e4a 70mm, white 70mm)" }}>
         {/* Left Column (Dark Side) */}
-        <div className="w-[70mm] bg-teal-900 text-white p-[15mm] border-t border-teal-800 min-h-[calc(296mm-80mm)]">
+        <div className="w-[70mm] text-white p-[15mm] border-t border-teal-800">
 
           <div className="space-y-6">
             {/* Contact */}
-            <div>
+            <div className="break-inside-avoid">
               <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">{t('resumes.builder.preview.themeLabels.contact')}</h2>
               <div className="space-y-2 text-xs font-light text-teal-50">
                 {cv.location && <div className="break-words">{cv.location}</div>}
@@ -60,7 +60,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
 
             {/* Social */}
             {cv.social_networks && cv.social_networks.length > 0 && (
-              <div>
+              <div className="break-inside-avoid">
                 <h2 className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">{t('resumes.builder.preview.themeLabels.social')}</h2>
                 <div className="space-y-2 text-xs font-light text-teal-50">
                   {cv.social_networks.map((sn, index) => (
@@ -80,7 +80,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
                 </h2>
                 <div className="space-y-3">
                   {cv.sections.skills.map((skill, i) => (
-                    <div key={i} className="text-xs">
+                    <div key={i} className="text-xs break-inside-avoid">
                       <div className="font-semibold text-teal-100 mb-0.5">{skill.label}</div>
                       <div className="font-light text-teal-200/80 leading-normal">{skill.details}</div>
                     </div>
@@ -103,7 +103,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
               </h2>
               <div className="space-y-6">
                 {cv.sections.experience.map((exp, i) => (
-                  <div key={i}>
+                  <div key={i} className="break-inside-avoid">
                     <div className="flex justify-between items-baseline mb-1">
                       <span className="font-bold text-[15px] text-slate-900">{exp.position}</span>
                       <span className="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded">{exp.start_date} – {exp.end_date}</span>
@@ -132,7 +132,7 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
               </h2>
               <div className="space-y-5">
                 {cv.sections.education.map((edu, i) => (
-                  <div key={i}>
+                  <div key={i} className="break-inside-avoid">
                     <div className="flex justify-between items-baseline mb-1">
                       <span className="font-bold text-[14px] text-slate-900">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area}</span>
                       <span className="text-xs font-bold text-teal-600">{edu.start_date} – {edu.end_date}</span>
@@ -149,11 +149,10 @@ export function CreativeTheme({ data }: CreativeThemeProps) {
 
           {/* Custom Sections */}
           {cv.sections.custom && Object.entries(cv.sections.custom).map(([title, items], i) => (
-            <section key={i} className="mb-8">
+            <section key={i} className="mb-8 break-inside-avoid">
               <h2 className="text-[15px] font-bold uppercase tracking-widest text-teal-800 mb-5 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-teal-500">
-                {title}
+                {items.title}
               </h2>
-              <div className="font-bold text-[14px] text-slate-900 mb-2">{items.title}</div>
               <ul className="list-disc list-outside ml-4 space-y-1">
                 {items.content.map((item, index) => (
                   <li key={index} className="text-[13px] leading-relaxed text-slate-600 pl-1">

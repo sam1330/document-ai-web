@@ -51,7 +51,7 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
 
       {/* Summary */}
       {cv.sections.summary && cv.sections.summary.length > 0 && (
-        <section className="mb-8">
+        <section className="mb-8 break-inside-avoid">
           <p className="text-sm leading-relaxed text-gray-600">
             {cv.sections.summary[0]}
           </p>
@@ -66,12 +66,12 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
           </h2>
           <div className="space-y-6">
             {cv.sections.experience.map((exp, i) => (
-              <div key={i}>
+              <div key={i} className="break-inside-avoid">
                 <div className="flex flex-col mb-1">
-                 <div className="flex justify-between items-baseline">
+                  <div className="flex justify-between items-baseline">
                     <span className="font-semibold text-gray-900 text-[15px]">{exp.position}</span>
                     <span className="text-xs text-gray-400 font-medium">{exp.start_date} — {exp.end_date}</span>
-                 </div>
+                  </div>
                   <span className="text-sm text-gray-600">{exp.company}{exp.location ? `, ${exp.location}` : ''}</span>
                 </div>
                 <ul className="list-none space-y-1.5 mt-2">
@@ -95,7 +95,7 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
           </h2>
           <div className="space-y-4">
             {cv.sections.education.map((edu, i) => (
-              <div key={i} className="flex justify-between items-baseline">
+              <div key={i} className="flex justify-between items-baseline break-inside-avoid">
                 <div>
                   <div className="font-semibold text-gray-900 text-[15px]">{edu.institution}</div>
                   <div className="text-sm text-gray-600">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area} {edu.location ? ` • ${edu.location}` : ''}</div>
@@ -111,7 +111,7 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
 
       {/* Skills */}
       {cv.sections.skills && cv.sections.skills.length > 0 && (
-        <section className="mb-8">
+        <section className="mb-8 break-inside-avoid">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
             {t('resumes.builder.preview.sections.skills')}
           </h2>
@@ -127,11 +127,10 @@ export function MinimalTheme({ data }: MinimalThemeProps) {
 
       {/* Custom Sections */}
       {cv.sections.custom && Object.entries(cv.sections.custom).map(([title, items], i) => (
-        <section key={i} className="mb-8">
+        <section key={i} className="mb-8 break-inside-avoid">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
-            {title}
+            {items.title}
           </h2>
-          <div className="font-semibold text-gray-900 text-[15px] mb-2">{items.title}</div>
           <ul className="list-none space-y-1.5">
             {items.content.map((item, index) => (
               <li key={index} className="text-[13px] leading-relaxed text-gray-600 relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-gray-300 before:rounded-full">

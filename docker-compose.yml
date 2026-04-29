@@ -13,6 +13,7 @@ services:
       # If SSR, it might need to talk to backend container name.
       # Ideally usage of public env vars handles client side
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped

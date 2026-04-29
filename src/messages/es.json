@@ -444,10 +444,29 @@
         "saving": "Guardando cambios...",
         "saveSuccess": "¡Cambios guardados con éxito!",
         "saveFailed": "Error al guardar los cambios.",
+        "optimizing": "Optimizando tu currículum...",
+        "optimizeSuccess": "¡Currículum optimizado con éxito!",
+        "optimizeFailed": "Error al optimizar el currículum.",
         "enterText": "Por favor, ingrese algún texto para mejorar",
         "enhancing": "La IA está puliendo tu punto clave...",
         "enhanceSuccess": "¡Mejorado!",
         "enhanceFailed": "Error al mejorar"
+      },
+      "optimize": {
+        "button": "Optimizar CV",
+        "modal": {
+          "title": "Optimizar CV",
+          "subtitle": "La IA analizará tu CV y lo optimizará para el rol y la empresa que especifiques.",
+          "cancel": "Cancelar",
+          "button": "Optimizar CV",
+          "role": "Rol Objetivo",
+          "rolePlaceholder": "ej. Ingeniero Frontend Senior",
+          "company": "Empresa Objetivo",
+          "companyPlaceholder": "ej. Google",
+          "jobDescription": "Descripción del Trabajo",
+          "jobDescriptionPlaceholder": "Pega la descripción completa del trabajo aquí...",
+          "jobDescriptionHint": "Pega la descripción del trabajo a continuación para personalizar el análisis de IA para este rol específico."
+        }
       },
       "form": {
         "sections": {
@@ -456,7 +475,8 @@
           "experience": "Experiencia",
           "education": "Educación",
           "skills": "Habilidades",
-          "socialNetworks": "Redes Sociales"
+          "socialNetworks": "Redes Sociales",
+          "custom": "Secciones Personalizadas"
         },
         "fields": {
           "fullName": "Nombre Completo",
@@ -477,6 +497,7 @@
           "degree": "Título",
           "area": "Área de Estudio",
           "customTitle": "Custom",
+          "customSectionTitle": "Título de la Sección",
           "network": "Red",
           "username": "Usuario"
         },
@@ -495,6 +516,7 @@
           "institution": "Nombre de la Universidad",
           "degree": "Maestría en Ciencias",
           "area": "Ciencias de la Computación",
+          "customSectionTitle": "ej. Proyectos / Premios",
           "skillCategory": "ej. Idiomas",
           "skillDetails": "JavaScript, React, Node.js"
         },
@@ -503,7 +525,8 @@
           "addExperience": "Agregar Experiencia",
           "addEducation": "Agregar Educación",
           "addSkill": "Agregar Categoría de Habilidad",
-          "addSocial": "Agregar Perfil Social"
+          "addSocial": "Agregar Perfil Social",
+          "addCustomSection": "Agregar Sección Personalizada"
         },
         "credits": {
           "oneCredit": "1 Crédito"
@@ -513,6 +536,21 @@
           "invalidEmail": "Correo electrónico inválido",
           "invalidPhone": "El teléfono debe estar en formato E.164 (ej. +1234567890)",
           "invalidUrl": "URL inválida"
+        },
+        "optimize": {
+          "button": "Optimizar currículum",
+          "modal": {
+            "title": "Optimizar currículum",
+            "subtitle": "Adapta tu currículum a una descripción de trabajo específica.",
+            "button": "Optimizar",
+            "role": "Rol Objetivo",
+            "rolePlaceholder": "ej. Ingeniero de Software Senior",
+            "company": "Empresa Objetivo",
+            "companyPlaceholder": "ej. Google",
+            "jobDescription": "Descripción del Trabajo",
+            "jobDescriptionPlaceholder": "Pega la descripción del trabajo aquí...",
+            "jobDescriptionHint": "Pega la descripción del trabajo a continuación para adaptar el análisis de IA a este rol específico."
+          }
         }
       },
       "design": {
