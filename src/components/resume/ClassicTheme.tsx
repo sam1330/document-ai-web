@@ -58,7 +58,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
 
       {/* Summary */}
       {cv.sections.summary && cv.sections.summary.length > 0 && (
-        <section className="mb-6">
+        <section className="mb-6 break-inside-avoid">
           <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-2">
             {t('resumes.builder.preview.sections.summary')}
           </h2>
@@ -75,7 +75,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
         </h2>
         <div className="space-y-4">
           {cv.sections.experience.map((exp, i) => (
-            <div key={i}>
+            <div key={i} className="break-inside-avoid">
               <div className="flex justify-between items-baseline mb-1">
                 <div>
                   <span className="font-bold text-md">{exp.company}</span>
@@ -108,7 +108,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
         </h2>
         <div className="space-y-3">
           {cv.sections.education.map((edu, i) => (
-            <div key={i} className="flex justify-between items-baseline">
+            <div key={i} className="flex justify-between items-baseline break-inside-avoid">
               <div>
                 <div className="flex items-center">
                   <span className="font-bold">{edu.institution}</span>
@@ -130,7 +130,7 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
       </section>
 
       {/* Skills */}
-      <section className="mb-6">
+      <section className="mb-6 break-inside-avoid">
         <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-2">
           {t('resumes.builder.preview.sections.skills')}
         </h2>
@@ -146,12 +146,11 @@ export function ClassicTheme({ data }: ClassicThemeProps) {
 
       {/* Custom Sections */}
       {cv.sections.custom && Object.entries(cv.sections.custom).map(([title, items], i) => (
-        <section key={i} className="mb-6">
+        <section key={i} className="mb-6 break-inside-avoid">
           <h2 className="text-lg font-bold uppercase tracking-wider border-b border-slate-300 mb-2">
-            {title}
+            {items.title}
           </h2>
           <ul className="list-disc list-outside ml-4 space-y-1">
-            <span className="font-bold">{items.title}</span>
             {items.content.map((item, index) => (
               <li key={index} className="text-[13px] leading-relaxed text-slate-800 pl-1">
                 {item}

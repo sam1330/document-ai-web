@@ -20,6 +20,7 @@ import {
   BriefcaseIcon,
   AcademicCapIcon,
   WrenchScrewdriverIcon,
+  PuzzlePieceIcon,
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
@@ -31,7 +32,7 @@ export function ResumeForm() {
 
   const { register, control, handleSubmit, watch, reset, getValues, setValue, formState: { errors } } = useForm<ResumeData>({
     resolver: zodResolver(getResumeSchema(t)) as any,
-    defaultValues: storeData
+    values: storeData
   })
 
   // Sync form changes to the store using a subscription
@@ -63,6 +64,10 @@ export function ResumeForm() {
   const { fields: socialFields, append: appendSocial, remove: removeSocial } = useFieldArray({
     control,
     name: "cv.social_networks"
+  })
+  const { fields: customFields, append: appendCustom, remove: removeCustom } = useFieldArray({
+    control,
+    name: "cv.sections.custom"
   })
 
   // Watch for 'present' checkbox logic
@@ -504,6 +509,81 @@ export function ResumeForm() {
               onClick={() => appendSkill({ label: "", details: "" })}
             >
               <PlusIcon className="h-4 w-4 mr-2" /> {t('resumes.builder.form.actions.addSkill')}
+            </Button>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Custom Sections */}
+        <AccordionItem value="custom" className="bg-white rounded-2xl border border-slate-200 px-6 shadow-sm">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-rose-50 rounded-xl">
+                <PuzzlePieceIcon className="h-5 w-5 text-rose-600" />
+              </div>
+              <span className="text-lg">{t('resumes.builder.form.sections.custom')}</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="space-y-6">
+            {customFields.map((field, index) => (
+              <div key={field.id} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-4 relative group">
+                <button
+                  type="button"
+                  onClick={() => removeCustom(index)}
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                >
+                  <TrashIcon className="h-4 w-4" />
+                </button>
+                <Input
+                  label={t('resumes.builder.form.fields.customSectionTitle')}
+                  {...register(`cv.sections.custom.${index}.title`)}
+                  placeholder={t('resumes.builder.form.placeholders.customSectionTitle')}
+                  error={errors.cv?.sections?.custom?.[index]?.title?.message}
+                />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-bold text-slate-700">{t('resumes.builder.form.fields.highlights')}</label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="text-xs h-8 text-indigo-600"
+                      onClick={() => {
+                        const values = getValues()
+                        const content = values.cv.sections.custom[index].content || [];
+                        setValue(`cv.sections.custom.${index}.content`, [...content, ""]);
+                      }}
+                    >
+                      <PlusIcon className="h-3 w-3 mr-1" /> {t('resumes.builder.form.actions.addBullet')}
+                    </Button>
+                  </div>
+                  {(watch(`cv.sections.custom.${index}.content`) || field.content || []).map((_, cIndex) => (
+                    <div key={cIndex} className="group/bullet relative">
+                      <Textarea
+                        className="min-h-[80px] text-[13px] leading-relaxed pr-12 pb-1 bg-white border-slate-200 focus:border-indigo-300 focus:ring-indigo-100 transition-all rounded-xl"
+                        {...register(`cv.sections.custom.${index}.content.${cIndex}`)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute bottom-3 right-3 p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all opacity-0 group-hover/bullet:opacity-100"
+                        onClick={() => {
+                          const values = getValues()
+                          const content = values.cv.sections.custom[index].content.filter((_, ci) => ci !== cIndex);
+                          setValue(`cv.sections.custom.${index}.content`, content);
+                        }}
+                      >
+                        <TrashIcon className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <Button
+              variant="outline"
+              className="w-full border-dashed border-slate-300 text-slate-500 hover:text-rose-600 hover:border-rose-300 h-12"
+              onClick={() => appendCustom({ title: "", content: [""] })}
+            >
+              <PlusIcon className="h-4 w-4 mr-2" /> {t('resumes.builder.form.actions.addCustomSection')}
             </Button>
           </AccordionContent>
         </AccordionItem>

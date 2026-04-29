@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { ResumeForm } from "@/components/resume/ResumeForm";
 import { DesignForm } from "@/components/resume/DesignForm";
 import { ResumePreview } from "@/components/resume/ResumePreview";
-import { Button } from "@/components/ui";
+import { Button, Modal, Input, Textarea } from "@/components/ui";
 import { useResumeStore } from "@/lib/store/useResumeStore";
 import {
   ArrowDownTrayIcon,
@@ -29,10 +29,15 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
   const t = useTranslations();
   const router = useRouter();
   const { locale } = useParams();
-  const { data } = useResumeStore();
+  const { data, setData } = useResumeStore();
   const [activeTab, setActiveTab] = useState<"content" | "design" | "preview">(
     "content",
   );
+  const [isOptimizeModalOpen, setIsOptimizeModalOpen] = useState(false);
+  const [optimizing, setOptimizing] = useState(false);
+  const [targetRole, setTargetRole] = useState("");
+  const [targetCompany, setTargetCompany] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
   const [exporting, setExporting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -121,6 +126,44 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
     }
   };
 
+  const handleOptimize = async () => {
+    if (!resumeId) return;
+    if (!jobDescription.trim() || !targetRole.trim() || !targetCompany.trim()) {
+      toast.error(t("resumes.errors.allFieldsRequired"));
+      return;
+    }
+
+    setOptimizing(true);
+    const toastId = toast.loading(t("resumes.builder.toasts.optimizing"));
+
+    try {
+      const response = await api.post(`/api/resumes/${resumeId}/optimize`, {
+        target_role: targetRole,
+        target_company: targetCompany,
+        job_description: jobDescription,
+      });
+
+      const { optimized_resume } = response.data;
+
+      // Merge the optimized CV into the existing resume data
+      setData({
+        ...data,
+        cv: optimized_resume,
+      });
+
+      toast.success(t("resumes.builder.toasts.optimizeSuccess"), { id: toastId });
+      setIsOptimizeModalOpen(false);
+    } catch (error: any) {
+      console.error("Optimization failed:", error);
+      toast.error(
+        error.response?.data?.message || t("resumes.builder.toasts.optimizeFailed"),
+        { id: toastId },
+      );
+    } finally {
+      setOptimizing(false);
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-white selection:bg-indigo-100 selection:text-indigo-700">
       <Navigation />
@@ -204,6 +247,19 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
               {t("resumes.fileType.pdf")}
             </span>
           </Button>
+          {resumeId && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setIsOptimizeModalOpen(true)}
+              leftIcon={<SparklesIcon className="h-4 w-4" />}
+              className="rounded-xl border-indigo-200 bg-indigo-50/50 text-indigo-700 font-bold px-3 md:px-4 shrink-0 hover:bg-indigo-100 hover:border-indigo-300"
+            >
+              <span className="hidden sm:inline">
+                {t("resumes.builder.optimize.button")}
+              </span>
+            </Button>
+          )}
           <Button
             size="sm"
             onClick={handleSave}
@@ -261,6 +317,64 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
           </div>
         </main>
       </div>
+
+      <Modal
+        isOpen={isOptimizeModalOpen}
+        onClose={() => !optimizing && setIsOptimizeModalOpen(false)}
+        title={t("resumes.builder.optimize.modal.title")}
+        subtitle={t("resumes.builder.optimize.modal.subtitle")}
+        footer={
+          <>
+            <Button
+              variant="outline"
+              onClick={() => setIsOptimizeModalOpen(false)}
+              disabled={optimizing}
+            >
+              {t("resumes.builder.optimize.modal.cancel") || t("resumes.modal.cancel")}
+            </Button>
+            <Button
+              onClick={handleOptimize}
+              loading={optimizing}
+              disabled={!jobDescription.trim() || !targetRole.trim() || !targetCompany.trim()}
+            >
+              {t("resumes.builder.optimize.modal.button")}
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              label={t("resumes.builder.optimize.modal.role")}
+              value={targetRole}
+              onChange={(e) => setTargetRole(e.target.value)}
+              placeholder={t("resumes.builder.optimize.modal.rolePlaceholder")}
+              required
+            />
+            <Input
+              label={t("resumes.builder.optimize.modal.company")}
+              value={targetCompany}
+              onChange={(e) => setTargetCompany(e.target.value)}
+              placeholder={t("resumes.builder.optimize.modal.companyPlaceholder")}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm text-slate-500 font-medium">
+              {t("resumes.builder.optimize.modal.jobDescriptionHint")}
+            </p>
+            <Textarea
+              label={t("resumes.builder.optimize.modal.jobDescription")}
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+              placeholder={t("resumes.builder.optimize.modal.jobDescriptionPlaceholder")}
+              rows={8}
+              className="w-full text-slate-700 rounded-2xl"
+              required
+            />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

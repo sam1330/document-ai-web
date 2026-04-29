@@ -27,11 +27,12 @@ export function ModernTheme({ data }: ModernThemeProps) {
       style={{
         width: "210mm",
         minHeight: "297mm",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        background: "linear-gradient(to right, #f1f5f9 60mm, white 60mm)"
       }}
     >
       {/* Sidebar sidebar-ish element */}
-      <div className="w-[60mm] bg-slate-100 p-[15mm] border-r border-slate-200">
+      <div className="w-[60mm] p-[15mm] border-r border-slate-200">
         <h1 className="text-2xl font-bold tracking-tight text-indigo-900 mb-2 leading-tight">
           {cv.name || t('resumes.builder.preview.placeholderName')}
         </h1>
@@ -76,7 +77,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
 
         {/* Skills in sidebar */}
         {cv.sections.skills && cv.sections.skills.length > 0 && (
-          <div className="mt-8">
+          <div className="mt-8 break-inside-avoid">
             <h2 className="text-sm font-bold uppercase tracking-wider text-indigo-900 mb-3 pb-1 border-b-2 border-indigo-100">
               {t('resumes.builder.preview.sections.skills')}
             </h2>
@@ -96,7 +97,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
       <div className="flex-1 p-[15mm]">
         {/* Summary */}
         {cv.sections.summary && cv.sections.summary.length > 0 && (
-          <section className="mb-8">
+          <section className="mb-8 break-inside-avoid">
             <h2 className="text-sm font-bold uppercase tracking-wider text-indigo-900 mb-3 pb-1 border-b-2 border-indigo-100">
               {t('resumes.builder.preview.sections.summary')}
             </h2>
@@ -114,7 +115,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
             </h2>
             <div className="space-y-6">
               {cv.sections.experience.map((exp, i) => (
-                <div key={i} className="relative pl-4 border-l-2 border-slate-200">
+                <div key={i} className="relative pl-4 border-l-2 border-slate-200 break-inside-avoid">
                   <div className="absolute w-2.5 h-2.5 bg-indigo-400 rounded-full -left-[6px] top-1.5 border-2 border-white"></div>
                   <div className="flex justify-between items-baseline mb-1">
                     <div>
@@ -148,7 +149,7 @@ export function ModernTheme({ data }: ModernThemeProps) {
             </h2>
             <div className="space-y-5">
               {cv.sections.education.map((edu, i) => (
-                <div key={i} className="relative pl-4 border-l-2 border-slate-200">
+                <div key={i} className="relative pl-4 border-l-2 border-slate-200 break-inside-avoid">
                   <div className="absolute w-2.5 h-2.5 bg-indigo-400 rounded-full -left-[6px] top-1.5 border-2 border-white"></div>
                   <div className="font-bold text-slate-900">{edu.degree} {t('resumes.builder.preview.themeLabels.in')} {edu.area}</div>
                   <div className="text-sm text-indigo-700 font-medium mb-1">{edu.institution}</div>
@@ -164,13 +165,12 @@ export function ModernTheme({ data }: ModernThemeProps) {
 
         {/* Custom Sections */}
         {cv.sections.custom && Object.entries(cv.sections.custom).map(([title, items], i) => (
-          <section key={i} className="mb-8">
+          <section key={i} className="mb-8 break-inside-avoid">
             <h2 className="text-sm font-bold uppercase tracking-wider text-indigo-900 mb-3 pb-1 border-b-2 border-indigo-100">
-              {title}
+              {items.title}
             </h2>
             <div className="pl-4 border-l-2 border-slate-200 relative">
-              <div className="absolute w-2.5 h-2.5 bg-indigo-400 rounded-full -left-[6px] top-1.5 border-2 border-white"></div>
-              <div className="font-bold text-slate-800 mb-2">{items.title}</div>
+              {/* <div className="absolute w-2.5 h-2.5 bg-indigo-400 rounded-full -left-[6px] top-1.5 border-2 border-white"></div> */}
               <ul className="list-disc list-outside ml-4 space-y-1">
                 {items.content.map((item, index) => (
                   <li key={index} className="text-[13px] leading-relaxed text-slate-600 pl-1">

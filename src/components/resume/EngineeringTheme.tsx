@@ -50,7 +50,7 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
 
       {/* Summary */}
       {cv.sections.summary && cv.sections.summary.length > 0 && (
-        <section className="mb-4">
+        <section className="mb-4 break-inside-avoid">
           <p className="text-sm leading-tight">
             {cv.sections.summary[0]}
           </p>
@@ -59,7 +59,7 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
 
       {/* Skills (Engineering standard usually puts skills near top) */}
       {cv.sections.skills && cv.sections.skills.length > 0 && (
-        <section className="mb-4 mt-2">
+        <section className="mb-4 mt-2 break-inside-avoid">
           <h2 className="text-sm font-bold uppercase border-b-2 border-black mb-2">
             {t('resumes.builder.preview.sections.skills')}
           </h2>
@@ -81,7 +81,7 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
         </h2>
         <div className="space-y-3">
           {cv.sections.experience.map((exp, i) => (
-            <div key={i}>
+            <div key={i} className="break-inside-avoid">
               <div className="flex justify-between items-baseline">
                 <span className="font-bold text-sm">{exp.company} — {exp.position}</span>
                 <span className="text-sm">{exp.start_date} – {exp.end_date}</span>
@@ -108,7 +108,7 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
         </h2>
         <div className="space-y-2">
           {cv.sections.education.map((edu, i) => (
-            <div key={i} className="flex justify-between items-baseline">
+            <div key={i} className="flex justify-between items-baseline break-inside-avoid">
               <div>
                 <span className="font-bold text-sm">{edu.institution}</span>
                 <span className="mx-2">—</span>
@@ -124,11 +124,10 @@ export function EngineeringTheme({ data }: EngineeringThemeProps) {
 
       {/* Custom Sections */}
       {cv.sections.custom && Object.entries(cv.sections.custom).map(([title, items], i) => (
-        <section key={i} className="mb-4">
+        <section key={i} className="mb-4 break-inside-avoid">
           <h2 className="text-sm font-bold uppercase border-b-2 border-black mb-2 mt-2">
-            {title}
+            {items.title}
           </h2>
-          <div className="font-bold text-sm mb-1">{items.title}</div>
           <ul className="list-disc list-outside ml-4 space-y-0.5">
             {items.content.map((item, index) => (
               <li key={index} className="text-[13px] leading-tight pl-1">
