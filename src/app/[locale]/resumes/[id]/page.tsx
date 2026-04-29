@@ -34,6 +34,7 @@ import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useTranslations } from "next-intl";
+import GradeCircleComponent from "@/components/resume/GradeCircleComponent";
 
 const initialResumeValue: ResumeDetailResponse = {
   resume: {
@@ -334,7 +335,7 @@ export default function ResumeDetailPage() {
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
                       {t('resumeDetail.score.title')}
                     </span>
-                    <div className="relative flex items-center justify-center">
+                    {/* <div className="relative flex items-center justify-center">
                       <svg className="w-32 h-32 transform -rotate-90">
                         <circle
                           className="text-slate-100"
@@ -362,7 +363,8 @@ export default function ResumeDetailPage() {
                       <div className="absolute flex flex-col items-center">
                         <span className="text-4xl font-extrabold text-slate-900">{score}/10</span>
                       </div>
-                    </div>
+                    </div> */}
+                    <GradeCircleComponent score={score} />
                     <p className="mt-4 text-sm text-slate-600 font-medium">
                       {score >= 8 ? t('resumeDetail.score.excellentMatch') : score >= 6 ? t('resumeDetail.score.goodPotential') : t('resumeDetail.score.significantGaps')}
                     </p>

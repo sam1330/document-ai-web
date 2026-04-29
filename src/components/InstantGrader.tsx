@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/24/outline'
 import api from '@/lib/api'
 import toast from 'react-hot-toast'
+import GradeCircleComponent from './resume/GradeCircleComponent'
 
 type GraderState = 'idle' | 'loading' | 'result' | 'error'
 interface GraderResult { atsScore: number; tip: string }
@@ -122,14 +123,14 @@ export default function InstantGrader() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="text-center">
                       <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{t('yourScore')}</p>
-                      <div className="relative inline-flex">
+                      {/* <div className="relative inline-flex">
                         <svg className="w-40 h-40 transform -rotate-90">
                           <circle strokeWidth="8" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className="text-slate-100" />
                           <circle strokeWidth="8" strokeDasharray={389.6} strokeDashoffset={389.6 - (389.6 * result.atsScore) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className={scoreColor + ' transition-all duration-1000'} />
                         </svg>
                         <span className={`absolute inset-0 flex items-center justify-center text-5xl font-black ${scoreColor}`}>{result.atsScore}</span>
-                      </div>
-                      <p className="text-sm text-slate-500 mt-3 font-medium">out of 10</p>
+                      </div> */}
+                      <GradeCircleComponent score={result.atsScore} />
                     </div>
                     <div className="space-y-6">
                       <div className="p-6 bg-amber-50 border border-amber-100 rounded-2xl">
