@@ -349,7 +349,13 @@
     "applications": "Solicitudes de Empleo",
     "settings": "Ajustes",
     "signOut": "Cerrar Sesión",
-    "creditsAvailable": "Créditos Disponibles"
+    "creditsAvailable": "Créditos Disponibles",
+    "buyCredits": "Comprar Créditos"
+  },
+  "buyCredits": {
+    "modalTitle": "Comprar Créditos",
+    "modalSubtitle": "Recarga tu saldo al instante. Elige el paquete que mejor se adapte a ti.",
+    "disclaimer": "Los créditos comprados nunca expiran mientras tu cuenta permanezca activa."
   },
   "common": {
     "and": "y",
@@ -479,6 +485,7 @@
           "custom": "Secciones Personalizadas"
         },
         "fields": {
+          "documentName": "Nombre del Documento",
           "fullName": "Nombre Completo",
           "location": "Ubicación",
           "email": "Correo Electrónico",
@@ -502,6 +509,7 @@
           "username": "Usuario"
         },
         "placeholders": {
+          "documentName": "mi-resumen",
           "fullName": "Juan Pérez",
           "location": "Ciudad, País",
           "email": "juan@example.com",
@@ -736,8 +744,8 @@
       "addCredits": "Agregar Créditos",
       "packages": {
         "starter": "Inicial",
-        "grow": "Crecimiento",
-        "power": "Potencia",
+        "professional": "Profesional",
+        "business": "Negocio",
         "recommended": "Recomendado"
       },
       "recentActivity": "Actividad Reciente"

@@ -2,32 +2,41 @@
 
 import { useState, Suspense } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import { EnvelopeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Input, Button } from '@/components/ui'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 interface ForgotPasswordForm {
   email: string
 }
 
 function ForgotPasswordContent() {
+  const t = useTranslations('auth.forgotPasswordPage')
   const { requestPasswordReset } = useAuth()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ForgotPasswordForm>()
 
   const onSubmit = async (data: ForgotPasswordForm) => {
     try {
-      await requestPasswordReset(data.email)
+      let recaptchaToken = ''
+      if (executeRecaptcha) {
+        recaptchaToken = await executeRecaptcha('login')
+      }
+
+      await requestPasswordReset(data.email, recaptchaToken)
       setSubmittedEmail(data.email)
       setIsSubmitted(true)
-      toast.success('Password reset email sent! Check your inbox.')
+      toast.success(t('successToast'))
     } catch (error: any) {
       const message = error.response?.data?.message || error.response?.data?.error
-      toast.error(message || 'Failed to send password reset email')
+      toast.error(message || t('errorToast'))
     }
   }
 
@@ -40,10 +49,14 @@ function ForgotPasswordContent() {
               <EnvelopeIcon className="h-10 w-10 text-green-600" aria-hidden="true" />
             </div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Check your email
+              {t('checkEmail')}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              We sent a password reset link to <span className="font-medium text-gray-900">{submittedEmail}</span>.
+              {t.rich('weSentLink', {
+                email: () => (
+                  <span className="font-medium text-gray-900">{submittedEmail}</span>
+                ),
+              })}
             </p>
           </div>
 
@@ -51,11 +64,11 @@ function ForgotPasswordContent() {
             <div className="space-y-6">
               <div className="text-sm text-gray-600 space-y-3">
                 <p>
-                  Click the link in the email to reset your password. The link will expire in 1 hour.
+                  {t('clickLink')}
                 </p>
                 <ul className="list-disc list-inside text-gray-500 space-y-1">
-                  <li>Check your spam folder</li>
-                  <li>Didn't receive it? Try again below</li>
+                  <li>{t('checkSpam')}</li>
+                  <li>{t('didntReceive')}</li>
                 </ul>
               </div>
 
@@ -66,13 +79,13 @@ function ForgotPasswordContent() {
                   onClick={() => setIsSubmitted(false)}
                   className="w-full"
                 >
-                  Resend reset email
+                  {t('resendButton')}
                 </Button>
 
                 <Link href="/login">
                   <Button variant="outline" size="lg" className="w-full">
                     <ArrowLeftIcon className="h-4 w-4 mr-2" />
-                    Back to sign in
+                    {t('backToSignIn')}
                   </Button>
                 </Link>
               </div>
@@ -91,10 +104,10 @@ function ForgotPasswordContent() {
             <EnvelopeIcon className="h-10 w-10 text-indigo-600" aria-hidden="true" />
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Forgot your password?
+            {t('title')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Enter your email and we'll send you a link to reset your password.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -102,15 +115,15 @@ function ForgotPasswordContent() {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
               {...register('email', {
-                required: 'Email is required',
+                required: t('emailRequired'),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
+                  message: t('invalidEmail')
                 }
               })}
               type="email"
-              label="Email address"
-              placeholder="Enter your email"
+              label={t('emailLabel')}
+              placeholder={t('emailPlaceholder')}
               leftIcon={<EnvelopeIcon />}
               error={errors.email?.message}
               autoComplete="email"
@@ -123,7 +136,7 @@ function ForgotPasswordContent() {
               loading={isSubmitting}
               className="w-full"
             >
-              {isSubmitting ? 'Sending...' : 'Send reset link'}
+              {isSubmitting ? t('sending') : t('sendLinkButton')}
             </Button>
 
             <div className="pt-4 border-t border-gray-200">
@@ -132,7 +145,7 @@ function ForgotPasswordContent() {
                 className="flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
-                Back to sign in
+                {t('backToSignIn')}
               </Link>
             </div>
           </form>

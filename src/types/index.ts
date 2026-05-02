@@ -41,7 +41,7 @@ export interface Analysis {
     atsScore: number
     strongPoints: string[]
     weaknesses: string[]
-    recruiterPerspective?: string[]
+    recruiter_perspective?: string[]
   }
   created_at: string
 }

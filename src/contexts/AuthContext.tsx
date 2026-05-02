@@ -80,8 +80,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
-    setUser(null)
+    const response = api.post('/api/auth/logout');
+
+    response.then(() => {
+      localStorage.removeItem('token')
+      setUser(null)
+    });
   }
 
   const updateProfile = async (data: Partial<User>) => {

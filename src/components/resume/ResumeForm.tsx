@@ -21,6 +21,7 @@ import {
   AcademicCapIcon,
   WrenchScrewdriverIcon,
   PuzzlePieceIcon,
+  DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
@@ -28,22 +29,35 @@ import { SOCIAL_NETWORKS } from '@/types/resume'
 
 export function ResumeForm() {
   const t = useTranslations()
-  const { data: storeData, setData: setStoreData } = useResumeStore()
+  const externalVersion = useResumeStore(s => s.externalVersion)
+  const setDataFromForm = useResumeStore(s => s.setDataFromForm)
 
-  const { register, control, handleSubmit, watch, reset, getValues, setValue, formState: { errors } } = useForm<ResumeData>({
+  const { register, control, watch, reset, getValues, setValue, formState: { errors } } = useForm<ResumeData>({
     resolver: zodResolver(getResumeSchema(t)) as any,
-    values: storeData
+    // defaultValues initializes the form once on mount — does NOT reset on re-renders
+    defaultValues: useResumeStore.getState().data,
   })
 
-  // Sync form changes to the store using a subscription
+  // Form → Store: push every form change to the store for the live preview.
+  // Uses setDataFromForm so it does NOT bump externalVersion (prevents re-initializing the form).
   useEffect(() => {
     const subscription = watch((value) => {
-      if (value) {
-        setStoreData(value as ResumeData)
-      }
+      if (value) setDataFromForm(value as ResumeData)
     })
     return () => subscription.unsubscribe()
-  }, [watch, setStoreData])
+  }, [watch, setDataFromForm])
+
+  // Store → Form: reset the form only when an external update arrives
+  // (resume load, AI optimization). Skips the initial mount since defaultValues already
+  // captured the correct data.
+  const isFirstRender = React.useRef(true)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    reset(useResumeStore.getState().data)
+  }, [externalVersion]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Field arrays
   const { fields: experienceFields, append: appendExperience, remove: removeExperience } = useFieldArray({
@@ -113,6 +127,27 @@ export function ResumeForm() {
   return (
     <div className="space-y-6 pb-20">
       <Accordion type="single" collapsible defaultValue="personal-info" className="w-full space-y-4">
+
+        {/* Document name */}
+        <AccordionItem value="document-name" className="bg-white rounded-2xl border border-slate-200 px-6 shadow-sm">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-indigo-50 rounded-xl">
+                <DocumentDuplicateIcon className="h-5 w-5 text-indigo-600" />
+              </div>
+              <span className="text-lg">{t('resumes.builder.form.fields.documentName')}</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="space-y-6">
+            <div className="w-full">
+              <Input
+              {...register("original_filename")}
+              placeholder={t('resumes.builder.form.placeholders.documentName')}
+              error={errors.original_filename?.message}
+            />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
         {/* Personal Info */}
         <AccordionItem value="personal-info" className="bg-white rounded-2xl border border-slate-200 px-6 shadow-sm">
@@ -325,7 +360,7 @@ export function ResumeForm() {
                         {...register(`cv.sections.experience.${index}.highlights.${hIndex}`)}
                       />
                       <div className="absolute bottom-3 right-3 flex items-center space-x-2 opacity-0 group-hover/bullet:opacity-100 transition-all">
-                        <button
+                        {/* <button
                           type="button"
                           disabled={enhancingIndex?.section === index && enhancingIndex?.highlight === hIndex}
                           onClick={() => handleEnhance(index, hIndex)}
@@ -338,7 +373,7 @@ export function ResumeForm() {
                         >
                           <SparklesIcon className={cn("h-3 w-3", enhancingIndex?.section === index && enhancingIndex?.highlight === hIndex && "animate-spin")} />
                           <span>{t('resumes.builder.form.credits.oneCredit')}</span>
-                        </button>
+                        </button> */}
                         <button
                           type="button"
                           className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all"

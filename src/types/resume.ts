@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const getResumeSchema = (t: any) => z.object({
+  original_filename: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.documentName') })),
   cv: z.object({
     name: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.fullName') })),
     location: z.string().min(1, t('resumes.builder.form.validation.required', { field: t('resumes.builder.form.fields.location') })),
