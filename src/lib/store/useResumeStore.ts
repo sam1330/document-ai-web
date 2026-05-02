@@ -4,6 +4,7 @@ import set from 'lodash/set';
 import cloneDeep from 'lodash/cloneDeep';
 
 export const initialDefaultData: ResumeData = {
+  original_filename: "my-resume",
   cv: {
     name: "John Doe",
     location: "San Francisco, CA",
@@ -64,18 +65,24 @@ export const initialDefaultData: ResumeData = {
 
 interface ResumeState {
   data: ResumeData;
+  externalVersion: number;
   updateField: (path: string, value: any) => void;
   setData: (data: ResumeData) => void;
+  setDataFromForm: (data: ResumeData) => void;
   resetData: () => void;
 }
 
 export const useResumeStore = create<ResumeState>((setStore) => ({
   data: initialDefaultData,
+  externalVersion: 0,
   updateField: (path, value) => setStore((state) => {
     const newData = cloneDeep(state.data);
     set(newData, path, value);
     return { data: newData };
   }),
-  setData: (data) => setStore({ data }),
-  resetData: () => setStore({ data: initialDefaultData }),
+  // External update (load, optimize) — bumps version so the form knows to reset
+  setData: (data) => setStore((state) => ({ data, externalVersion: state.externalVersion + 1 })),
+  // Internal update from the form's watch — updates store for live preview without bumping version
+  setDataFromForm: (data) => setStore({ data }),
+  resetData: () => setStore({ data: initialDefaultData, externalVersion: 0 }),
 }));

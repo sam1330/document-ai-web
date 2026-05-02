@@ -279,8 +279,8 @@ export default function ProfilePage() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           {[
                             { name: t('profile.credits.packages.starter'), price: '$10', tokens: '100', color: 'indigo', planName: 'starter' },
-                            { name: t('profile.credits.packages.grow'), price: '$20', tokens: '200', color: 'violet', planName: 'grow', recommended: true },
-                            { name: t('profile.credits.packages.power'), price: '$50', tokens: '500', color: 'slate', planName: 'power' },
+                            { name: t('profile.credits.packages.professional'), price: '$20', tokens: '250', color: 'violet', planName: 'professional', recommended: true },
+                            { name: t('profile.credits.packages.business'), price: '$50', tokens: '650', color: 'slate', planName: 'business' },
                           ].map((pkg) => (
                             <div key={pkg.name} onClick={() => handleAddCreditsClick(pkg.planName)} className={`relative p-6 rounded-3xl border-2 transition-all group cursor-pointer hover:shadow-xl ${pkg.recommended ? 'border-indigo-600 bg-indigo-50/30' : 'border-slate-100 hover:border-indigo-200'}`}>
                               {pkg.recommended && (

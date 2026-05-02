@@ -25,7 +25,10 @@ export default function ResumeBuilderEditPage() {
         const resumeData = response.data.resume
 
         if (resumeData && resumeData.metadata) {
-          setData(resumeData.metadata)
+          setData({
+            original_filename: resumeData.original_filename,
+            ...resumeData.metadata
+          })
         } else {
           toast.error(t('resumes.builder.toasts.invalidData'))
         }

@@ -349,7 +349,13 @@
     "applications": "Applications",
     "settings": "Settings",
     "signOut": "Sign out",
-    "creditsAvailable": "Credits Available"
+    "creditsAvailable": "Credits Available",
+    "buyCredits": "Buy Credits"
+  },
+  "buyCredits": {
+    "modalTitle": "Buy Credits",
+    "modalSubtitle": "Top up your balance instantly. Pick the package that suits you.",
+    "disclaimer": "Purchased credits never expire as long as your account remains active."
   },
   "common": {
     "and": "and",
@@ -434,6 +440,22 @@
       "template": "Template",
       "scale": "Scale",
       "fitToWidth": "Fit to Width",
+      "optimize": {
+        "button": "Optimize Resume",
+        "modal": {
+          "title": "Optimize Resume",
+          "subtitle": "Tailor your resume to a specific job description.",
+          "cancel": "Cancel",
+          "button": "Optimize",
+          "role": "Target Role",
+          "rolePlaceholder": "e.g. Senior Software Engineer",
+          "company": "Target Company",
+          "companyPlaceholder": "e.g. Google",
+          "jobDescription": "Job Description",
+          "jobDescriptionPlaceholder": "Paste the job description here...",
+          "jobDescriptionHint": "Paste the job description below to tailor the AI analysis to this specific role."
+        }
+      },
       "toasts": {
         "generatingPDF": "Generating your premium PDF...",
         "downloadSuccess": "Resume downloaded successfully!",
@@ -463,6 +485,7 @@
           "custom": "Custom Sections"
         },
         "fields": {
+          "documentName": "Document Name",
           "fullName": "Full Name",
           "location": "Location",
           "email": "Email",
@@ -486,6 +509,7 @@
           "username": "Username"
         },
         "placeholders": {
+          "documentName": "my-resume",
           "fullName": "John Doe",
           "location": "City, Country",
           "email": "john@example.com",
@@ -720,8 +744,8 @@
       "addCredits": "Add Credits",
       "packages": {
         "starter": "Starter",
-        "grow": "Grow",
-        "power": "Power",
+        "professional": "Professional",
+        "business": "Business",
         "recommended": "Recommended"
       },
       "recentActivity": "Recent Activity"

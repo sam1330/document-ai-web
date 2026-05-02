@@ -48,8 +48,12 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
 
     try {
       const payload = {
-        original_filename: `${data.cv.name.replace(/\s+/g, "-").toLowerCase()}-resume`,
-        metadata: data,
+        original_filename: data.original_filename || `${data.cv.name.replace(/\s+/g, "-").toLowerCase()}-resume`,
+        metadata: {
+          cv: data.cv,
+          design: data.design,
+          locale: data.locale
+        },
       };
 
       if (resumeId) {
@@ -108,7 +112,7 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
       link.href = url;
       link.setAttribute(
         "download",
-        `haku-resume-${data.cv.name.replace(/\s+/g, "-").toLowerCase()}.pdf`,
+        data?.original_filename?.toLowerCase()?.split(" ").join("-") || `haku-resume-${data.cv.name.replace(/\s+/g, "-").toLowerCase()}.pdf`,
       );
       document.body.appendChild(link);
       link.click();
@@ -169,22 +173,25 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
       <Navigation />
 
       {/* Top Sticky Toolbar */}
-      <div className="h-16 border-b border-slate-200/60 px-4 md:px-6 flex items-center justify-between bg-white/80 backdrop-blur-md z-20">
-        <div className="flex items-center space-x-3 md:space-x-6">
-          <div className="flex items-center space-x-2.5">
-            <div className="p-1.5 bg-indigo-600 rounded-lg shadow-sm shrink-0 hidden lg:block">
+      <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-md z-20">
+        {/* Row 1: Brand + Actions */}
+        <div className="h-14 px-3 sm:px-4 md:px-6 flex items-center justify-between gap-2">
+          {/* Brand */}
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="p-1.5 bg-indigo-600 rounded-lg shadow-sm shrink-0">
               <SparklesIcon className="h-4 w-4 text-white" />
             </div>
-            <h1 className="text-lg font-black tracking-tight text-slate-900 hidden lg:block">
+            <h1 className="text-sm font-black tracking-tight text-slate-900 truncate max-w-[100px] sm:max-w-[180px] md:max-w-xs">
               {t("resumes.builder.title")}
             </h1>
           </div>
 
-          <nav className="flex items-center bg-slate-100 p-1 rounded-xl shrink-0">
+          {/* On large screens, show nav inline here */}
+          <nav className="hidden lg:flex items-center bg-slate-100 p-1 rounded-xl shrink-0">
             <button
               onClick={() => setActiveTab("content")}
               className={cn(
-                "px-3 md:px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
                 activeTab === "content"
                   ? "bg-white text-indigo-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-900",
@@ -195,7 +202,91 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
             <button
               onClick={() => setActiveTab("design")}
               className={cn(
-                "px-3 md:px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                activeTab === "design"
+                  ? "bg-white text-indigo-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900",
+              )}
+            >
+              {t("resumes.builder.designText")}
+            </button>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            {resumeId && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleDelete}
+                loading={deleting}
+                className="rounded-xl border-slate-200 font-bold px-2 sm:px-3 shrink-0 text-rose-600 hover:bg-rose-50"
+                title={t("resumes.actions.delete")}
+              >
+                <TrashIcon className="h-4 w-4 md:mr-2" />
+                <span className="hidden md:inline">
+                  {t("resumes.actions.delete") || "Delete"}
+                </span>
+              </Button>
+            )}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleDownloadPDF}
+              loading={exporting}
+              className="rounded-xl border-slate-200 font-bold px-2 sm:px-3 shrink-0"
+              title={t("resumes.builder.downloadPDF")}
+            >
+              <ArrowDownTrayIcon className="h-4 w-4 md:mr-2" />
+              <span className="hidden md:inline">
+                {t("resumes.builder.downloadPDF")}
+              </span>
+            </Button>
+            {resumeId && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setIsOptimizeModalOpen(true)}
+                className="rounded-xl border-indigo-200 bg-indigo-50/50 text-indigo-700 font-bold px-2 sm:px-3 shrink-0 hover:bg-indigo-100 hover:border-indigo-300"
+                title={t("resumes.builder.optimize.button")}
+              >
+                <SparklesIcon className="h-4 w-4 md:mr-2" />
+                <span className="hidden md:inline">
+                  {t("resumes.builder.optimize.button")}
+                </span>
+              </Button>
+            )}
+            <Button
+              size="sm"
+              onClick={handleSave}
+              loading={saving}
+              className="rounded-xl font-bold px-2 sm:px-3 shrink-0"
+              title={t("common.saveChanges")}
+            >
+              <PencilSquareIcon className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">{t("common.saveChanges")}</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Row 2: Nav tabs — only visible below lg */}
+        <div className="lg:hidden border-t border-slate-100 px-3 sm:px-4 h-10 flex items-center gap-1">
+          <nav className="flex items-center bg-slate-100 p-1 rounded-xl">
+            <button
+              onClick={() => setActiveTab("content")}
+              className={cn(
+                "px-3 py-1 text-xs font-bold rounded-lg transition-all whitespace-nowrap",
+                activeTab === "content"
+                  ? "bg-white text-indigo-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900",
+              )}
+            >
+              {t("resumes.builder.content")}
+            </button>
+            <button
+              onClick={() => setActiveTab("design")}
+              className={cn(
+                "px-3 py-1 text-xs font-bold rounded-lg transition-all whitespace-nowrap",
                 activeTab === "design"
                   ? "bg-white text-indigo-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-900",
@@ -206,7 +297,7 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
             <button
               onClick={() => setActiveTab("preview")}
               className={cn(
-                "lg:hidden px-3 md:px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                "px-3 py-1 text-xs font-bold rounded-lg transition-all whitespace-nowrap",
                 activeTab === "preview"
                   ? "bg-white text-indigo-600 shadow-sm"
                   : "text-slate-500 hover:text-slate-900",
@@ -215,60 +306,6 @@ export default function ResumeBuilder({ resumeId }: ResumeBuilderProps) {
               {t("resumes.builder.previewText")}
             </button>
           </nav>
-        </div>
-
-        <div className="flex items-center space-x-2 md:space-x-3">
-          {resumeId && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleDelete}
-              loading={deleting}
-              leftIcon={<TrashIcon className="h-4 w-4" />}
-              className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0 text-rose-600 hover:bg-rose-50"
-            >
-              <span className="hidden sm:inline">
-                {t("resumes.actions.delete") || "Delete"}
-              </span>
-            </Button>
-          )}
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handleDownloadPDF}
-            loading={exporting}
-            leftIcon={<ArrowDownTrayIcon className="h-4 w-4" />}
-            className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0"
-          >
-            <span className="hidden sm:inline">
-              {t("resumes.builder.downloadPDF")}
-            </span>
-            <span className="sm:hidden text-[10px]">
-              {t("resumes.fileType.pdf")}
-            </span>
-          </Button>
-          {resumeId && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setIsOptimizeModalOpen(true)}
-              leftIcon={<SparklesIcon className="h-4 w-4" />}
-              className="rounded-xl border-indigo-200 bg-indigo-50/50 text-indigo-700 font-bold px-3 md:px-4 shrink-0 hover:bg-indigo-100 hover:border-indigo-300"
-            >
-              <span className="hidden sm:inline">
-                {t("resumes.builder.optimize.button")}
-              </span>
-            </Button>
-          )}
-          <Button
-            size="sm"
-            onClick={handleSave}
-            loading={saving}
-            className="rounded-xl border-slate-200 font-bold px-3 md:px-4 shrink-0"
-            leftIcon={<PencilSquareIcon className="h-4 w-4" />}
-          >
-            <span className="hidden sm:inline">{t("common.saveChanges")}</span>
-          </Button>
         </div>
       </div>
 

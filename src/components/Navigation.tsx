@@ -15,6 +15,7 @@ import {
   ArrowRightOnRectangleIcon,
   BellIcon,
   SparklesIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 import {
   Menu,
@@ -27,10 +28,12 @@ import CreditsService from "@/services/credits";
 import { useCredits } from "@/contexts/CreditContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslations } from "next-intl";
+import BuyCreditsModal from "./BuyCreditsModal";
 
 export default function Navigation() {
   const t = useTranslations();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [buyCreditsOpen, setBuyCreditsOpen] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -149,6 +152,18 @@ export default function Navigation() {
                   <MenuItem>
                     {({ focus }) => (
                       <button
+                        onClick={() => setBuyCreditsOpen(true)}
+                        className={`${focus ? "bg-indigo-50 text-indigo-700" : "text-slate-600"
+                          } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
+                      >
+                        <WalletIcon className="mr-3 h-5 w-5 opacity-70" />
+                        {t("navigation.buyCredits")}
+                      </button>
+                    )}
+                  </MenuItem>
+                  <MenuItem>
+                    {({ focus }) => (
+                      <button
                         onClick={handleLogout}
                         className={`${focus ? "bg-rose-50 text-rose-700" : "text-slate-600"
                           } flex w-full cursor-pointer items-center px-3 py-2 text-left text-sm font-semibold rounded-xl transition-colors mt-1`}
@@ -234,18 +249,29 @@ export default function Navigation() {
                 className="flex items-center justify-center px-4 py-2 text-sm font-bold text-slate-700 bg-white border border-slate-200 rounded-xl shadow-sm hover:bg-slate-50 transition-all"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Settings
+                {t("navigation.settings")}
               </Link>
               <button
                 onClick={handleLogout}
                 className="flex items-center justify-center px-4 py-2 text-sm font-bold text-rose-700 bg-rose-50 rounded-xl hover:bg-rose-100 transition-all"
               >
-                Sign out
+                {t("navigation.signOut")}
+              </button>
+            </div>
+            <div className="px-2 mt-2">
+              <button
+                onClick={() => { setMobileMenuOpen(false); setBuyCreditsOpen(true); }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl hover:bg-indigo-100 transition-all"
+              >
+                <WalletIcon className="h-4 w-4" />
+                {t("navigation.buyCredits")}
               </button>
             </div>
           </div>
         </div>
       </Transition>
+
+      <BuyCreditsModal isOpen={buyCreditsOpen} onClose={() => setBuyCreditsOpen(false)} />
     </nav>
   );
 }

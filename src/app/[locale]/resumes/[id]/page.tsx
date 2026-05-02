@@ -322,7 +322,7 @@ export default function ResumeDetailPage() {
                 </div>
 
                 {/* Recruiter Feedback – Hiring Manager Lens */}
-                <RecruiterFeedbackCard feedback={analysisData?.recruiterPerspective} />
+                {/* <RecruiterFeedbackCard feedback={analysisData?.recruiter_perspective} /> */}
 
               </div>
 
