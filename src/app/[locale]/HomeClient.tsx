@@ -14,6 +14,8 @@ import {
   CommandLineIcon,
   DocumentTextIcon,
   BriefcaseIcon,
+  BoltIcon,
+  DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -21,7 +23,6 @@ import RoadmapItem from '@/components/ui/RoadmapItem'
 import Footer from '@/components/Footer'
 import Faq from '@/components/Faq'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { CreditUtilityGuide } from '@/components/ui'
 import InstantGrader from '@/components/InstantGrader'
 import PlaywrightGuarantee from '@/components/PlaywrightGuarantee'
 
@@ -264,22 +265,37 @@ export default function HomeClient() {
                 </Link>
               </div>
               <div className="p-12 lg:p-16 flex flex-col justify-center items-center lg:items-start text-center lg:text-left bg-white border-l border-slate-100">
-                <div className="mb-8">
+                <div className="mb-6">
                   <span className="text-indigo-600 font-bold uppercase tracking-widest text-sm">{t('landing.pricing.transparencyFirst')}</span>
-                  <p className="text-4xl font-black text-slate-900 mt-2">{t('landing.pricing.intelligenceOnDemand')}</p>
+                  <p className="text-3xl font-black text-slate-900 mt-2">{t('landing.pricing.intelligenceOnDemand')}</p>
+                  <p className="text-slate-500 text-sm mt-2 leading-relaxed">{t('landing.pricing.creditSystem.description')}</p>
                 </div>
-                <div className="space-y-6 w-full">
-                  <div className="p-6 rounded-2xl bg-indigo-50 border border-indigo-100 text-left">
-                    <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-2">{t('landing.pricing.tokenSystem.title')}</p>
-                    <p className="text-slate-700 text-sm leading-relaxed">
-                      {t('landing.pricing.tokenSystem.description')}
-                    </p>
-                    <div className="mt-4">
-                      <CreditUtilityGuide />
+                <div className="space-y-5 w-full">
+                  {/* Credit cost grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 text-left">
+                      <SparklesIcon className="h-5 w-5 text-indigo-600 mb-2" />
+                      <p className="text-xs font-semibold text-slate-600 leading-tight mb-2">{t('landing.pricing.creditGuide.resumeOptimization')}</p>
+                      <p className="text-2xl font-black text-indigo-600">15 <span className="text-sm font-bold">cr.</span></p>
                     </div>
+                    <div className="bg-violet-50 border border-violet-100 rounded-2xl p-4 text-left">
+                      <DocumentMagnifyingGlassIcon className="h-5 w-5 text-violet-600 mb-2" />
+                      <p className="text-xs font-semibold text-slate-600 leading-tight mb-2">{t('landing.pricing.creditGuide.resumeAnalysis')}</p>
+                      <p className="text-2xl font-black text-violet-600">10 <span className="text-sm font-bold">cr.</span></p>
+                    </div>
+                    <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-left">
+                      <DocumentTextIcon className="h-5 w-5 text-emerald-600 mb-2" />
+                      <p className="text-xs font-semibold text-slate-600 leading-tight mb-2">{t('landing.pricing.creditGuide.coverLetter')}</p>
+                      <p className="text-2xl font-black text-emerald-600">5 <span className="text-sm font-bold">cr.</span></p>
+                    </div>
+                    {/* <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-left">
+                      <BoltIcon className="h-5 w-5 text-amber-600 mb-2" />
+                      <p className="text-xs font-semibold text-slate-600 leading-tight mb-2">{t('landing.pricing.creditGuide.bulletEnhance')}</p>
+                      <p className="text-2xl font-black text-amber-600">1 <span className="text-sm font-bold">cr.</span></p>
+                    </div> */}
                   </div>
                   <div className="flex items-center space-x-4">
-                    <div className="h-14 w-14 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                    <div className="h-14 w-14 bg-emerald-50 rounded-2xl flex items-center justify-center flex-shrink-0">
                       <SparklesIcon className="h-8 w-8 text-emerald-500" />
                     </div>
                     <div className="text-left">

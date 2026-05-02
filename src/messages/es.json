@@ -93,22 +93,26 @@
         "atsScoring": "Cartas de Presentación con IA"
       },
       "viewRates": "Crea una cuenta gratis para ver las tarifas detalladas",
-      "tokenSystem": {
-        "title": "Sistema de Tokens",
-        "description": "Cobramos según el consumo real de tokens. Pagas el costo directo del modelo con un pequeño margen de procesamiento. Transparencia total, control absoluto."
+      "creditSystem": {
+        "title": "Sistema de Créditos",
+        "description": "Cada tarea de IA cuesta una cantidad fija de créditos. Sin facturación variable, sin sorpresas — solo precios claros y transparentes que tú controlas."
       },
       "startFree": {
         "title": "Comienza gratis",
-        "description": "Cada usuario nuevo recibe 30 tokens de cortesía."
+        "description": "Cada usuario nuevo recibe 30 créditos de cortesía."
       },
       "transparencyFirst": "Transparencia Primero",
       "intelligenceOnDemand": "Inteligencia Bajo Demanda",
       "creditGuide": {
         "trigger": "¿Qué puedo hacer con los créditos?",
         "title": "Tasa de Cambio de Créditos",
+        "subtitle": "Créditos fijos por tarea de IA",
         "deepScan": "Análisis Profundo + Carta de Presentación",
+        "resumeAnalysis": "Análisis de CV",
         "coverLetter": "Solo Carta de Presentación",
-        "bulletEnhance": "Mejora de Punto IA"
+        "bulletEnhance": "Mejora de Punto IA",
+        "footerNote": "Los créditos no vencen · Sin cargos ocultos",
+        "resumeOptimization": "Optimización de CV"
       }
     },
     "roadmap": {

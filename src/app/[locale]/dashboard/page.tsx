@@ -170,7 +170,7 @@ export default function DashboardPage() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {stats.map((stat) => (
-              <div key={stat.name} className="relative group overflow-hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div key={stat.name} className="relative group bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
                 <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${stat.gradient} opacity-5 group-hover:opacity-10 transition-opacity rounded-bl-full`} />
                 <div className="flex items-center justify-between mb-4">
                   <div className={`p-3 bg-gradient-to-br ${stat.gradient} rounded-2xl shadow-lg shadow-indigo-100`}>
