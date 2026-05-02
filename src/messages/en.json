@@ -93,22 +93,26 @@
         "atsScoring": "AI-Powered Cover Letters"
       },
       "viewRates": "Create free account to view detailed rates",
-      "tokenSystem": {
-        "title": "Token System",
-        "description": "We charge based on actual token consumption. You pay the direct model cost with a small processing margin. Total transparency, absolute control."
+      "creditSystem": {
+        "title": "Credits System",
+        "description": "Each AI task costs a fixed number of credits. No variable billing, no surprises — just clear, transparent pricing you control."
       },
       "startFree": {
         "title": "Start for free",
-        "description": "Every new user gets 30 complimentary tokens."
+        "description": "Every new user gets 30 complimentary credits."
       },
       "transparencyFirst": "Transparency First",
       "intelligenceOnDemand": "Intelligence on Demand",
       "creditGuide": {
         "trigger": "What can I do with credits?",
         "title": "Credit Exchange Rate",
+        "subtitle": "Fixed credits per AI task",
         "deepScan": "Deep Scan + Cover Letter",
+        "resumeAnalysis": "Resume Analysis",
         "coverLetter": "Cover Letter only",
-        "bulletEnhance": "AI Bullet Enhancement"
+        "bulletEnhance": "AI Bullet Enhancement",
+        "footerNote": "Credits never expire · No hidden fees",
+        "resumeOptimization": "Resume Optimization"
       }
     },
     "roadmap": {
