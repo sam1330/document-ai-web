@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -24,11 +26,14 @@ import { Modal, Textarea, Button, Input } from "@/components/ui";
 import { useCredits } from "@/contexts/CreditContext";
 import { useTranslations } from "next-intl";
 import ResumeCard from "@/components/resume/ResumeCard";
+import { clearPendingResume, getPendingResume } from "@/lib/pendingResume";
 
-export default function ResumesPage() {
+function ResumesPageContent() {
   const t = useTranslations();
   const { user } = useAuth();
   const { getBalance } = useCredits();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [resumesLoading, setResumesLoading] = useState(true);
@@ -39,6 +44,7 @@ export default function ResumesPage() {
   const [targetRole, setTargetRole] = useState("");
   const [targetCompany, setTargetCompany] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
+  const [convertingId, setConvertingId] = useState<string | null>(null);
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
@@ -81,12 +87,8 @@ export default function ResumesPage() {
     }
   };
 
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  /** Uploads a resume and returns the new resume id, or null if it failed. */
+  const uploadResumeFile = async (file: File): Promise<string | null> => {
     // Validate file type
     const allowedTypes = [
       "application/pdf",
@@ -94,13 +96,13 @@ export default function ResumesPage() {
     ];
     if (!allowedTypes.includes(file.type)) {
       toast.error(t("resumes.upload.invalidType"));
-      return;
+      return null;
     }
 
     // Validate file size (10MB max)
     if (file.size > 10 * 1024 * 1024) {
       toast.error(t("resumes.upload.invalidSize"));
-      return;
+      return null;
     }
 
     setUploading(true);
@@ -108,19 +110,49 @@ export default function ResumesPage() {
     formData.append("resume", file);
 
     try {
-      await api.post("/api/resumes/upload", formData, {
+      const response = await api.post("/api/resumes/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       toast.success(t("resumes.upload.success"));
-      fetchResumes();
+      await fetchResumes();
+      return response.data?.resume?.id ?? null;
     } catch (error: any) {
       toast.error(error.response?.data?.message || t("resumes.upload.failed"));
+      return null;
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      await uploadResumeFile(file);
+    } finally {
       // Reset file input
       event.target.value = "";
+    }
+  };
+
+  const handleConvertToEditable = async (resumeId: string) => {
+    setConvertingId(resumeId);
+    try {
+      await api.post(`/api/resumes/${resumeId}/convert`);
+      toast.success(t("resumes.convert.success"));
+      getBalance();
+      router.push(`/resumes/builder/${resumeId}`);
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.message || error.response?.data?.error || t("resumes.convert.failed"),
+      );
+    } finally {
+      setConvertingId(null);
     }
   };
 
@@ -143,6 +175,42 @@ export default function ResumesPage() {
     setTargetCompany("");
     setIsAnalyzeModalOpen(true);
   };
+
+  // Entry points from the landing-page grader:
+  //   ?analyze=<id>    the resume was already uploaded, just open the modal
+  //   ?pending=grader  the PDF is waiting in IndexedDB, upload it then open the modal
+  // The ref guards against React StrictMode double-invoking the effect in dev,
+  // which would otherwise upload the same file twice.
+  const graderHandledRef = useRef(false);
+
+  useEffect(() => {
+    if (!user || graderHandledRef.current) return;
+
+    const analyzeId = searchParams.get("analyze");
+    const pending = searchParams.get("pending");
+    if (!analyzeId && pending !== "grader") return;
+
+    graderHandledRef.current = true;
+
+    const run = async () => {
+      if (analyzeId) {
+        handleAnalyzeClick(analyzeId);
+      } else {
+        const file = await getPendingResume();
+        if (!file) {
+          toast.error(t("resumes.grader.pendingNotFound"));
+        } else {
+          const resumeId = await uploadResumeFile(file);
+          await clearPendingResume();
+          if (resumeId) handleAnalyzeClick(resumeId);
+        }
+      }
+      // Strip the param so a refresh doesn't re-run this.
+      router.replace("/resumes");
+    };
+
+    run();
+  }, [user, searchParams]);
 
   const handleConfirmAnalyze = async () => {
     if (!selectedResumeId) return;
@@ -298,7 +366,16 @@ export default function ResumesPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredResumes.map((resume) => (
-                <ResumeCard key={resume.id} resume={resume} handleDeleteResume={handleDeleteResume} handleAnalyzeClick={handleAnalyzeClick} analyzing={analyzing} t={t} />
+                <ResumeCard
+                  key={resume.id}
+                  resume={resume}
+                  handleDeleteResume={handleDeleteResume}
+                  handleAnalyzeClick={handleAnalyzeClick}
+                  analyzing={analyzing}
+                  handleConvertToEditable={handleConvertToEditable}
+                  converting={convertingId === resume.id}
+                  t={t}
+                />
               ))}
             </div>
           )}
@@ -361,5 +438,13 @@ export default function ResumesPage() {
         </div>
       </Modal>
     </ProtectedRoute>
+  );
+}
+
+export default function ResumesPage() {
+  return (
+    <Suspense>
+      <ResumesPageContent />
+    </Suspense>
   );
 }

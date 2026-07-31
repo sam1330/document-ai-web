@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, DragEvent, ChangeEvent } from 'react'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -15,6 +14,9 @@ import {
 import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import GradeCircleComponent from './resume/GradeCircleComponent'
+import { useRouter } from '@/i18n/navigation'
+import { useAuth } from '@/contexts/AuthContext'
+import { savePendingResume } from '@/lib/pendingResume'
 
 type GraderState = 'idle' | 'loading' | 'result' | 'error'
 interface GraderResult { atsScore: number; tip: string }
@@ -24,13 +26,6 @@ const ENDPOINT_AVAILABLE = true
 
 
 async function callGradeEndpoint(file: File): Promise<GraderResult> {
-  // TODO implement real endpoint
-  // await new Promise((resolve) => setTimeout(resolve, 1500));
-  // return {
-  //   atsScore: Math.floor(Math.random() * 10) + 1,
-  //   tip: "This is a good resume, but it could be improved with more..." // TODO make it better
-  // }
-  console.log(file);
   const form = new FormData()
   form.append('resume', file)
   const res = await api.post('/api/resumes/public/grade', form, {
@@ -46,30 +41,63 @@ async function callGradeEndpoint(file: File): Promise<GraderResult> {
 
 export default function InstantGrader() {
   const t = useTranslations('landing.grader')
+  const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
   const [state, setState] = useState<GraderState>('idle')
   const [result, setResult] = useState<GraderResult | null>(null)
+  const [file, setFile] = useState<File | null>(null)
+  const [submitting, setSubmitting] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleFile = async (file?: File) => {
-    if (!file || file.type !== 'application/pdf' || file.size > 10 * 1024 * 1024) {
+  const handleFile = async (selected?: File) => {
+    if (!selected || selected.type !== 'application/pdf' || selected.size > 10 * 1024 * 1024) {
       toast.error(t('toasts.invalidFile')); return
     }
+    setFile(selected)
     if (!ENDPOINT_AVAILABLE) { setState('result'); setResult(null); return }
     setState('loading')
     try {
-      const data = await callGradeEndpoint(file)
+      const data = await callGradeEndpoint(selected)
       setResult(data); setState('result')
     } catch { setState('error') }
+  }
+
+  // Carries the graded PDF into the authenticated deep-analysis flow: signed-in
+  // users upload it straight away, everyone else stashes it until they have a token.
+  const handleUnlock = async () => {
+    if (authLoading || submitting || !file) return
+    setSubmitting(true)
+    try {
+      if (user) {
+        const form = new FormData()
+        form.append('resume', file)
+        const res = await api.post('/api/resumes/upload', form, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        const resumeId = res.data?.resume?.id
+        router.push(resumeId ? `/resumes?analyze=${resumeId}` : '/resumes')
+      } else {
+        await savePendingResume(file)
+        router.push('/register?next=grader')
+      }
+    } catch {
+      toast.error(t('toasts.uploadFailed'))
+      if (user) router.push('/resumes')
+      setSubmitting(false)
+    }
   }
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault(); setIsDragging(false); handleFile(e.dataTransfer.files[0])
   }
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => handleFile(e.target.files?.[0])
-  const reset = () => { setState('idle'); setResult(null); if (inputRef.current) inputRef.current.value = '' }
+  const reset = () => {
+    setState('idle'); setResult(null); setFile(null)
+    if (inputRef.current) inputRef.current.value = ''
+  }
 
-  const scoreColor = !result ? '' : result.atsScore >= 8 ? 'text-emerald-400' : result.atsScore >= 5 ? 'text-amber-400' : 'text-rose-400'
+  const ctaClasses = 'w-full py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group'
 
   return (
     <section id="instant-grader" className="py-24 lg:py-32" aria-labelledby="grader-heading">
@@ -123,13 +151,6 @@ export default function InstantGrader() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="text-center">
                       <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{t('yourScore')}</p>
-                      {/* <div className="relative inline-flex">
-                        <svg className="w-40 h-40 transform -rotate-90">
-                          <circle strokeWidth="8" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className="text-slate-100" />
-                          <circle strokeWidth="8" strokeDasharray={389.6} strokeDashoffset={389.6 - (389.6 * result.atsScore) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" className={scoreColor + ' transition-all duration-1000'} />
-                        </svg>
-                        <span className={`absolute inset-0 flex items-center justify-center text-5xl font-black ${scoreColor}`}>{result.atsScore}</span>
-                      </div> */}
                       <GradeCircleComponent score={result.atsScore} />
                     </div>
                     <div className="space-y-6">
@@ -140,11 +161,19 @@ export default function InstantGrader() {
                         </div>
                         <p className="text-slate-700 text-sm leading-relaxed">{result.tip}</p>
                       </div>
-                      <Link href="/register" className="w-full py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 group">
-                        {t('cta')}<ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
+                      <button onClick={handleUnlock} disabled={authLoading || submitting} className={ctaClasses}>
+                        {submitting ? (
+                          <>
+                            <SparklesIcon className="h-4 w-4 animate-pulse" />{t('unlocking')}
+                          </>
+                        ) : (
+                          <>
+                            {t('cta')}<ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </>
+                        )}
+                      </button>
                       <p className="text-xs text-center text-slate-400">{t('ctaSubtext')}</p>
-                      <button onClick={reset} className="w-full text-sm text-slate-400 hover:text-indigo-600 transition-colors font-medium">{t('uploadAnother')}</button>
+                      <button onClick={reset} disabled={submitting} className="w-full text-sm text-slate-400 hover:text-indigo-600 disabled:opacity-60 transition-colors font-medium">{t('uploadAnother')}</button>
                     </div>
                   </div>
                 ) : (
@@ -155,10 +184,18 @@ export default function InstantGrader() {
                     <h3 className="text-2xl font-black text-slate-900 mb-3">{t('comingSoon')}</h3>
                     <p className="text-slate-500 mb-8 max-w-sm mx-auto">{t('comingSoonSubtext')}</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      <Link href="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all group">
-                        {t('cta')}<ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                      <button onClick={reset} className="px-8 py-4 border border-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-50 transition-colors">{t('uploadAnother')}</button>
+                      <button onClick={handleUnlock} disabled={authLoading || submitting} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed transition-all group">
+                        {submitting ? (
+                          <>
+                            <SparklesIcon className="h-4 w-4 animate-pulse" />{t('unlocking')}
+                          </>
+                        ) : (
+                          <>
+                            {t('cta')}<ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </>
+                        )}
+                      </button>
+                      <button onClick={reset} disabled={submitting} className="px-8 py-4 border border-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-50 disabled:opacity-60 transition-colors">{t('uploadAnother')}</button>
                     </div>
                   </div>
                 )}

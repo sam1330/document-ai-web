@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, EnvelopeIcon, UserIcon } from '@heroicons/react/24/outline'
@@ -19,12 +19,14 @@ interface RegisterForm {
   confirmPassword: string
 }
 
-export default function RegisterClient() {
+function RegisterForm() {
   const t = useTranslations()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const { register: registerUser } = useAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next')
   const { executeRecaptcha } = useGoogleReCaptcha()
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<RegisterForm>()
 
@@ -45,7 +47,13 @@ export default function RegisterClient() {
         recaptcha_token: recaptchaToken,
       })
       toast.success(t('auth.accountCreatedSuccess'))
-      router.push(`/email-verification?email=${encodeURIComponent(data.email)}`)
+      if (next === 'grader') {
+        // register() already stored a token, so send them straight to the resume
+        // they graded on the landing page. They can verify their email later.
+        router.push('/resumes?pending=grader')
+      } else {
+        router.push(`/email-verification?email=${encodeURIComponent(data.email)}`)
+      }
     } catch (error: any) {
       const code = error.response?.data?.code
       if (code === 'USER_EXISTS') {
@@ -66,7 +74,7 @@ export default function RegisterClient() {
           <p className="mt-2 text-sm text-gray-600">
             {t('auth.getStartedWithHaku')}{' '}
             <Link
-              href="/login"
+              href={next ? `/login?next=${encodeURIComponent(next)}` : '/login'}
               className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
             >
               {t('auth.signInToExistingAccount')}
@@ -197,5 +205,13 @@ export default function RegisterClient() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function RegisterClient() {
+  return (
+    <Suspense>
+      <RegisterForm />
+    </Suspense>
   )
 }

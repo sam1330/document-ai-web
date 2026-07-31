@@ -145,8 +145,10 @@
       "comingSoon": "Instant Grader is launching soon!",
       "comingSoonSubtext": "Sign up now and be the first to know when it goes live.",
       "uploadAnother": "Grade another resume",
+      "unlocking": "Saving your resume...",
       "toasts": {
-        "invalidFile": "Invalid file. Please upload a valid PDF file."
+        "invalidFile": "Invalid file. Please upload a valid PDF file.",
+        "uploadFailed": "We couldn't save your resume. Please try again."
       }
     },
     "playwrightGuarantee": {
@@ -384,7 +386,12 @@
     },
     "actions": {
       "edit": "Update",
-      "delete": "Delete"
+      "delete": "Delete",
+      "makeEditable": "Make Editable"
+    },
+    "convert": {
+      "success": "Resume converted to an editable, themeable version!",
+      "failed": "Failed to convert resume"
     },
     "emptyState": {
       "title": "Build your Talent Library",
@@ -425,6 +432,9 @@
       "invalidType": "Please upload a PDF or DOCX file",
       "invalidSize": "File size must be less than 10MB"
     },
+    "grader": {
+      "pendingNotFound": "We couldn't find the resume you graded. Please upload it again."
+    },
     "delete": {
       "confirm": "Are you sure you want to delete this resume?",
       "success": "Resume deleted successfully!",
@@ -444,6 +454,12 @@
       "template": "Template",
       "scale": "Scale",
       "fitToWidth": "Fit to Width",
+      "convert": {
+        "title": "This resume isn't editable yet",
+        "subtitle": "Convert your uploaded resume into structured data so you can edit it and apply any of our themes.",
+        "button": "Make Editable",
+        "failed": "Failed to convert resume"
+      },
       "optimize": {
         "button": "Optimize Resume",
         "modal": {

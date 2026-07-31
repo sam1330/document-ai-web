@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { Button } from "../ui";
-import { DocumentTextIcon, EyeIcon, InformationCircleIcon, PencilIcon, SparklesIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { DocumentTextIcon, EyeIcon, InformationCircleIcon, PencilIcon, PencilSquareIcon, SparklesIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDate, formatFileSize } from "@/lib/utils";
+import { Resume } from "@/types";
 
 
-export default function ResumeCard({ resume, handleDeleteResume, handleAnalyzeClick, analyzing, t }: { resume: any, handleDeleteResume: (id: string) => void, handleAnalyzeClick: (id: string) => void, analyzing: boolean, t: any }) {
+export default function ResumeCard({ resume, handleDeleteResume, handleAnalyzeClick, analyzing, handleConvertToEditable, converting, t }: {
+  resume: Resume,
+  handleDeleteResume: (id: string) => void,
+  handleAnalyzeClick: (id: string) => void,
+  analyzing: boolean,
+  handleConvertToEditable: (id: string) => void,
+  converting: boolean,
+  t: any,
+}) {
 
   return (
     <div
@@ -115,6 +124,18 @@ export default function ResumeCard({ resume, handleDeleteResume, handleAnalyzeCl
                 {t("resumes.analysis.viewLastReport")}
               </Button>
             </Link>
+          )}
+
+          {resume.source !== 'builder' && (
+            <Button
+              onClick={() => handleConvertToEditable(resume.id)}
+              disabled={!resume.is_processed || converting}
+              loading={converting}
+              className="w-full py-3 text-md bg-white text-slate-700 border border-slate-200 font-bold rounded-xl hover:bg-slate-50 transition flex items-center justify-center disabled:opacity-50"
+            >
+              <PencilSquareIcon className="h-5 w-5 mr-2" />
+              {t("resumes.actions.makeEditable")}
+            </Button>
           )}
         </div>
       </div>

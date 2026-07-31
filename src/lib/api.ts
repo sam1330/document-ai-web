@@ -49,8 +49,13 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
+    const isRefreshCall = originalRequest?.url?.includes('/api/auth/refresh')
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // If the refresh call itself 401s, don't recurse into another refresh attempt:
+    // that self-referential retry deadlocks (the outer refresh's await never settles,
+    // since it depends on a queued promise only the outer call's own resolution
+    // would flush), which left AuthContext's `loading` stuck `true` forever.
+    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshCall) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({

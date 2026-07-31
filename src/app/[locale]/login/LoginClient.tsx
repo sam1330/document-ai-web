@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
@@ -16,13 +16,15 @@ interface LoginForm {
   password: string
 }
 
-export default function LoginClient() {
+function LoginForm() {
   const t = useTranslations()
 
   const [showPassword, setShowPassword] = useState(false)
   const [unverifiedEmail, setUnverifiedEmail] = useState('')
   const { login } = useAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next')
   const { executeRecaptcha } = useGoogleReCaptcha()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginForm>()
 
@@ -35,7 +37,8 @@ export default function LoginClient() {
 
       await login(data.email, data.password, recaptchaToken)
       toast.success(t('auth.toast.signInSuccess'))
-      router.push('/dashboard')
+      // Coming from the landing-page grader: pick the stashed PDF back up on /resumes.
+      router.push(next === 'grader' ? '/resumes?pending=grader' : '/dashboard')
     } catch (error: any) {
       const code = error.response?.data?.code
       if (code === 'EMAIL_NOT_VERIFIED') {
@@ -58,7 +61,7 @@ export default function LoginClient() {
             {t.rich('auth.signInSubHeader', {
               customLink: (chunks) => (
                 <Link
-                  href="/register"
+                  href={next ? `/register?next=${encodeURIComponent(next)}` : '/register'}
                   className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
                 >
                   {chunks}
@@ -166,5 +169,13 @@ export default function LoginClient() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginClient() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   )
 }

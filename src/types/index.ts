@@ -1,3 +1,5 @@
+import { ResumeData } from './resume'
+
 export interface User {
   id: string
   email: string
@@ -58,6 +60,8 @@ export interface Resume {
   created_at: string
   updated_at: string
   latest_analysis?: Analysis
+  source?: 'upload' | 'builder'
+  metadata?: { cv: ResumeData['cv']; design: ResumeData['design']; locale: ResumeData['locale'] } | null
 }
 
 export interface ResumeDetailResponse {

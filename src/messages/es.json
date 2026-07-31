@@ -145,8 +145,10 @@
       "comingSoon": "¡El Calificador Instantáneo lanza pronto!",
       "comingSoonSubtext": "Regístrate ahora y sé el primero en saber cuando esté disponible.",
       "uploadAnother": "Calificar otro curriculum",
+      "unlocking": "Guardando tu curriculum...",
       "toasts": {
-        "invalidFile": "Archivo inválido. Por favor, sube un archivo PDF válido."
+        "invalidFile": "Archivo inválido. Por favor, sube un archivo PDF válido.",
+        "uploadFailed": "No pudimos guardar tu curriculum. Por favor, inténtalo de nuevo."
       }
     },
     "playwrightGuarantee": {
@@ -384,7 +386,12 @@
     },
     "actions": {
       "edit": "Actualizar",
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "makeEditable": "Hacer Editable"
+    },
+    "convert": {
+      "success": "¡Currículum convertido a una versión editable y personalizable!",
+      "failed": "Error al convertir el currículum"
     },
     "emptyState": {
       "title": "Construye tu Biblioteca de Talentos",
@@ -425,6 +432,9 @@
       "invalidType": "Por favor sube un archivo PDF o DOCX",
       "invalidSize": "El tamaño del archivo debe ser menor a 10MB"
     },
+    "grader": {
+      "pendingNotFound": "No encontramos el currículum que calificaste. Por favor, súbelo de nuevo."
+    },
     "delete": {
       "confirm": "¿Estás seguro de que quieres eliminar este currículum?",
       "success": "¡Currículum eliminado exitosamente!",
@@ -444,6 +454,12 @@
       "template": "Plantilla",
       "scale": "Escala",
       "fitToWidth": "Ajustar al Ancho",
+      "convert": {
+        "title": "Este currículum aún no es editable",
+        "subtitle": "Convierte tu currículum subido en datos estructurados para poder editarlo y aplicar cualquiera de nuestros temas.",
+        "button": "Hacer Editable",
+        "failed": "Error al convertir el currículum"
+      },
       "toasts": {
         "generatingPDF": "Generando tu PDF premium...",
         "downloadSuccess": "¡Currículum descargado exitosamente!",
